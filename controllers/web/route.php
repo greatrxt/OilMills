@@ -1,5 +1,5 @@
 <?php
-class Route extends CI_Controller {
+class Route extends Admin_controller {
 
         public function __construct()
         {
@@ -11,7 +11,7 @@ class Route extends CI_Controller {
 public function view($id = NULL)
 {
 		if($id == NULL){
-			redirect('index.php/ParmarOilMills/web/landing_route', 'refresh');
+			redirect('ParmarOilMills/web/landing_route', 'refresh');
 			return;
 		}
 		
@@ -45,7 +45,7 @@ public function edit($id = NULL)
 
 			$result = $this->route_model->edit_route($id, $data);
 			//print_r($result);
-			redirect('index.php/ParmarOilMills/web/route/view/'.$id, 'refresh');
+			redirect('ParmarOilMills/web/route/view/'.$id, 'refresh');
 		} 
 }
 
@@ -74,7 +74,7 @@ public function create()
 		);
 	
         $this->route_model->add_route($data);
-        redirect('index.php/ParmarOilMills/web/landing_route', 'refresh');
+        redirect('ParmarOilMills/web/landing_route', 'refresh');
     }
 }
 

@@ -48,24 +48,18 @@
 
                     
                     <td>
+					<!--<?php echo base_url()."/uploads/product/".$product['ProductId'] ?> -->
 					<img style = 'height:50px;' 
 						src = "<?php 
 							
 							$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
-							$imageUrl = base_url()."/uploads/product/".$product['ProductId'];
-							
-							$ch = curl_init();
-							curl_setopt($ch, CURLOPT_URL,$imageUrl);
-							// don't download content
-							curl_setopt($ch, CURLOPT_NOBODY, 1);
-							curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-							curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-							if(curl_exec($ch)!==FALSE)
-							{
-								echo $imageUrl;
-							}
-							else
-							{
+							$imageUrlJpg = base_url()."/uploads/product/".$product['ProductId'].".jpg";
+							//$imageUrlPng = base_url()."/uploads/product/".$product['ProductId'].".png";
+							if(@getimagesize($imageUrlJpg)){
+								echo $imageUrlJpg;
+							//} else if (@getimagesize($imageUrlPng)){
+							//	echo $imageUrlPng;
+							} else {
 								echo $defaultImageURL;
 							}
 	
@@ -146,7 +140,7 @@
 					if(request.readyState == 4){
 						var response = request.response;
 						if(request.status == 200){
-							if(response == "success"){
+							if(response.trim() == "success"){
 								window.location = "landing_product"; //refresh
 							} else {
 								//show error dialog box

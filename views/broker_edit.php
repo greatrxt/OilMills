@@ -15,9 +15,8 @@
 						<a id = "0" class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab" aria-expanded="false">Broker Details</a>
 					</li>
 				</ul>
-				<?php echo validation_errors(); ?>
 
-				<?php echo form_open('index.php/ParmarOilMills/web/broker/edit/'.$broker['BrokerId']); ?>
+				<?php echo form_open('ParmarOilMills/web/broker/edit/'.$broker['BrokerId']); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						

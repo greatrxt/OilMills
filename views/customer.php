@@ -27,7 +27,7 @@
 				</ul>
 				<?php echo validation_errors(); ?>
 
-				<?php echo form_open('index.php/ParmarOilMills/web/customer/create/'); ?>
+				<?php echo form_open('ParmarOilMills/web/customer/create/'); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
@@ -102,7 +102,7 @@
 							
 							<div class="form-group">
                                 <label for="contactNumber">Contact Number*</label>
-                                <input class="form-control" id="contactNumber" type="text" name="contactNumber" value="<?php echo set_value('contactNumber'); ?>">
+                                <input class="form-control" id="contactNumber" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="contactNumber" value="<?php echo set_value('contactNumber'); ?>">
                             </div>
 
 							
@@ -113,7 +113,7 @@
 						<div class = "col-lg-5">
 							<div class="form-group">
 								<label class="form-control-label" for="gstNumberApplicable">GST Number Available</label><br/>
-                                <input value="Yes" name = "GSTNumberStatus" type="radio" style="margin:11px" <?php if(set_value('GSTNumberStatus') == "Yes") echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = false">Yes
+                                <input value="Yes" name = "GSTNumberStatus" type="radio" style="margin:11px" <?php if(set_value('GSTNumberStatus') == "Yes" || set_value('GSTNumberStatus') == null) echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = false">Yes
 								<input value="NA" name = "GSTNumberStatus" type="radio"  style="margin:11px" <?php if(set_value('GSTNumberStatus') == "NA") echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = true">NA
 								<input value="Applied" name = "GSTNumberStatus" type="radio" style="margin:11px" <?php if(set_value('GSTNumberStatus') == "Applied") echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = true">Applied
                             </div>
@@ -126,7 +126,7 @@
 						<div class = "col-lg-5">
 							<div class="form-group">
 								<label class="form-control-label" for="gstNumberApplicable">FSSAI Number</label><br/>
-                                <input value="Yes" name = "FSSAINumberStatus" type="radio" style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "Yes") echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = false">Yes
+                                <input value="Yes" name = "FSSAINumberStatus" type="radio" style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "Yes" || set_value('FSSAINumberStatus') == null) echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = false">Yes
 								<input value="NA" name = "FSSAINumberStatus" type="radio"  style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "NA") echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = true">NA
 								<input value="Applied" name = "FSSAINumberStatus" type="radio" style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "Applied") echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = true">Applied
                             </div>
@@ -148,13 +148,13 @@
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>">
+                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>" >
                             </div>
 						</div>
 						<div class = "col-lg-1">
 							<div class="form-group">
 								<label class="form-control-label" for="userActive">Active</label><br/>
-                                <input id="vatIsApplicable" name = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on") echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
+                                <input id="vatIsApplicable" name = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on" || set_value('userActive') == null) echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
                             </div>
 						</div>
 					</div>
@@ -164,7 +164,7 @@
 							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick = "return validateForm()">Save</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnBack" style="margin:10px">Back</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnNext" style="margin:10px">Next</button>
-							<button type="button" class="btn width-150 btn-default" style="margin:10px">Cancel</button>
+							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_customer"><button type="button" class="btn width-150 btn-default" style="margin:10px" >Cancel</button></a>
 						</div>
                     </div>
 					</div>
@@ -179,7 +179,7 @@
 </section>
 <script>
 function validateForm(){
-	return false;
+	return true;
 }
 </script>
 <script>

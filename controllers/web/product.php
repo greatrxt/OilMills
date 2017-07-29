@@ -1,5 +1,5 @@
 <?php
-class Product extends CI_Controller {
+class Product extends Admin_controller {
 
         public function __construct()
         {
@@ -11,7 +11,7 @@ class Product extends CI_Controller {
 public function view($id = NULL)
 {
 		if($id == NULL){
-			redirect('index.php/ParmarOilMills/web/landing_product', 'refresh');
+			redirect('ParmarOilMills/web/landing_product', 'refresh');
 			return;
 		}
 		
@@ -23,7 +23,7 @@ public function view($id = NULL)
         {
                 show_404();
         }
-		print_r($data);
+		//print_r($data);
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/templates/upper_menu');
 		$this->load->view('parmaroilmills/product_edit', $data);
@@ -46,43 +46,41 @@ public function edit($id = NULL)
 			'ProductCategory' => $this->input->post('productCategory'),
 			'SellingPrice' => $this->input->post('sellingPrice'),
 			'Status' => $this->input->post('productStatus'),
-			'ProductImage' => $this->input->post('state'),
-			'RecordCreatedBy' => 1
+			'ProductImage' => $this->input->post('state')
 	);
 	
 	//echo $data['city'];
 	$result = $this->product_model->edit_product($id, $data);
 
-	if($result['id'] > 0 && !empty($_FILES['productImage']['name'])){		
-		$productId = $result['id'];
+	if($id > 0 && !empty($_FILES['productImage']['name'])){		
 		$uploadPath = './uploads/product/';
 		if (!file_exists($uploadPath)) {
 			mkdir($uploadPath, 0777, true);
 		}
-	
-		$new_name = $productId;
-		
+
 		//Image
 		$config['upload_path']          = $uploadPath;
-		$config['allowed_types']        = 'gif|jpg|png';
+		$config['allowed_types']        = 'jpg';
 		$config['max_size']             = 10000333;
 		$config['max_width']            = 102400;
 		$config['max_height']           = 76800;
-		$config['file_name'] 			= $new_name;
+		$config['file_name'] 			= $id;
+		$config['overwrite'] 			= TRUE;
 
 		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
 		
 		if (!$this->upload->do_upload('productImage')){
 				$error = array('error' => $this->upload->display_errors());
-				print_r($error);
+				//print_r($error);
 		} else {
 				$data = array('upload_data' => $this->upload->data());
-				print_r($data);
+				//print_r($data);
 		}
 	} else {
-		print_r($result);
+		//print_r($result);
 	}
-	redirect('index.php/ParmarOilMills/web/product/view/'.$id, 'refresh');
+	redirect('ParmarOilMills/web/product/view/'.$id, 'refresh');
     
 }
 
@@ -94,7 +92,7 @@ public function create()
 
     $data['title'] = 'Parmar Oil Mills';
 
-    $this->form_validation->set_rules('name', 'Name', 'required|is_unique[product.name]');
+    $this->form_validation->set_rules('name', 'Name', 'required|is_unique[Product.name]');
 
     if ($this->form_validation->run() === FALSE)
     {
@@ -114,7 +112,7 @@ public function create()
 				'SellingPrice' => $this->input->post('sellingPrice'),
 				'Status' => $this->input->post('productStatus'),
 				'ProductImage' => $this->input->post('state'),
-				'RecordCreatedBy' => 1
+				'RecordCreatedBy' => $this->session->userdata('userid')
 		);
 		
 		//echo $data['city'];
@@ -131,7 +129,7 @@ public function create()
 			
 			//Image
 			$config['upload_path']          = $uploadPath;
-			$config['allowed_types']        = 'gif|jpg|png';
+			$config['allowed_types']        = 'jpg';
 			$config['max_size']             = 10000333;
 			$config['max_width']            = 102400;
 			$config['max_height']           = 76800;
@@ -149,7 +147,7 @@ public function create()
 		} else {
 			print_r($result);
 		}
-        //redirect('index.php/ParmarOilMills/web/landing_product', 'refresh');
+        redirect('ParmarOilMills/web/landing_product', 'refresh');
     }
 }
 }

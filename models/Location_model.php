@@ -8,7 +8,7 @@ class Location_model extends CI_Model {
 		
 		function deleteLocationBy($id) {
 			$this->db->where( 'LocationID', $id );
-			$this->db->delete('location');
+			$this->db->delete('Location');
 
 			if ($this->db->affected_rows() == '1') {
 				return TRUE;
@@ -19,38 +19,32 @@ class Location_model extends CI_Model {
 
 		public function get_all_locations()
 		{
-			//$query = $this->db->get('location');
-			//SELECT location.LocationID, location.City, location.District, location.State, applicationuser.username FROM location left join applicationuser on location.RecordCreatedBy = applicationuser.UserId;
-			/*$query = $this->db->select('location.LocationID, location.City, location.District, location.RecordCreationTime, location.State, applicationuser.username')
-                  ->from('location')
-                  ->join('applicationuser', 'applicationuser.UserId = location.RecordCreatedBy', 'left')
-                  ->get();*/
 			$result = $this->db->query('SELECT
-										  location.LocationID,
-										  location.City,
-										  location.District,
-										  location.State,
-										  location.RecordCreationTime,
-										  applicationuser.username
+										  Location.LocationID,
+										  Location.City,
+										  Location.District,
+										  Location.State,
+										  Location.RecordCreationTime,
+										  ApplicationUser.username
 										FROM
-										  location
+										  Location
 										LEFT JOIN
-										  applicationuser
+										  ApplicationUser
 										ON
-										  location.RecordCreatedBy = applicationuser.UserId;');
+										  Location.RecordCreatedBy = ApplicationUser.UserId;');
 			return $result->result_array();
 		}
 		
 		public function get_location_with_id($id)
 		{
-			$query = $this->db->get_where('location', array('LocationID' => $id));
+			$query = $this->db->get_where('Location', array('LocationID' => $id));
 			return $query->row_array();
 		}
 		
 		public function edit_location($id, $data)
 		{	
 			$this->db->where('LocationId', $id);
-			$this->db->update('location', $data);
+			$this->db->update('Location', $data);
 			
 			if($this->db->affected_rows() > 0){
 				$response['Result'] = "Success";
@@ -63,7 +57,7 @@ class Location_model extends CI_Model {
 		
 		public function add_location($data)
 		{	
-			if($this->db->insert('location', $data)){
+			if($this->db->insert('Location', $data)){
 				$response['Result'] = "Success";
 			} else {
 				 $response['Result'] = $this->db->error();

@@ -8,7 +8,7 @@ class Product_model extends CI_Model {
 		
 		function deleteProductBy($id) {
 			$this->db->where( 'ProductID', $id );
-			$this->db->delete('product');
+			$this->db->delete('Product');
 
 			if ($this->db->affected_rows() == '1') {
 				return TRUE;
@@ -27,26 +27,26 @@ class Product_model extends CI_Model {
                   ->get();*/
 			$result = $this->db->query('SELECT
 										  *,
-										  applicationuser.username
+										  ApplicationUser.username
 										FROM
-										  product
+										  Product
 										LEFT JOIN
-										  applicationuser
+										  ApplicationUser
 										ON
-										  product.RecordCreatedBy = applicationuser.UserId;');
+										  Product.RecordCreatedBy = ApplicationUser.UserId;');
 			return $result->result_array();
 		}
 		
 		public function get_product_with_id($id)
 		{
-			$query = $this->db->get_where('product', array('ProductID' => $id));
+			$query = $this->db->get_where('Product', array('ProductID' => $id));
 			return $query->row_array();
 		}
 		
 		public function edit_product($id, $data)
 		{	
 			$this->db->where('ProductId', $id);
-			$this->db->update('product', $data);
+			$this->db->update('Product', $data);
 			
 			if($this->db->affected_rows() > 0){
 				$response['id'] = $id;
@@ -61,7 +61,7 @@ class Product_model extends CI_Model {
 		
 		public function add_product($data)
 		{	
-			if($this->db->insert('product', $data)){
+			if($this->db->insert('Product', $data)){
 				$response['Result'] = "Success";
 				$response['id'] = $this->db->insert_id();
 			} else {

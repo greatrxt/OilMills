@@ -1,17 +1,18 @@
 <?php
-class Location extends CI_Controller {
+class Location extends Admin_controller {
 
         public function __construct()
         {
                 parent::__construct();
                 $this->load->model('location_model');
                 $this->load->helper('url_helper');
+
         }
 
 public function view($id = NULL)
 {
 		if($id == NULL){
-			redirect('index.php/ParmarOilMills/web/landing_location', 'refresh');
+			redirect('ParmarOilMills/web/landing_location', 'refresh');
 			return;
 		}
 		
@@ -45,7 +46,7 @@ public function edit($id = NULL)
 			);
 
 			$result = $this->location_model->edit_location($id, $data);
-			redirect('index.php/ParmarOilMills/web/location/view/'.$id, 'refresh');
+			redirect('ParmarOilMills/web/location/view/'.$id, 'refresh');
 		} 
 }
 
@@ -71,12 +72,12 @@ public function create()
 				'city' => $this->input->post('city'),
 				'district' => $this->input->post('district'),
 				'state' => $this->input->post('state'),
-				'RecordCreatedBy' => 1
+				'RecordCreatedBy' => $this->session->userdata('userid')
 		);
 		
 		//echo $data['city'];
         $this->location_model->add_location($data);
-        redirect('index.php/ParmarOilMills/web/landing_location', 'refresh');
+        redirect('ParmarOilMills/web/landing_location', 'refresh');
     }
 }
 }

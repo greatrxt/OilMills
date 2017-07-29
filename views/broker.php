@@ -17,7 +17,7 @@
 				</ul>
 				<?php echo validation_errors(); ?>
 
-				<?php echo form_open('index.php/ParmarOilMills/web/broker/create'); ?>
+				<?php echo form_open('ParmarOilMills/web/broker/create'); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						

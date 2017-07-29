@@ -1,52 +1,69 @@
 <?php
-class Employee extends CI_Controller {
+class Employee extends Admin_controller {
 
-        public function __construct()
-        {
-                parent::__construct();
-                $this->load->model('location_model');
-				$this->load->model('employee_model');
-                $this->load->helper('url_helper');
-        }
+public function __construct()
+{
+		parent::__construct();
+		$this->load->model('location_model');
+		$this->load->model('employee_model');
+		$this->load->model('user_model');
+		$this->load->helper('url_helper');
+}
 
-public function view($id = NULL)
-{		$this->load->library('form_validation');
-		$this->form_validation->set_rules('city', 'City', 'required');
-		if($id == NULL){
-			redirect('index.php/ParmarOilMills/web/landing_employee', 'refresh');
-			return;
+
+public function edit($id = NULL){
+	
+	if($id == NULL){
+		redirect('ParmarOilMills/web/landing_employee', 'refresh');
+		return;
+	}
+	
+	$data['employee'] = $this->employee_model->get_employee_with_id($id)[0];
+	//print_r($data);			
+	if (empty($data['employee'])){
+			show_404();
+	}
+			
+	$this->load->library('form_validation');
+	$this->form_validation->set_rules('city', 'City', 'required');
+	$this->form_validation->set_error_delimiters('<div class="error" style="display:none;width:82%;padding:10px;margin-top:20px;border: 1px solid #FF0000">', '</div>'); 
+	$this->form_validation->set_rules('name', 'Name', 'required');
+	
+	if($this->input->post('username')!=null){
+		$applicationuser = $this->user_model->user_exists($this->input->post('username'));
+		if($applicationuser!=null){		
+			if($applicationuser['UserId']!=$data['employee']['UserId']){
+				$this->form_validation->set_rules(
+					'username', 'Username',
+					'required|min_length[5]|max_length[25]|is_unique[ApplicationUser.username]',
+					array(
+							'required'      => 'You have not provided %s.',
+							'is_unique'     => 'This %s already exists.'
+					)
+				);
+			}
 		}
-		
-        $data['employee'] = $this->employee_model->get_employee_with_id($id)[0];
+	}
+	
+	if ($this->form_validation->run() == FALSE) {
+						
 		$data['location'] = $this->location_model->get_all_locations();
-		
-		print_r($data);
-        if (empty($data['employee']))
-        {
-                show_404();
-        }
-
+	
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/templates/header_master');
 		$this->load->view('parmaroilmills/templates/upper_menu');
 		$this->load->view('parmaroilmills/employee_edit', $data);
-		$this->load->view('parmaroilmills/templates/footer');		
+		$this->load->view('parmaroilmills/templates/footer');	
+		
+	} else {
+		
+		$result = $this->employee_model->edit_employee($id, $this->input->post());
+		//print_r($result);
+		redirect('ParmarOilMills/web/employee/edit/'.$id, 'refresh');	
+	}		
+	//print_r($this->input->post());
+	
 }
-
-public function edit($id = NULL){
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('city', 'City', 'required');
-
-		if ($this->form_validation->run())
-		{
-			$result = $this->employee_model->edit_employee($id, $this->input->post());
-			//redirect('index.php/ParmarOilMills/web/employee/view/'.$id, 'refresh');
-			print_r($result);
-		}
-		print_r($this->input->post());
-		//print_r($data);
-}
-
 
 public function create()
 {
@@ -61,7 +78,7 @@ public function create()
 	if (array_key_exists('userActive', $this->input->post())) {
 		$this->form_validation->set_rules(
         'username', 'Username',
-        'required|min_length[5]|max_length[12]|is_unique[applicationuser.username]',
+        'required|min_length[5]|max_length[12]|is_unique[ApplicationUser.username]',
         array(
                 'required'      => 'You have not provided %s.',
                 'is_unique'     => 'The %s you entered already exists.'
@@ -86,7 +103,7 @@ public function create()
     } else {
 		
         $this->employee_model->add_employee($this->input->post());
-        redirect('index.php/ParmarOilMills/web/landing_employee', 'refresh');
+        redirect('ParmarOilMills/web/landing_employee', 'refresh');
 		//print_r($this->input->post());
     }
 }

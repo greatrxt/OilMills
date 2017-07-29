@@ -10,7 +10,7 @@
         </div>
 		<?php echo validation_errors(); ?>
 
-		<?php echo form_open_multipart('index.php/ParmarOilMills/web/product/edit/'.$product['ProductId']); ?>
+		<?php echo form_open_multipart('ParmarOilMills/web/product/edit/'.$product['ProductId']); ?>
         <div id = "form-validation"  class="panel-body">
             <div class="row">
                 <div class="col-lg-8">
@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label for="productCategory">Product Category</label>
 								<select class="form-control" name  = "productCategory">
-									<option value="Option 1">Vegetable Oil</option>
+									<option value="Vegetable Oil">Vegetable Oil</option>
 								</select>
                             </div>
                         </div>
@@ -49,8 +49,8 @@
                             <div class="form-group">
                                 <label for="unitOfMeasurement">Unit Of Measurement</label>
                                 <select class="form-control" name  = "unitOfMeasurement">
-									<option value="Kilograms">Kilograms</option>
-									<option value="Litres">Litres</option>
+									<option value="Kilograms" <?php if($product['UnitOfMeasurement'] == "Kilograms") echo "selected" ?>>Kilograms</option>
+									<option value="Litres" <?php if($product['UnitOfMeasurement'] == "Litres") echo "selected" ?>>Litres</option>
 								</select>
                             </div>
                         </div>
@@ -67,14 +67,14 @@
 						<div class="form-group">
 							<label for="productStatus">Product Status</label>
 							<select class="form-control" name  = "productStatus">
-								<option value="Active">Active</option>
-								<option value="Deactivated">Deactivated</option>
+								<option value="Active" <?php if($product['Status'] == "ACTIVE") echo "selected" ?>>Active</option>
+								<option value="Deactivated" <?php if($product['Status'] == "DEACTIVATED") echo "selected" ?>>Deactivated</option>
 							</select>
 						</div>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary width-150">Save Product</button>
-                        <button type="button" class="btn btn-default">Cancel</button>
+                        <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_product"><button type="button" class="btn btn-default">Cancel</button></a>
                     </div>
 
                 </div>
@@ -83,12 +83,13 @@
                     <h4>Product Image</h4>
                     <div class="cui-ecommerce--catalog--item">
                         <div id = "imagesToUpload" class="cui-ecommerce--catalog--item--img">
-                           <img style = 'width:80%;' 
+                           <img style = 'height:100%;' 
 							src = "<?php 
 							
 							$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
-							$imageUrl = base_url()."/uploads/product/".$product['ProductId'];
-							
+							$imageUrlJpg = base_url()."/uploads/product/".$product['ProductId'].".jpg";
+							//$imageUrlPng = base_url()."/uploads/product/".$product['ProductId'].".png";
+							/*
 							$ch = curl_init();
 							curl_setopt($ch, CURLOPT_URL,$imageUrl);
 							// don't download content
@@ -102,6 +103,14 @@
 							else
 							{
 								echo $defaultImageURL;
+							}*/
+							
+							if(@getimagesize($imageUrlJpg)){
+								echo $imageUrlJpg;
+							//} else if (@getimagesize($imageUrlPng)){
+							//	echo $imageUrlPng;
+							} else {
+								echo $defaultImageURL;
 							}
 	
 							
@@ -110,7 +119,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input name = "productImage" type="file" id="l16">
+                        <input id = "productImage" name = "productImage" type="file"  accept=".jpg" >
                         <br>
                         <small>Image of Product</small>
                     </div>
@@ -124,7 +133,7 @@
 							$('#imagesToUpload').html("");
 							for(var i = 0; i < fileList.length; i++){
 							  var objectUrl = anyWindow.createObjectURL(fileList[i]);
-							  $('#imagesToUpload').append('<img style="width:50%" src="' + objectUrl + '" /><br/><br/><br/>');
+							  $('#imagesToUpload').append('<img style="height:100%" src="' + objectUrl + '" /><br/><br/><br/>');
 							  window.URL.revokeObjectURL(fileList[i]);
 							}	
 						}

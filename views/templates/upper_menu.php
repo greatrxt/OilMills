@@ -1,3 +1,5 @@
+
+		
 <nav class="left-menu" left-menu ng-class="{'hidden-left-menu': hideLeftMenu}">
     <div class="logo-container">
         <a href="http://1qubit.com" target="_blank" class="logo">
@@ -9,7 +11,7 @@
         <ul class="left-menu-list left-menu-list-root list-unstyled">   
 		
             <li>
-                <a class="left-menu-link" href="home.html">
+                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/home">
                     <i class="left-menu-link-icon icmn-home2"></i>
                     Home
                 </a>
@@ -110,7 +112,6 @@
                 </ul>
             </li>
 			
-			<li class="left-menu-list-separator"><!-- --></li>
 			<li class="left-menu-list-submenu" style = "display:none"><!-- DO NOT DELETE MENU ITEM. NEEDED TO SHOW COLOR BAND OVER MENU ITEM WHILE HOVERING MOUSE -->
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon icmn-cog util-spin-delayed-pseudo"></i>
@@ -146,7 +147,7 @@
             </li>
             <li class="left-menu-list-separator"><!-- --></li>
             <li>
-                <a class="left-menu-link" onclick = "sendSignoutRequest();" href="#">
+                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/login/signout">
                     <i class="left-menu-link-icon icmn-profile"><!-- --></i>
                     Sign Out
                 </a>

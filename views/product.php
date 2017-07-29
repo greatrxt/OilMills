@@ -10,7 +10,7 @@
         </div>
 		<?php echo validation_errors(); ?>
 
-		<?php echo form_open_multipart('index.php/ParmarOilMills/web/product/create'); ?>
+		<?php echo form_open_multipart('ParmarOilMills/web/product/create'); ?>
         <div id = "form-validation"  class="panel-body">
             <div class="row">
                 <div class="col-lg-8">
@@ -24,7 +24,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="productId">Product ID</label>
-                                <input type="text" class="form-control" disabled>
+                                <input type="text" class="form-control" disabled value = "Not Assigned Yet">
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label for="productCategory">Product Category</label>
 								<select class="form-control" name  = "productCategory">
-									<option value="Option 1">Vegetable Oil</option>
+									<option value="Vegetable Oil">Vegetable Oil</option>
 								</select>
                             </div>
                         </div>
@@ -48,7 +48,10 @@
                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="unitOfMeasurement">Unit Of Measurement</label>
-                                <input type="text" name = "unitOfMeasurement" class="form-control">
+                                <select class="form-control" name  = "unitOfMeasurement">
+									<option value="Kilograms">Kilograms</option>
+									<option value="Litres">Litres</option>
+								</select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -64,13 +67,14 @@
 						<div class="form-group">
 							<label for="productStatus">Product Status</label>
 							<select class="form-control" name  = "productStatus">
-								<option value="Option 1">Option 1</option>
+								<option value="Active">Active</option>
+								<option value="Deactivated">Deactivated</option>
 							</select>
 						</div>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary width-150">Save Product</button>
-                        <button type="button" class="btn btn-default">Cancel</button>
+                        <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_product"><button type="button" class="btn btn-default">Cancel</button></a>
                     </div>
 
                 </div>
@@ -89,7 +93,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input name = "productImage" type="file" id="l16">
+                        <input id = "productImage" name = "productImage" type="file"  accept=".jpg" >
                         <br>
                         <small>Image of Product</small>
                     </div>

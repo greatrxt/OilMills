@@ -1,3 +1,6 @@
+<div style = "padding-top:20px;padding-left:20px;padding-right:20px;">
+	<?php echo validation_errors('  <div style = "border-color: #ebccd1;background-color:#f2dede; color:#a94442" class="alert alert-danger alert-dismissable"><a style = "padding-bottom:10px" href="#" class="close" data-dismiss="alert" aria-label="close">×</a>', '</div>'); ?>
+</div>
 <section class = "page-content">
 <div class="page-content-inner">
 
@@ -23,7 +26,7 @@
 				</ul>
 				<?php echo validation_errors(); ?>
 
-				<?php echo form_open('index.php/ParmarOilMills/web/customer/edit/'); ?>
+				<?php echo form_open('ParmarOilMills/web/customer/edit/'.$customer['CustomerId']); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
@@ -138,12 +141,12 @@
 						<div class = "col-lg-4">							
 						<div class="form-group">
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" value = "<?php echo $customer['Username']; ?>">
+                                <input class="form-control" id="username" type="text" name = "username" <?php if($customer['Active'] != "1") echo "disabled" ?>  value = "<?php echo $customer['Username']; ?>">
                             </div></div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value = "<?php echo $customer['Password']; ?>">
+                                <input class="form-control" id="password" type="password" name = "password" <?php if($customer['Active'] != "1") echo "disabled" ?> value = "<?php echo $customer['Password']; ?>">
                             </div>
 						</div>
 						<div class = "col-lg-1">
@@ -162,7 +165,7 @@
 							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick="createOrUpdateCustomer()">Save</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnBack" style="margin:10px">Back</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnNext" style="margin:10px">Next</button>
-							<button type="button" class="btn width-150 btn-default" style="margin:10px" onclick="goBackToLandingPage();">Cancel</button>
+							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_customer"><button type="button" class="btn width-150 btn-default" style="margin:10px" >Cancel</button></a>
 						</div>
                     </div>
 					</div>

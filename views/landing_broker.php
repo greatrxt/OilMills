@@ -116,7 +116,7 @@
 					if(request.readyState == 4){
 						var response = request.response;
 						if(request.status == 200){
-							if(response == "success"){
+							if(response.trim() == "success"){
 								window.location = "landing_broker"; //refresh
 							} else {
 								//show error dialog box

@@ -1,5 +1,5 @@
 <?php
-class Landing_customer extends CI_Controller {
+class Landing_customer extends Admin_controller {
 
         public function __construct()
         {

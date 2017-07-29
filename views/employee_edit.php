@@ -23,7 +23,7 @@
 					</li>
 				</ul>
 
-				<?php $attributes = array('name' => 'form-validation'); echo form_open('index.php/ParmarOilMills/web/employee/edit/'.$employee['EmployeeId'], $attributes); ?>
+				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/employee/edit/'.$employee['EmployeeId'], $attributes); ?>
 				<div id = "form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
@@ -133,7 +133,7 @@
 							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick = "return validateForm()">Save</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnBack" style="margin:10px">Back</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnNext" style="margin:10px">Next</button>
-							<button type="button" class="btn width-150 btn-default" style="margin:10px">Cancel</button>
+							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_employee"><button type="button" class="btn width-150 btn-default" style="margin:10px" >Cancel</button></a>
 						</div>
                     </div>
 					</div>

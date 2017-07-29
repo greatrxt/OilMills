@@ -1,5 +1,5 @@
 <?php
-class Landing_route extends CI_Controller {
+class Landing_route extends Admin_controller {
 
         public function __construct()
         {

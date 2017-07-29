@@ -8,7 +8,7 @@ class Route_model extends CI_Model {
 		
 		function deleteRouteBy($id) {
 			$this->db->where( 'RouteID', $id );
-			$this->db->delete('route');
+			$this->db->delete('Route');
 
 			if ($this->db->affected_rows() == '1') {
 				return TRUE;
@@ -21,30 +21,30 @@ class Route_model extends CI_Model {
 		{
 
 			$result = $this->db->query('SELECT
-										  route.RouteID,
-										  route.RouteCode,
-										  route.RouteName,
-										  route.RecordCreationTime,
-										  applicationuser.username
+										  Route.RouteID,
+										  Route.RouteCode,
+										  Route.RouteName,
+										  Route.RecordCreationTime,
+										  ApplicationUser.username
 										FROM
-										  route
+										  Route
 										LEFT JOIN
-										  applicationuser
+										  ApplicationUser
 										ON
-										  route.RecordCreatedBy = applicationuser.UserId;');
+										  Route.RecordCreatedBy = ApplicationUser.UserId;');
 			return $result->result_array();
 		}
 		
 		public function get_route_with_id($id)
 		{
-			$query = $this->db->get_where('route', array('RouteID' => $id));
+			$query = $this->db->get_where('Route', array('RouteID' => $id));
 			return $query->row_array();
 		}
 		
 		public function edit_route($id, $data)
 		{	
 			$this->db->where('RouteId', $id);
-			$this->db->update('route', $data);
+			$this->db->update('Route', $data);
 			
 			if($this->db->affected_rows() > 0){
 				$response['Result'] = "Success";
@@ -57,7 +57,7 @@ class Route_model extends CI_Model {
 		
 		public function add_route($data)
 		{	
-			if($this->db->insert('route', $data)){
+			if($this->db->insert('Route', $data)){
 				$response['Result'] = "Success";
 			} else {
 				 $response['Result'] = $this->db->error();

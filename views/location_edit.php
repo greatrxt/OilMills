@@ -19,7 +19,7 @@
 				
 				<?php echo validation_errors(); ?>
 
-				<?php echo form_open('index.php/ParmarOilMills/web/location/edit/'.$location['LocationID']); ?>
+				<?php echo form_open('ParmarOilMills/web/location/edit/'.$location['LocationID']); ?>
 
 				<div id = "form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">

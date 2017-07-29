@@ -114,4 +114,4 @@
 	<script src="<?php echo base_url();?>js/common.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/float-modal.css">
 </head>
-<body class="theme-blue menu-top menu-top-compact menu-static colorful-enabled" ng-controller="MainCtrl">	
+<body class="theme-dark colorful-enabled" ng-controller="MainCtrl">

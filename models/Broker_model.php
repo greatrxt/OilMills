@@ -8,7 +8,7 @@ class Broker_model extends CI_Model {
 		
 		function deleteBrokerBy($id) {
 			$this->db->where( 'BrokerID', $id );
-			$this->db->delete('broker');
+			$this->db->delete('Broker');
 
 			if ($this->db->affected_rows() == '1') {
 				return TRUE;
@@ -23,34 +23,34 @@ class Broker_model extends CI_Model {
 										  NAME,
 										  address,
 										  AREA,
-										  location.City,
+										  Location.City,
 										  ContactPerson,
 										  ContactNumber,
 										  EmailAddress,
-										  applicationuser.Username
+										  ApplicationUser.Username
 										FROM
-										  broker
+										  Broker
 										LEFT JOIN
-										  applicationuser
+										  ApplicationUser
 										ON
-										  broker.RecordCreatedBy = applicationuser.UserId
+										  Broker.RecordCreatedBy = ApplicationUser.UserId
 										LEFT JOIN
-										  location
+										  Location
 										ON
-										  broker.location = location.LocationID;');
+										  Broker.location = Location.LocationID;');
 			return $result->result_array();
 		}
 		
 		public function get_broker_with_id($id)
 		{
-			$query = $this->db->get_where('broker', array('BrokerID' => $id));
+			$query = $this->db->get_where('Broker', array('BrokerID' => $id));
 			return $query->row_array();
 		}
 		
 		public function edit_broker($id, $data)
 		{	
 			$this->db->where('BrokerId', $id);
-			$this->db->update('broker', $data);
+			$this->db->update('Broker', $data);
 			
 			if($this->db->affected_rows() > 0){
 				$response['Result'] = "Success";
@@ -64,7 +64,7 @@ class Broker_model extends CI_Model {
 		
 		public function add_broker($data)
 		{	
-			if($this->db->insert('broker', $data)){
+			if($this->db->insert('Broker', $data)){
 				$response['Result'] = "Success";
 			} else {
 				 $response['Result'] = $this->db->error();
