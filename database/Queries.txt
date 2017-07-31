@@ -11,33 +11,25 @@ CREATE TABLE `ApplicationUser` ( `UserId` INT NOT NULL AUTO_INCREMENT , `Usernam
 
 CREATE TABLE `Location` ( `LocationID` INT NOT NULL AUTO_INCREMENT , `City` VARCHAR(255) NOT NULL , `District` VARCHAR(255) NULL , `State` VARCHAR(255) NOT NULL , `RecordCreatedBy` INT NOT NULL ,`RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`LocationID`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`), UNIQUE (`City`, `District`, `State`)) ENGINE = InnoDB;
 
-
 CREATE TABLE `Route` ( `RouteId` INT NOT NULL AUTO_INCREMENT , `RouteCode` TEXT NOT NULL , `RouteName` TEXT NOT NULL , `RecordCreatedBy` INT NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`RouteId`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
-
 
 CREATE TABLE `Customer` ( `CustomerId` INT NOT NULL AUTO_INCREMENT , `Name` TEXT NOT NULL , `UserId` INT NULL , `Address` TEXT NOT NULL, `Area` VARCHAR(255), `ContactPerson` VARCHAR(255), `ContactNumber` VARCHAR(255),  `EmailAddress` TEXT , `GSTNumberStatus` VARCHAR(255), `FSSAINumberStatus` VARCHAR(255), `GSTNumber` VARCHAR(255), `FSSAINumber` VARCHAR(255), `Location` INT,  `RecordCreatedBy` INT NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, `Route` INT , PRIMARY KEY (`CustomerId`), FOREIGN KEY (`Location`) REFERENCES `Location`(`LocationID`), FOREIGN KEY (`UserId`) REFERENCES `ApplicationUser`(`UserId`), UNIQUE (`UserId`), FOREIGN KEY (`Route`) REFERENCES `Route`(`RouteId`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
 
 CREATE TABLE `Employee` ( `EmployeeId` INT NOT NULL AUTO_INCREMENT , `Name` TEXT NOT NULL , `UserId` INT NULL , `Address` TEXT NOT NULL, `Area` VARCHAR(255), `Department` VARCHAR(255), `Designation` VARCHAR(255), `Location` INT,  `RecordCreatedBy` INT NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`EmployeeId`), FOREIGN KEY (`Location`) REFERENCES `Location`(`LocationID`), FOREIGN KEY (`UserId`) REFERENCES `ApplicationUser`(`UserId`), UNIQUE (`UserId`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
 
-
 CREATE TABLE `Broker` ( `BrokerId` INT NOT NULL AUTO_INCREMENT , `Name` TEXT NOT NULL , `Address` TEXT NOT NULL, `Area` VARCHAR(255), `Location` INT, `RecordCreatedBy` INT NOT NULL , `ContactPerson` VARCHAR(255) , `ContactNumber` VARCHAR(255) , `EmailAddress` VARCHAR(255) , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`BrokerId`), FOREIGN KEY (`Location`) REFERENCES `Location`(`LocationID`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
 
+CREATE TABLE `Product` ( `ProductId` INT NOT NULL AUTO_INCREMENT , `Name` VARCHAR(255) NOT NULL , `Code` VARCHAR(255) NOT NULL , `UnitOfMeasurement` VARCHAR(255) NOT NULL , `ProductCategory` VARCHAR(255) NOT NULL , `SellingPrice`  DECIMAL(8,2), `Status` ENUM('ACTIVE', 'DEACTIVATED') NOT NULL DEFAULT 'DEACTIVATED', `RecordCreatedBy` INT NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`ProductId`), UNIQUE (`Code`, `Name`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
 
-CREATE TABLE `Product` ( `ProductId` INT NOT NULL AUTO_INCREMENT , `Name` VARCHAR(255) NOT NULL , `Code` VARCHAR(255) NOT NULL , `UnitOfMeasurement` VARCHAR(255) NOT NULL , `ProductCategory` VARCHAR(255) NOT NULL , `SellingPrice` VARCHAR(255), `Status` ENUM('ACTIVE', 'DEACTIVATED') NOT NULL DEFAULT 'DEACTIVATED', `ProductImage` TEXT, `RecordCreatedBy` INT NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`ProductId`), UNIQUE (`Code`, `Name`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
+CREATE TABLE `Dispatch` ( `DispatchId` INT NOT NULL AUTO_INCREMENT , `DefaultRouteId` INT NOT NULL, `AllocatedRouteId` INT, `DispatchTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `DispatchedByUser` INT NOT NULL , PRIMARY KEY (`DispatchId`), FOREIGN KEY (`DefaultRouteId`) REFERENCES `Route`(`RouteId`), FOREIGN KEY (`AllocatedRouteId`) REFERENCES `Route`(`RouteId`), FOREIGN KEY (`DispatchedByUser`) REFERENCES `ApplicationUser`(`UserId`) ) ENGINE = InnoDB;
 
+CREATE TABLE `Order` ( `OrderId` INT NOT NULL AUTO_INCREMENT , `CustomerId` INT NOT NULL , `OrderPlacedByUser` INT NOT NULL , `LinkedBrokerId` INT NOT NULL, `PaymentTerms` VARCHAR(255) NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`OrderId`), FOREIGN KEY (`CustomerId`) REFERENCES `Customer`(`CustomerId`),  FOREIGN KEY (`OrderPlacedByUser`) REFERENCES `ApplicationUser`(`UserId`), FOREIGN KEY (`LinkedBrokerId`) REFERENCES `Broker`(`BrokerId`)) ENGINE = InnoDB;
 
-CREATE TABLE `SalesOrder` ( `OrderId` INT NOT NULL AUTO_INCREMENT , `CustomerId` INT NOT NULL , `LinkedProductId` INT NOT NULL , `Quantity` INT NOT NULL, `OrderPlacedByUser` INT NOT NULL , `LinkedBrokerId` INT NOT NULL, `PaymentTerms` VARCHAR(255) NOT NULL , `UnitRate`  DECIMAL(8,2) NOT NULL , `RecordCreatedBy` INT NOT NULL , `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`OrderId`), FOREIGN KEY (`CustomerId`) REFERENCES `Customer`(`CustomerId`), FOREIGN KEY (`LinkedProductId`) REFERENCES `Product`(`ProductId`), FOREIGN KEY (`OrderPlacedByUser`) REFERENCES `ApplicationUser`(`UserId`), FOREIGN KEY (`LinkedBrokerId`) REFERENCES `Broker`(`BrokerId`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`)) ENGINE = InnoDB;
+CREATE TABLE `OrderEntries` ( `OrderEntryId` INT NOT NULL AUTO_INCREMENT ,  `OrderId` INT NOT NULL , `OrderedProductId` INT NOT NULL , `SellingPriceAtOrderTime`  DECIMAL(8,2) NOT NULL , `OrderQuantity` INT NOT NULL, `OrderTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, `Status` ENUM('PENDING_APPROVAL', 'APPROVED', 'PARTIALLY_DISPATCHED', 'DISPATCHED') NOT NULL DEFAULT 'PENDING_APPROVAL', `DispatchQuantity` INT NOT NULL, `DispatchID` INT,  PRIMARY KEY (`OrderEntryId`), FOREIGN KEY (`OrderId`) REFERENCES `Order`(`OrderId`) , FOREIGN KEY (`DispatchID`) REFERENCES `Dispatch`(`DispatchId`), FOREIGN KEY (`OrderedProductId`) REFERENCES `Product`(`ProductId`)) ENGINE = InnoDB;
 
+CREATE TABLE `Production` ( `ProductionId` INT NOT NULL AUTO_INCREMENT , `ProductionTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `SentForProductionByUser` INT NOT NULL , PRIMARY KEY (`ProductionId`), FOREIGN KEY (`SentForProductionByUser`) REFERENCES `ApplicationUser`(`UserId`) ) ENGINE = InnoDB;
 
-
-
-
-
-
-
-
-
-
+CREATE TABLE `ProductionEntries` ( `ProductionEntryId` INT NOT NULL AUTO_INCREMENT , `ProductionId` INT NOT NULL , `ProductId` INT NOT NULL , `ProductionQuantity` INT NOT NULL,  PRIMARY KEY (`ProductionEntryId`), FOREIGN KEY (`ProductionId`) REFERENCES `Production`(`ProductionId`), FOREIGN KEY (`ProductId`) REFERENCES `Product`(`ProductId`)) ENGINE = InnoDB;
 
 
 
