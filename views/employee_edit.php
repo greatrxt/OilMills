@@ -35,7 +35,7 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value="<?php if(set_value('address')!=null) echo set_value('address'); else echo $employee['Address']; ?>">
+                                <input class="form-control" id="address" type="text" name="address" value="<?php if(set_value('address')!=null) echo set_value('address'); else echo $employee['Address']; ?>" data-validation="[L>=2]" data-validation-message="Please enter a valid address">
 							</div>
 
 							<div class="form-group">
@@ -64,7 +64,7 @@
 						
 							<div class="form-group">
                                 <label for="department">Department*</label>
-                                <input class="form-control" type="text" name="department" value="<?php if(set_value('department')!=null) echo set_value('department'); else echo $employee['Department']; ?>">
+                                <input class="form-control" type="text" name="department" value="<?php if(set_value('department')!=null) echo set_value('department'); else echo $employee['Department']; ?>" data-validation="[L>=2]"  data-validation-message="Must contain atleast 2 characters">
                             </div>
 
 						</div>
@@ -86,7 +86,8 @@
 							
 							<div class="form-group">
                                 <label for="designation">Designation*</label>
-                                <input class="form-control" type="text" name="designation"  value="<?php if(set_value('designation')!=null) echo set_value('designation'); else echo $employee['Designation']; ?>">
+                                <input class="form-control" type="text" name="designation"  value="<?php if(set_value('designation')!=null) echo set_value('designation'); else echo $employee['Designation']; ?>" data-validation="[L>=2]"
+																					   data-validation-message="Must contain atleast 2 characters">
                             </div>
 
 							

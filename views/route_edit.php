@@ -6,7 +6,7 @@
     <section class="panel panel-with-borders" style="overflow:auto">
         <div class="panel-heading">
             <h2>
-                <div id = "title">Create New Route</div>
+                <div id = "title">Route</div>
             </h2>
         </div>
         <div class="panel-body">
@@ -17,17 +17,17 @@
 					</li>
 				</ul>
 				<?php echo validation_errors(); ?>
-
-				<?php echo form_open('ParmarOilMills/web/route/edit/'.$route['RouteId']); ?>
+				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/route/edit/'.$route['RouteId'], $attributes); ?>
 				<div id = "form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
 						<div class = "col-lg-5">
-							<div class="form-group">
-                                <label for="textRouteId">Route ID</label>
-                                <input class="form-control" id="textRouteId" type="text" disabled value = "RT<?php echo $route['RouteId']; ?>">
-                            </div>
 
+							<div class="form-group">
+                                <label for="routeName">Route Name*</label>
+                                <input class="form-control" tabindex="1" name="routeName" type="text" value = "<?php echo $route['RouteName']; ?>" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid route name">
+                            </div>
 							<div class="form-group">
 								<label class="form-control-label" for="routeCode">Route Code</label>
 								<input class="form-control" tabindex="2" name="routeCode" type="text" value = "<?php echo $route['RouteCode']; ?>">
@@ -38,8 +38,8 @@
 						
 						<div class = "col-lg-5">
 							<div class="form-group">
-                                <label for="routeName">Route Name*</label>
-                                <input class="form-control" tabindex="1" name="routeName" type="text" value = "<?php echo $route['RouteName']; ?>">
+                                <label for="textRouteId">Route ID</label>
+                                <input class="form-control" id="textRouteId" type="text" disabled value = "RT<?php echo $route['RouteId']; ?>">
                             </div>
 
 							

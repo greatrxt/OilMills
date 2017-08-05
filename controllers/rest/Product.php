@@ -1,18 +1,18 @@
 <?php
 require(APPPATH.'/libraries/REST_Controller.php');
 
-class location extends REST_Controller
+class Product extends REST_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('location_model');
+		$this->load->model('product_model');
 		$this->load->helper('url_helper');
 	}
 
   public function index_get()
   {  
-	$data['location'] = $this->location_model->get_all_locations();
+	$data['products'] = $this->product_model->get_all_products();
 	$this->response($data, 200);
   }
 

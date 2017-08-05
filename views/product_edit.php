@@ -9,8 +9,7 @@
             </h2>
         </div>
 		<?php echo validation_errors(); ?>
-
-		<?php echo form_open_multipart('ParmarOilMills/web/product/edit/'.$product['ProductId']); ?>
+		<?php $attributes = array('name' => 'form-validation'); echo form_open_multipart('ParmarOilMills/web/product/edit/'.$product['ProductId'], $attributes); ?>
         <div id = "form-validation"  class="panel-body">
             <div class="row">
                 <div class="col-lg-8">
@@ -18,7 +17,8 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">Product Name</label>
-                                <input type="text" name = "name" class="form-control" value="<?php if(set_value('name')!=null) echo set_value('name'); else echo $product['Name']; ?>">
+                                <input type="text" name = "name" class="form-control" value="<?php if(set_value('name')!=null) echo set_value('name'); else echo $product['Name']; ?>" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid product name">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -87,7 +87,7 @@
 							src = "<?php 
 							
 							$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
-							$imageUrlJpg = base_url()."/uploads/product/".$product['ProductId'].".jpg";
+							$imageUrlJpg = $product['ProductImage'];
 							//$imageUrlPng = base_url()."/uploads/product/".$product['ProductId'].".png";
 							/*
 							$ch = curl_init();

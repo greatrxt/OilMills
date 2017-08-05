@@ -33,7 +33,8 @@ class Product_model extends CI_Model {
 										LEFT JOIN
 										  ApplicationUser
 										ON
-										  Product.RecordCreatedBy = ApplicationUser.UserId;');
+										  Product.RecordCreatedBy = ApplicationUser.UserId
+										WHERE Product.Status = "Active";');
 			return $result->result_array();
 		}
 		

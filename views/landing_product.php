@@ -53,7 +53,7 @@
 						src = "<?php 
 							
 							$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
-							$imageUrlJpg = base_url()."/uploads/product/".$product['ProductId'].".jpg";
+							$imageUrlJpg = $product['ProductImage'];
 							//$imageUrlPng = base_url()."/uploads/product/".$product['ProductId'].".png";
 							if(@getimagesize($imageUrlJpg)){
 								echo $imageUrlJpg;

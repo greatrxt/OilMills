@@ -17,15 +17,15 @@
 					</li>
 				</ul>
 				<?php echo validation_errors(); ?>
-
-				<?php echo form_open('ParmarOilMills/web/route/create'); ?>
+				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/route/create', $attributes); ?>
 				<div id = "form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
 						<div class = "col-lg-5">
 							<div class="form-group">
-                                <label for="textRouteId">Route ID</label>
-                                <input class="form-control" id="textRouteId" type="text" disabled value = "Not Assigned Yet">
+                                <label for="routeName">Route Name*</label>
+                                <input class="form-control" tabindex="1" name="routeName" type="text" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid route name">
                             </div>
 
 							<div class="form-group">
@@ -37,11 +37,11 @@
 						
 						
 						<div class = "col-lg-5">
-							<div class="form-group">
-                                <label for="routeName">Route Name*</label>
-                                <input class="form-control" tabindex="1" name="routeName" type="text">
-                            </div>
 
+							<div class="form-group">
+                                <label for="textRouteId">Route ID</label>
+                                <input class="form-control" id="textRouteId" type="text" disabled value = "Not Assigned Yet">
+                            </div>
 							
 						</div>
 					</div>

@@ -18,8 +18,7 @@
 				</ul>
 				
 				<?php echo validation_errors(); ?>
-
-				<?php echo form_open('ParmarOilMills/web/location/edit/'.$location['LocationID']); ?>
+				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/location/edit/'.$location['LocationID'], $attributes); ?>
 
 				<div id = "form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
@@ -27,7 +26,8 @@
 						<div class = "col-lg-5">
 							<div class="form-group">
                                 <label for="city">City Name*</label>
-                                <input class="form-control" tabindex="1" name="city" type="text" required value = "<?php echo $location['City']; ?>">
+                                <input class="form-control" tabindex="1" name="city" type="text" required value = "<?php echo $location['City']; ?>" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid city name" >
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="district">District</label>

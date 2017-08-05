@@ -15,19 +15,20 @@
 						<a id = "0" class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab" aria-expanded="false">Broker Details</a>
 					</li>
 				</ul>
-
-				<?php echo form_open('ParmarOilMills/web/broker/edit/'.$broker['BrokerId']); ?>
+				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/broker/edit/'.$broker['BrokerId'], $attributes); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
 						<div class = "col-lg-5">
 							<div class="form-group">
                                 <label for="name">Broker / Company Name*</label>
-                                <input class="form-control" name="name" type="text" value = "<?php echo $broker['Name']; ?>">
+                                <input class="form-control" name="name" type="text" value = "<?php echo $broker['Name']; ?>" data-validation="[L>=2]"
+																					   data-validation-message="Please enter a valid company name">
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" name="address" type="text" value = "<?php echo $broker['Address']; ?>">
+                                <input class="form-control" name="address" type="text" value = "<?php echo $broker['Address']; ?>" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid address">
 							</div>
 
 							<div class="form-group">
@@ -50,7 +51,8 @@
 						
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
-                                <input class="form-control" name="contactPerson" type="text" value = "<?php echo $broker['ContactPerson']; ?>">
+                                <input class="form-control" name="contactPerson" type="text" value = "<?php echo $broker['ContactPerson']; ?>" data-validation="[L>=2]"
+																					   data-validation-message="Please enter a valid name">
                             </div>
 
 						</div>
@@ -73,12 +75,14 @@
 							
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" name="emailAddress" type="text" value = "<?php echo $broker['EmailAddress']; ?>">
+                                <input class="form-control" name="emailAddress" type="text" value = "<?php echo $broker['EmailAddress']; ?>" data-validation="[L>=2]"
+																					   data-validation-message="email address must contain atleast 3 characters">
                             </div>
 							
 							<div class="form-group">
                                 <label for="contactNumber">Contact Number*</label>
-                                <input class="form-control" name="contactNumber" type="text" value = "<?php echo $broker['ContactNumber']; ?>">
+                                <input class="form-control" name="contactNumber" type="text" value = "<?php echo $broker['ContactNumber']; ?>" data-validation="[L>=8]"
+																					   data-validation-message="Please enter a valid Contact Number" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                             </div>							
 						</div>
 					</div>

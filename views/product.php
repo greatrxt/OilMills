@@ -9,8 +9,7 @@
             </h2>
         </div>
 		<?php echo validation_errors(); ?>
-
-		<?php echo form_open_multipart('ParmarOilMills/web/product/create'); ?>
+		<?php $attributes = array('name' => 'form-validation'); echo form_open_multipart('ParmarOilMills/web/product/create', $attributes); ?>
         <div id = "form-validation"  class="panel-body">
             <div class="row">
                 <div class="col-lg-8">
@@ -18,7 +17,8 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">Product Name</label>
-                                <input type="text" name = "name" class="form-control">
+                                <input type="text" name = "name" class="form-control" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid product name">
                             </div>
                         </div>
                         <div class="col-lg-6">

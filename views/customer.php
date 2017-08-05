@@ -26,20 +26,20 @@
 					</li>
 				</ul>
 				<?php echo validation_errors(); ?>
-
-				<?php echo form_open('ParmarOilMills/web/customer/create/'); ?>
+				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/customer/create/', $attributes); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
 						
 						<div class = "col-lg-5">
 							<div class="form-group">
                                 <label for="name">Customer / Company Name*</label>
-                                <input class="form-control" id="name" type="text" value="<?php echo set_value('name'); ?>" name="name" data-validation="[L>=3]"
-																					   data-validation-message="Must contain atleast 3 characters">
+                                <input class="form-control" id="name" type="text" name="name" value="<?php echo set_value('name'); ?>" data-validation="[L>=3]"
+																					   data-validation-message = "Must contain atleast 3 characters" >
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>">
+                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid address">
 							</div>
 
 							<div class="form-group">
@@ -62,12 +62,14 @@
 						
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
-                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value="<?php echo set_value('contactPerson'); ?>">
+                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value="<?php echo set_value('contactPerson'); ?>" data-validation="[L>=2]"
+																					   data-validation-message="Please enter a valid name">
                             </div>
 							
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>">
+                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>" data-validation="[L>=2]"
+																					   data-validation-message="email address must contain atleast 3 characters">
                             </div>
 						</div>
 						
@@ -102,7 +104,8 @@
 							
 							<div class="form-group">
                                 <label for="contactNumber">Contact Number*</label>
-                                <input class="form-control" id="contactNumber" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="contactNumber" value="<?php echo set_value('contactNumber'); ?>">
+                                <input class="form-control" id="contactNumber" type="text" data-validation="[L>=8]"
+																					   data-validation-message="Please enter a valid Contact Number" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="contactNumber" value="<?php echo set_value('contactNumber'); ?>">
                             </div>
 
 							
@@ -141,10 +144,11 @@
 					<div class="tab-pane" id="tab3" role="tabpanel" aria-expanded="true">
 
 						<div class = "col-lg-4">							
-						<div class="form-group">
+							<div class="form-group">
                                 <label for="username">Username</label>
                                 <input class="form-control" id="username" type="text" name = "username" value="<?php echo set_value('username'); ?>">
-                            </div></div>
+                            </div>
+						</div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
@@ -154,7 +158,9 @@
 						<div class = "col-lg-1">
 							<div class="form-group">
 								<label class="form-control-label" for="userActive">Active</label><br/>
-                                <input id="vatIsApplicable" name = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on" || set_value('userActive') == null) echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
+                                <input id="userIsActive" name = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on" || set_value('userActive') == null) echo "checked"; ?>
+								onclick="document.getElementById('username').disabled=!this.checked;
+											document.getElementById('password').disabled=!this.checked;">
                             </div>
 						</div>
 					</div>
@@ -178,7 +184,16 @@
 
 </section>
 <script>
+
 function validateForm(){
+	if(document.getElementById('userIsActive').checked){
+		if(document.getElementById('username').value.length < 3
+			|| document.getElementById('password').value.length < 3){
+			 $('.nav-tabs-horizontal li:eq(2) a').tab('show');
+			 
+			return false;
+		}
+	}
 	return true;
 }
 </script>

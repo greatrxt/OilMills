@@ -194,12 +194,17 @@ class Employee_model extends CI_Model {
 				$userActive = 1;
 			} 
 			
+			$role_string = $data['role'][0];
+			if(sizeof($data['role']) == 2){	//In case multiple roles have been selected - Sales + Operations
+				$role_string = $data['role'][0].','.$data['role'][1];
+			}
+			
 			if(!empty($data['username']) AND !empty($data['password'])){
 				$application_user = array(
 						'Username' => $data['username'],
 						'Password' => $data['password'],
 						'Active' => 1,
-						'Role' => 'EMPLOYEE'
+						'Role' => $role_string
 				);
 				
 				$application_user_added = $this->db->insert('ApplicationUser', $application_user);

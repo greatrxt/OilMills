@@ -35,7 +35,8 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>">
+                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=2]"
+																						data-validation-message="Please enter a valid address">
 							</div>
 
 							<div class="form-group">
@@ -58,7 +59,8 @@
 						
 							<div class="form-group">
                                 <label for="department">Department*</label>
-                                <input class="form-control" id="contactPerson" type="text" name="department" value="<?php echo set_value('department'); ?>">
+                                <input class="form-control" id="contactPerson" type="text" name="department" value="<?php echo set_value('department'); ?>" data-validation="[L>=2]"
+																					   data-validation-message="Must contain atleast 2 characters">
                             </div>
 
 						</div>
@@ -80,7 +82,8 @@
 							
 							<div class="form-group">
                                 <label for="designation">Designation*</label>
-                                <input class="form-control" id="contactNumber" type="text" name="designation" value="<?php echo set_value('designation'); ?>">
+                                <input class="form-control" id="contactNumber" type="text" name="designation" value="<?php echo set_value('designation'); ?>" data-validation="[L>=2]"
+																					   data-validation-message="Must contain atleast 2 characters">
                             </div>
 
 							
