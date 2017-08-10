@@ -81,7 +81,7 @@ class Employee_model extends CI_Model {
 		public function edit_employee($id, $data)
 		{	
 			$this->db->trans_begin();
-			
+			$this->db->query('SET time_zone = "+05:30";');
 			$employee = array(
 				'name' => $data['name'],
 				'address' => $data['address'],
@@ -162,7 +162,7 @@ class Employee_model extends CI_Model {
 		{	
 
 			$this->db->trans_begin();
-			
+			$this->db->query('SET time_zone = "+05:30";');
 			$employee = array(
 				'name' => $data['name'],
 				'address' => $data['address'],

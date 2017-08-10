@@ -39,12 +39,7 @@ public function edit($id = NULL)
     //$this->form_validation->set_rules('name', 'Name', 'required|is_unique[product.name]');
 
 	$current_time = now('Asia/Kolkata');
-	$file_location = '';
-	if(!empty($_FILES['productImage']['name'])){
-		$file_name_array = explode(".", $_FILES['productImage']['name']);
-		$file_type = $file_name_array[1];
-		$file_location = base_url()."uploads/product/".$current_time.".".$file_type;
-	}
+	
 	//Text data
 	$data = array(
 			'Name' => $this->input->post('name'),
@@ -52,9 +47,16 @@ public function edit($id = NULL)
 			'UnitOfMeasurement' => $this->input->post('unitOfMeasurement'),
 			'ProductCategory' => $this->input->post('productCategory'),
 			'SellingPrice' => $this->input->post('sellingPrice'),
-			'Status' => $this->input->post('productStatus'),
-			'ProductImage' => $file_location
+			'Status' => $this->input->post('productStatus')
 	);
+
+	if(!empty($_FILES['productImage']['name'])){
+		$file_name_array = explode(".", $_FILES['productImage']['name']);
+		$file_type = $file_name_array[1];
+		$file_location = base_url()."uploads/product/".$current_time.".".$file_type;
+		
+		$data['ProductImage'] = $file_location;
+	}
 	
 	//echo $data['city'];
 	$result = $this->product_model->edit_product($id, $data);
@@ -128,6 +130,11 @@ public function create()
 		
 		//echo $data['city'];
 		$result = $this->product_model->add_product($data);
+		
+		if(empty($_FILES['productImage']['name'])){
+			redirect('ParmarOilMills/web/landing_product', 'refresh');
+			return;
+		}
 
         if($result['id'] > 0){		
 			$productId = $result['id'];
@@ -153,12 +160,12 @@ public function create()
 					print_r($error);
 			} else {
 					$data = array('upload_data' => $this->upload->data());
-					print_r($data);
+					//print_r($data);
+					redirect('ParmarOilMills/web/landing_product', 'refresh');
 			}
 		} else {
 			print_r($result);
 		}
-        redirect('ParmarOilMills/web/landing_product', 'refresh');
     }
 }
 }

@@ -42,7 +42,8 @@ class Location_model extends CI_Model {
 		}
 		
 		public function edit_location($id, $data)
-		{	
+		{
+			$this->db->query('SET time_zone = "+05:30";');
 			$this->db->where('LocationId', $id);
 			$this->db->update('Location', $data);
 			
@@ -57,6 +58,7 @@ class Location_model extends CI_Model {
 		
 		public function add_location($data)
 		{	
+			$this->db->query('SET time_zone = "+05:30";');
 			if($this->db->insert('Location', $data)){
 				$response['Result'] = "Success";
 			} else {

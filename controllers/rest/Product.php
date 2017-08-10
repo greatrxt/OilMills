@@ -12,7 +12,7 @@ class Product extends REST_Controller
 
   public function index_get()
   {  
-	$data['products'] = $this->product_model->get_all_products();
+	$data['products'] = $this->product_model->get_activated_products();
 	$this->response($data, 200);
   }
 

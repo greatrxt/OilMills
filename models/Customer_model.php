@@ -89,7 +89,7 @@ class Customer_model extends CI_Model {
 		{	
 
 			$this->db->trans_begin();
-			
+			$this->db->query('SET time_zone = "+05:30";');
 			$customer = array(
 				'name' => $data['name'],
 				'address' => $data['address'],
@@ -181,7 +181,7 @@ class Customer_model extends CI_Model {
 		{	
 
 			$this->db->trans_begin();
-			
+			$this->db->query('SET time_zone = "+05:30";');
 			$customer = array(
 				'name' => $data['name'],
 				'address' => $data['address'],

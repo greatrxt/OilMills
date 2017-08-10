@@ -49,17 +49,22 @@
                 </a>
                 <ul class="left-menu-list list-unstyled">
                     <li>
-                        <a class="left-menu-link" href="landing-sales-order.html">
+                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_sales_order_approval">
                             Orders Received
                         </a>
                     </li>
                     <li>
-                        <a class="left-menu-link" href="landing-packing-list.html">
+                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order">
                             View Approved Orders
                         </a>
                     </li>
+                    <li>
+                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_rejected_sales_order">
+                            View Rejected Orders
+                        </a>
+                    </li>
 					<li>
-                        <a class="left-menu-link" href="landing-invoice.html">
+                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/production">
                             Production Summary
                         </a>
                     </li>

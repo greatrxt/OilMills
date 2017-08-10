@@ -1,0 +1,12 @@
+#hiderow,
+.delete {
+  display: none;
+}
+@media print {
+  .no-print {
+    display: none!important;
+  }
+  .no-print .green{
+    display: none!important;
+  }
+}

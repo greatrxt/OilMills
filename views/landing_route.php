@@ -7,7 +7,7 @@
             <h2>
                 <div class="dropdown pull-right">
 				<a href="route/create">
-					<button type="button" class="btn btn-primary"  onclick = "addRoute();">
+					<button type="button" class="btn btn-primary">
                         Add Route
                     </button>
 				</a>

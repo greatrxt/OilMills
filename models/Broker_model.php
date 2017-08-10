@@ -64,6 +64,7 @@ class Broker_model extends CI_Model {
 		
 		public function add_broker($data)
 		{	
+			$this->db->query('SET time_zone = "+05:30";');
 			if($this->db->insert('Broker', $data)){
 				$response['Result'] = "Success";
 			} else {

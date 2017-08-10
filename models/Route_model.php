@@ -43,6 +43,7 @@ class Route_model extends CI_Model {
 		
 		public function edit_route($id, $data)
 		{	
+			$this->db->query('SET time_zone = "+05:30";');
 			$this->db->where('RouteId', $id);
 			$this->db->update('Route', $data);
 			
@@ -57,6 +58,7 @@ class Route_model extends CI_Model {
 		
 		public function add_route($data)
 		{	
+			$this->db->query('SET time_zone = "+05:30";');
 			if($this->db->insert('Route', $data)){
 				$response['Result'] = "Success";
 			} else {

@@ -16,6 +16,21 @@ class Product_model extends CI_Model {
 				return FALSE;
 			}
 		}
+		
+		public function get_activated_products()
+		{
+			$result = $this->db->query('SELECT
+										  *,
+										  ApplicationUser.username
+										FROM
+										  Product
+										LEFT JOIN
+										  ApplicationUser
+										ON
+										  Product.RecordCreatedBy = ApplicationUser.UserId
+										WHERE Product.Status = "Active";');
+			return $result->result_array();
+		}
 
 		public function get_all_products()
 		{
@@ -33,8 +48,7 @@ class Product_model extends CI_Model {
 										LEFT JOIN
 										  ApplicationUser
 										ON
-										  Product.RecordCreatedBy = ApplicationUser.UserId
-										WHERE Product.Status = "Active";');
+										  Product.RecordCreatedBy = ApplicationUser.UserId;');
 			return $result->result_array();
 		}
 		
@@ -46,6 +60,7 @@ class Product_model extends CI_Model {
 		
 		public function edit_product($id, $data)
 		{	
+			$this->db->query('SET time_zone = "+05:30";');
 			$this->db->where('ProductId', $id);
 			$this->db->update('Product', $data);
 			
@@ -62,6 +77,7 @@ class Product_model extends CI_Model {
 		
 		public function add_product($data)
 		{	
+			$this->db->query('SET time_zone = "+05:30";');
 			if($this->db->insert('Product', $data)){
 				$response['Result'] = "Success";
 				$response['id'] = $this->db->insert_id();
