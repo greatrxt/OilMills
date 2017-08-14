@@ -145,7 +145,8 @@ class Order_model extends CI_Model {
 										SellingPriceAtOrderTime,
 										OrderQuantity,
 										ProductionTime,
-										DispatchID,
+										Dispatch.DispatchID,
+										Dispatch.DispatchTime,
 										OrderTime,
 										OrderEntries.Status,
 										OrderEntries.ProductionId
@@ -175,6 +176,10 @@ class Order_model extends CI_Model {
 										ApplicationUser
 										ON
 										SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
+										LEFT JOIN
+										Dispatch
+										ON
+										OrderEntries.DispatchID = Dispatch.DispatchId
 										WHERE
 										OrderEntries.Status = "APPROVED" ||
 										OrderEntries.Status = "PARTIALLY_DISPATCHED"

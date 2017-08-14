@@ -54,8 +54,8 @@
                 <tbody id = 'displayRoutesTableBody'>
 				<?php foreach ($order_entries as $order_entry): ?>
 				<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
-					<td><?php echo $order_entry['OrderEntryId']; ?></td>
-					<td><?php echo $order_entry['OrderId']; ?></td>
+					<td>ODE<?php echo $order_entry['OrderEntryId']; ?></td>
+					<td>OD<?php echo $order_entry['OrderId']; ?></td>
                     <td><?php echo $order_entry['OrderTime']; ?></td>
                     <td><?php echo $order_entry['CustomerName']; ?></td>
                     <td><?php echo $order_entry['BrokerName']; ?></td>
@@ -216,6 +216,10 @@ function closeOrderReviewModal(){
 </script>
 <script>
     $(function () {
-		$('#displayRoutesTable').DataTable();
+		$('#displayRoutesTable').DataTable({
+			"pageLength": 50,
+			"order": [
+                      [2, 'desc'],[0, 'desc']      
+		]});
     });
 </script>

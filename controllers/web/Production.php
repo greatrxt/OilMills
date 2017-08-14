@@ -13,7 +13,7 @@ class Production extends Operations_controller {
 		$data['productions'] = $this->production_model->get_all_production();
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/templates/upper_menu');
-		$this->load->view('parmaroilmills/production_landing', $data);
+		$this->load->view('parmaroilmills/landing_production', $data);
 		$this->load->view('parmaroilmills/templates/footer');
 	}
 	

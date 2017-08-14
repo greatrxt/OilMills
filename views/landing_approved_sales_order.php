@@ -1,26 +1,205 @@
 <section class = "page-content">
 <div class="page-content-inner">
 
-    <!-- Ecommerce Products List -->
-    <section class="panel panel-with-borders">
+    <!-- Ecommerce Product Details -->
+    <section class="panel panel-with-borders" style="overflow:auto">
         <div class="panel-heading">
             <h2>
+				<div class="dropdown pull-right">
+
+					<button type="button" class="btn btn-primary"  onclick = "sendFor('production');">
+						Send for Production
+					</button>
+
+					<button type="button" class="btn btn-primary"  onclick = "sendFor('dispatch');">
+						Send for Dispatch
+					</button>
+				
+                </div>
+                Approved Sales Orders
+            </h2>
+        </div>
+
+        <div class="panel-body">
+			<div class="nav-tabs-horizontal" id = "homeTabs">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item">
+						<a id = "0" class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab" aria-expanded="false">Pending Dispatch</a>
+					</li>
+					<li class="nav-item">
+						<a id = "1" class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab" aria-expanded="true">Dispatched</a>
+					</li>
+				</ul>
+				<div class="tab-content padding-vertical-20">
+				<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
+					<div class="panel-body">
+						<table class="table table-hover nowrap" id="displayPendingDispatchTable" width="100%">
+							<thead class="thead-default">
+							<tr>
+								<th>Entry ID</th>
+								<th>Order ID</th>
+								<th>Date</th>				
+								<th>Customer Name</th>				
+								<th>Payment</th>
+								<th>Product Name</th>
+								<th>Order Qty</th>
+								<th>Rate</th>
+								<th>Ordered By</th>
+								<th>Production</th>
+								<th>Production Date</th>
+								<th>Dispatch</th>
+								<th>Dispatch Date</th>
+							</tr>
+							</thead>
+							<tfoot>
+							<tr>
+								<th>Entry ID</th>
+								<th>Order ID</th>
+								<th>Date</th>				
+								<th>Customer Name</th>				
+								<th>Payment</th>
+								<th>Product Name</th>
+								<th>Order Qty</th>
+								<th>Rate</th>
+								<th>Ordered By</th>
+								<th>Production</th>
+								<th>Production Date</th>
+								<th>Dispatch</th>
+								<th>Dispatch Date</th>
+							</tr>
+							</tfoot>
+							<tbody>
+							<?php foreach ($order_entries as $order_entry): ?>
+							<?php if($order_entry['DispatchID'] !=null)
+								continue;
+							?>
+							<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
+								<td>ODE<?php echo $order_entry['OrderEntryId']; ?></td>
+								<td>OD<?php echo $order_entry['OrderId']; ?></td>
+								<td><?php echo $order_entry['OrderTime']; ?></td>
+								<td><?php echo $order_entry['CustomerName']; ?></td>
+								<td><?php echo $order_entry['PaymentTerms']; ?></td>
+								<td><?php echo $order_entry['ProductName']; ?></td>
+								<td><?php echo $order_entry['OrderQuantity']; ?></td>
+								<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
+								<td><?php echo $order_entry['Username']; ?></td>
+								<td><input type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+								<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
+								</td>
+								<td><?php echo $order_entry['ProductionTime']; ?></td>
+								<td><input type = "checkbox" <?php if($order_entry['DispatchID'] !=null) echo "checked disabled"?> onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+								<?php if($order_entry['DispatchID'] !=null) echo "<a href = "."dispatch/view/".$order_entry['DispatchID'].">  DISP".$order_entry['DispatchID']."</a>";?>
+								</td>
+								<td><?php echo $order_entry['DispatchTime']; ?></td>
+							</tr>
+							<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div class="tab-pane" id="tab2" role="tabpanel" aria-expanded="false">
+						<div class="panel-body">
+						<table class="table table-hover nowrap" id="displayDispatchedTable" width="100%">
+							<thead class="thead-default">
+							<tr>
+								<th>Entry ID</th>
+								<th>Order ID</th>
+								<th>Date</th>				
+								<th>Customer Name</th>				
+								<th>Payment</th>
+								<th>Product Name</th>
+								<th>Order Qty</th>
+								<th>Rate</th>
+								<th>Ordered By</th>
+								<th>Production</th>
+								<th>Production Date</th>
+								<th>Dispatch</th>
+								<th>Dispatch Date</th>
+							</tr>
+							</thead>
+							<tfoot>
+							<tr>
+								<th>Entry ID</th>
+								<th>Order ID</th>
+								<th>Date</th>				
+								<th>Customer Name</th>				
+								<th>Payment</th>
+								<th>Product Name</th>
+								<th>Order Qty</th>
+								<th>Rate</th>
+								<th>Ordered By</th>
+								<th>Production</th>
+								<th>Production Date</th>
+								<th>Dispatch</th>
+								<th>Dispatch Date</th>
+							</tr>
+							</tfoot>
+							<tbody>
+							<?php foreach ($order_entries as $order_entry): ?>
+							<?php if($order_entry['DispatchID'] == null)
+								continue;
+							?>
+							<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
+								<td>ODE<?php echo $order_entry['OrderEntryId']; ?></td>
+								<td>OD<?php echo $order_entry['OrderId']; ?></td>
+								<td><?php echo $order_entry['OrderTime']; ?></td>
+								<td><?php echo $order_entry['CustomerName']; ?></td>
+								<td><?php echo $order_entry['PaymentTerms']; ?></td>
+								<td><?php echo $order_entry['ProductName']; ?></td>
+								<td><?php echo $order_entry['OrderQuantity']; ?></td>
+								<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
+								<td><?php echo $order_entry['Username']; ?></td>
+								<td><input type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+								<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
+								</td>
+								<td><?php echo $order_entry['ProductionTime']; ?></td>
+								<td><input type = "checkbox" <?php if($order_entry['DispatchID'] !=null) echo "checked disabled"?> onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+								<?php if($order_entry['DispatchID'] !=null) echo "<a href = "."dispatch/view/".$order_entry['DispatchID'].">  DISP".$order_entry['DispatchID']."</a>";?>
+								</td>
+								<td><?php echo $order_entry['DispatchTime']; ?></td>
+							</tr>
+							<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+</section>
+<!--
+<section class = "page-content">
+<div class="page-content-inner">
+    <section class="panel panel-with-borders">
+		<div class="panel-heading">
+            <h2>
+                Approved Sales Orders
+            </h2>
+        </div>
+	</section>
+
+    <section class="panel panel-with-borders">
+        <div class="panel-heading">
+            <h3>
 			    <div class="dropdown pull-right">
 
 					<button type="button" class="btn btn-primary"  onclick = "sendFor('production');">
 						Send for Production
 					</button>
 
-					<button type="button" class="btn btn-primary"  onclick = "changeSelectedOrderStatus('reject');">
+					<button type="button" class="btn btn-primary"  onclick = "sendFor('dispatch');">
 						Send for Dispatch
 					</button>
 				
                 </div>
-                Approved Sales Order
-            </h2>
+                Pending Dispatch
+            </h3>
         </div>
         <div class="panel-body">
-            <table class="table table-hover nowrap" id="displayRoutesTable" width="100%">
+            <table class="table table-hover nowrap" id="displayPendingDispatchTable" width="100%">
                 <thead class="thead-default">
                 <tr>
 					<th>Entry ID</th>
@@ -55,11 +234,14 @@
 					<th>Dispatch Date</th>
                 </tr>
                 </tfoot>
-                <tbody id = 'displayRoutesTableBody'>
+                <tbody>
 				<?php foreach ($order_entries as $order_entry): ?>
+				<?php if($order_entry['DispatchID'] !=null)
+					continue;
+				?>
 				<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
-					<td><?php echo $order_entry['OrderEntryId']; ?></td>
-					<td><?php echo $order_entry['OrderId']; ?></td>
+					<td>ODE<?php echo $order_entry['OrderEntryId']; ?></td>
+					<td>OD<?php echo $order_entry['OrderId']; ?></td>
                     <td><?php echo $order_entry['OrderTime']; ?></td>
                     <td><?php echo $order_entry['CustomerName']; ?></td>
                     <td><?php echo $order_entry['PaymentTerms']; ?></td>
@@ -72,19 +254,95 @@
 					</td>
 					<td><?php echo $order_entry['ProductionTime']; ?></td>
 					<td><input type = "checkbox" <?php if($order_entry['DispatchID'] !=null) echo "checked disabled"?> onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
-					<?php if($order_entry['DispatchID'] !=null) echo 'DISP'.$order_entry['DispatchID'];?>
+					<?php if($order_entry['DispatchID'] !=null) echo "<a href = "."dispatch/view/".$order_entry['DispatchID'].">  DISP".$order_entry['DispatchID']."</a>";?>
 					</td>
-					<td></td>
+					<td><?php echo $order_entry['DispatchTime']; ?></td>
 				</tr>
 				<?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </section>
-    <!-- End Ecommerce Products List -->
+    
+
+	
+	    <section class="panel panel-with-borders">
+        <div class="panel-heading">
+            <h3>
+                Dispatched
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover nowrap" id="displayDispatchedTable" width="100%">
+                <thead class="thead-default">
+                <tr>
+					<th>Entry ID</th>
+                    <th>Order ID</th>
+                    <th>Date</th>				
+					<th>Customer Name</th>				
+					<th>Payment</th>
+					<th>Product Name</th>
+					<th>Order Qty</th>
+					<th>Rate</th>
+					<th>Ordered By</th>
+					<th>Production</th>
+					<th>Production Date</th>
+					<th>Dispatch</th>
+					<th>Dispatch Date</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+					<th>Entry ID</th>
+                    <th>Order ID</th>
+                    <th>Date</th>				
+					<th>Customer Name</th>				
+					<th>Payment</th>
+					<th>Product Name</th>
+					<th>Order Qty</th>
+					<th>Rate</th>
+					<th>Ordered By</th>
+					<th>Production</th>
+					<th>Production Date</th>
+					<th>Dispatch</th>
+					<th>Dispatch Date</th>
+                </tr>
+                </tfoot>
+                <tbody>
+				<?php foreach ($order_entries as $order_entry): ?>
+				<?php if($order_entry['DispatchID'] == null)
+					continue;
+				?>
+				<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
+					<td>ODE<?php echo $order_entry['OrderEntryId']; ?></td>
+					<td>OD<?php echo $order_entry['OrderId']; ?></td>
+                    <td><?php echo $order_entry['OrderTime']; ?></td>
+                    <td><?php echo $order_entry['CustomerName']; ?></td>
+                    <td><?php echo $order_entry['PaymentTerms']; ?></td>
+					<td><?php echo $order_entry['ProductName']; ?></td>
+					<td><?php echo $order_entry['OrderQuantity']; ?></td>
+					<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
+					<td><?php echo $order_entry['Username']; ?></td>
+					<td><input type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+					<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
+					</td>
+					<td><?php echo $order_entry['ProductionTime']; ?></td>
+					<td><input type = "checkbox" <?php if($order_entry['DispatchID'] !=null) echo "checked disabled"?> onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+					<?php if($order_entry['DispatchID'] !=null) echo "<a href = "."dispatch/view/".$order_entry['DispatchID'].">  DISP".$order_entry['DispatchID']."</a>";?>
+					</td>
+					<td><?php echo $order_entry['DispatchTime']; ?></td>
+				</tr>
+				<?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
+	
+	
+	
 
 </div>
-</section>
+</section>-->
 <script>
 var entriesProduction = new Array();
 function addForProduction(checkbox, id){
@@ -105,7 +363,16 @@ function addForDispatch(checkbox, id){
 }
 
 function sendFor(status){
-	if(entriesProduction.length == 0){
+	var entries = null;
+	if(status == 'production'){
+		entries = entriesProduction;
+	} else if (status == 'dispatch'){
+		entries = entriesDispatch;
+	} else {
+		return;
+	}
+	
+	if(entries.length == 0){
 		document.getElementById('error').style.display = "block";
 		document.getElementById('notification').innerHTML = "Please select at least 1 entry for " + status;
 		document.getElementById('buttonClose').onclick = function (){
@@ -113,25 +380,26 @@ function sendFor(status){
 		}
 		return;
 	}
+	
 	document.getElementById('reviewOrderEntryModal').style.display = "block";
-	document.getElementById('textConfirmReview').innerHTML = "Are you sure you want to " + status + " the selected Sales Order Entries ?";
+	document.getElementById('textConfirmReview').innerHTML = "Are you sure you want to send the selected Sales Order Entries for " + status +" ?";
 	var parameters = "";
-	if(status == 'production'){
-		for(var i = 0; i < entriesProduction.length; i++){
-			parameters+="entryId[]="+entriesProduction[i];
-			if(i != entriesProduction.length -1){
-				parameters+="&";
-			}
+	
+	for(var i = 0; i < entries.length; i++){
+		parameters+="entryId[]="+entries[i];
+		if(i != entries.length -1){
+			parameters+="&";
 		}
 	}
 	document.getElementById('buttonConfirmReview').onclick = function (){
-		window.location = status+"/estimate?"+parameters;
+		window.location = status + '/estimate?' + parameters;
 	}
 }
 
 function closeOrderReviewModal(){
 	document.getElementById('reviewOrderEntryModal').style.display = 'none';
 }
+
 </script>
 			
 <div id="reviewOrderEntryModal" class="modal-outer-body">
@@ -178,55 +446,20 @@ function closeOrderReviewModal(){
 
 </div>
 
-
-<script>
-	function showDeleteRouteDialog(id) {
-		document.getElementById('deleteRouteModal').style.display = "block";
-		document.getElementById('buttonConfirmDelete').onclick = function (){
-				var request = new XMLHttpRequest();
-				NProgress.start();
-				request.onreadystatechange = function(){
-					NProgress.inc();
-					if(request.readyState == 4){
-						var response = request.response;
-						if(request.status == 200){
-							if(response.trim() == "success"){
-								window.location = "landing_route"; //refresh
-							} else {
-								//show error dialog box
-									document.getElementById('errorWhileDeletingModal').style.display = "block";
-									document.getElementById('buttonCloseErrorWhileDeletingModal').onclick = function (){
-									window.location = "landing_route"; //refresh
-								}
-							}
-						} else {
-							window.location = "landing_route";
-						}
-						NProgress.done();
-					}
-				};
-				
-				request.open ("DELETE", "landing_route/delete/"+id, true);
-				request.send();
-		}
-	}
-
-	function closeDeleteRouteModal(){
-		document.getElementById('deleteRouteModal').style.display = 'none';
-	}
-	
-	// Get the modal
-	var modal = document.getElementById('deleteRouteModal');
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-</script>
 <script>
     $(function () {
-		$('#displayRoutesTable').DataTable();
+		$('#displayDispatchedTable').DataTable({
+			"pageLength": 10,
+			"order": [
+                      [2, 'desc'],[0, 'desc']      
+		]});
+    });
+	
+	$(function () {
+		$('#displayPendingDispatchTable').DataTable({
+			"pageLength": 10,
+			"order": [
+                    //  [2, 'desc'],[0, 'desc']      
+		]});
     });
 </script>

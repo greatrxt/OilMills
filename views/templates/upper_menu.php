@@ -69,7 +69,7 @@
                         </a>
                     </li>
 					<li>
-                        <a class="left-menu-link" href="landing-credit-note.html">
+                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/dispatch">
                             Dispatch Summary
                         </a>
                     </li>
