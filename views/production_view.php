@@ -46,7 +46,7 @@
 				foreach ($productions as $production): ?>
 				<tr>
 				    <td><?php echo $i; ?></td>
-					<td><?php echo $production['OrderId']; ?></td>
+					<td>OD<?php echo $production['OrderId']; ?></td>
 					<td><?php echo $production['OrderEntryId']; ?></td>
                     <td><?php echo $production['Name']; ?></td>
                     <td><?php echo $production['Quantity']; ?></td>
@@ -62,3 +62,13 @@
 
 </div>
 </section>
+<script>
+    $(function () {
+		$('#displayProductionsTable').DataTable({
+			"pageLength": 10,
+			"order": [
+                      /*[2, 'desc'],*/[1, 'desc']      
+		]});
+    });
+
+</script>

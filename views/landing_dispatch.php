@@ -50,3 +50,13 @@
 
 </div>
 </section>
+<script>
+    $(function () {
+		$('#displayDispatchsTable').DataTable({
+			"pageLength": 10,
+			"order": [
+                      /*[2, 'desc'],*/[1, 'desc']      
+		]});
+    });
+
+</script>

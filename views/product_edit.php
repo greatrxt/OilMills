@@ -87,7 +87,7 @@
 							src = "<?php 
 							
 							$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
-							$imageUrlJpg = $product['ProductImage'];
+							$imageUrlJpg = base_url().$product['ProductImage'];
 							//$imageUrlPng = base_url()."/uploads/product/".$product['ProductId'].".png";
 							/*
 							$ch = curl_init();

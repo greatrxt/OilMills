@@ -1,58 +1,3 @@
-    <!--<section class = "page-content">
-<div class="page-content-inner">
-
-
-    <section class="panel panel-with-borders">
-        <div class="panel-heading">
-            <h2>
-                <div class="dropdown pull-right">
-				<a href="#">
-					<button type="button" class="btn btn-primary" onclick = "showConfirmDispatchDialog()">
-                        Confirm Dispatch
-                    </button>
-				</a>
-				<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order">
-					<button type="button" class="btn btn-primary">
-                        Cancel
-                    </button>
-				</a>
-                </div>
-                Dispatch Estimate
-            </h2>
-        </div>
-        <div class="panel-body">
-            <table class="table table-hover nowrap" id="displayDispatchsTable" width="100%">
-                <thead class="thead-default">
-                <tr>
-                    <th>Entry ID</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                    <th>Entry ID</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                </tr>
-                </tfoot>
-                <tbody id = 'displayDispatchsTableBody'>
-				<?php
-				foreach ($dispatchs as $dispatch): ?>
-				<tr>
-				    <td><?php echo $dispatch['OrderEntryId']; ?></td>
-                    <td><?php echo $dispatch['Name']; ?></td>
-                    <td><input type="text" class="form-control width-50" value="<?php echo $dispatch['OrderQuantity']; ?>" /></td>
-				</tr>
-				<?php 
-				endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    </section>
-</div>
-</section>-->
-
 					
 <script>
 
@@ -177,12 +122,12 @@ function addToCustomRoute(customerId, defaultRoute, element){
 									
 									<td>									
 										<input type="number" class="form-control width-100 customer_<?php echo $dispatch['CustomerId']; ?> customer_<?php echo $dispatch['CustomerId']?>_product_<?php echo $dispatch['ProductId']; ?>"
-										oninput = "limitWithin(this, 1, <?php echo $dispatch['OrderQuantity']; ?>);	
+										oninput = "limitWithin(this, 1, <?php if($dispatch['Balance']!=null) echo $dispatch['Balance']; else echo $dispatch['OrderQuantity']; ?>);	
 													calculateDispatch('customer_<?php echo $dispatch['CustomerId']; ?>');
 													calculateDispatch('customer_<?php echo $dispatch['CustomerId']?>_product_<?php echo $dispatch['ProductId']; ?>');
-													addToCustomDispatch('<?php echo $dispatch['OrderEntryId']?>', '<?php echo $dispatch['OrderQuantity']; ?>', this);"
-											value="<?php echo $dispatch['OrderQuantity']; ?>" 
-											min="1" max="<?php echo $dispatch['OrderQuantity']; ?>"/>									
+													addToCustomDispatch('<?php echo $dispatch['OrderEntryId']?>', '<?php echo $dispatch['Balance']; ?>', this);"
+											value="<?php if($dispatch['Balance']!=null) echo $dispatch['Balance']; else echo $dispatch['OrderQuantity']; ?>" 
+											min="1" max="<?php if($dispatch['Balance']!=null) echo $dispatch['Balance']; else echo $dispatch['OrderQuantity']; ?>"/>									
 									</td>
 									
 									<td><?php echo $dispatch['SellingPriceAtOrderTime']; ?></td>
@@ -285,7 +230,7 @@ function addToCustomRoute(customerId, defaultRoute, element){
 									<td><?php echo $dispatch['CustomerName']; ?></td>
 									<td><?php echo $dispatch['Name']; ?></td>
 									<td><?php echo $dispatch['OrderQuantity']; ?></td>
-									<td><span id = "customer_<?php echo $dispatch['CustomerId']?>_product_<?php echo $dispatch['ProductId']; ?>"><?php echo $dispatch['OrderQuantity']; ?></span></td>
+									<td><span id = "customer_<?php echo $dispatch['CustomerId']?>_product_<?php echo $dispatch['ProductId']; ?>"><?php if($dispatch['Balance']!=null) echo $dispatch['Balance']; else echo $dispatch['OrderQuantity']; ?></span></td>
 									<td><?php echo $dispatch['RouteName']; ?></td>
 									<td><span class = 'route_<?php echo $dispatch['CustomerId']?>'><?php echo $dispatch['RouteName']; ?></td>									
 								</tr>
@@ -361,9 +306,7 @@ function addToCustomRoute(customerId, defaultRoute, element){
 			request.onreadystatechange = function(){
 			NProgress.inc();
 			if(request.readyState == 4 && request.status == 200){
-					var response = JSON.parse(request.response);
-					alert(response);
-					NProgress.done();
+					window.location = request.response;
 				}
 			}
 

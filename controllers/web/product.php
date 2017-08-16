@@ -1,36 +1,59 @@
 <?php
 class Product extends Admin_controller {
 
-        public function __construct()
-        {
-                parent::__construct();
-                $this->load->model('product_model');
-                $this->load->helper('url_helper');
-				$this->load->helper('date');
-				$this->load->helper('form');
-				$this->load->library('form_validation');
-        }
+public function __construct()
+{
+	parent::__construct();
+	$this->load->model('product_model');
+	$this->load->helper('url_helper');
+	$this->load->helper('date');
+	$this->load->helper('form');
+	$this->load->library('form_validation');
+}
 
 public function view($id = NULL)
 {
-		if($id == NULL){
-			redirect('ParmarOilMills/web/landing_product', 'refresh');
-			return;
-		}
-		
-		$this->load->helper('form');
-		$this->load->library('form_validation');
-        $data['product'] = $this->product_model->get_product_with_id($id);
+	if($id == NULL){
+		redirect('ParmarOilMills/web/landing_product', 'refresh');
+		return;
+	}
+	
+	$this->load->helper('form');
+	$this->load->library('form_validation');
+	$data['product'] = $this->product_model->get_product_with_id($id);
 
-        if (empty($data['product']))
-        {
-                show_404();
-        }
-		//print_r($data);
-		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
-		$this->load->view('parmaroilmills/product_edit', $data);
-		$this->load->view('parmaroilmills/templates/footer');	
+	if (empty($data['product']))
+	{
+			show_404();
+	}
+	//print_r($data);
+	$this->load->view('parmaroilmills/templates/header');
+	$this->load->view('parmaroilmills/templates/upper_menu');
+	$this->load->view('parmaroilmills/product_edit', $data);
+	$this->load->view('parmaroilmills/templates/footer');	
+}
+
+
+public function live()
+{       
+	$data['title'] = 'Parmar Oil Mills';
+	$data['products'] = $this->product_model->get_all_products();
+
+	if (empty($data['products']))
+	{
+			show_404();
+	}
+
+	$this->load->view('parmaroilmills/templates/header', $data);
+	$this->load->view('parmaroilmills/templates/upper_menu', $data);
+	$this->load->view('parmaroilmills/product_live_rates', $data);
+	$this->load->view('parmaroilmills/templates/footer');
+}
+
+public function update_rates()
+{       
+	$this->product_model->update_rates($this->input->post());
+	redirect('ParmarOilMills/web/product/live', 'refresh');
 }
 
 public function edit($id = NULL)
@@ -53,7 +76,7 @@ public function edit($id = NULL)
 	if(!empty($_FILES['productImage']['name'])){
 		$file_name_array = explode(".", $_FILES['productImage']['name']);
 		$file_type = $file_name_array[1];
-		$file_location = base_url()."uploads/product/".$current_time.".".$file_type;
+		$file_location = "/uploads/product/".$current_time.".".$file_type;
 		
 		$data['ProductImage'] = $file_location;
 	}

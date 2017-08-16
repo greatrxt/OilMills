@@ -133,8 +133,8 @@ class Order_model extends CI_Model {
 	/**
 	Get all APPROVED order entries
 	*/
-	public function get_all_approved_order_entries(){
-			$result = $this->db->query('SELECT
+	public function get_all_approved_and_dispatched_order_entries(){
+			/*$query = $this->db->query('SELECT
 										OrderEntryId,
 										OrderEntries.OrderId,
 										ApplicationUser.Username,
@@ -145,8 +145,6 @@ class Order_model extends CI_Model {
 										SellingPriceAtOrderTime,
 										OrderQuantity,
 										ProductionTime,
-										Dispatch.DispatchID,
-										Dispatch.DispatchTime,
 										OrderTime,
 										OrderEntries.Status,
 										OrderEntries.ProductionId
@@ -176,17 +174,138 @@ class Order_model extends CI_Model {
 										ApplicationUser
 										ON
 										SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
-										LEFT JOIN
-										Dispatch
-										ON
-										OrderEntries.DispatchID = Dispatch.DispatchId
 										WHERE
 										OrderEntries.Status = "APPROVED" ||
 										OrderEntries.Status = "PARTIALLY_DISPATCHED"
 										ORDER BY
-										OrderEntries.OrderId');
+										OrderEntries.OrderId');*/
 			
-			return $result->result_array();		
+			$query = $this->db->query('SELECT
+						OrderEntries.OrderEntryId,
+						OrderEntries.OrderId,
+						ApplicationUser.Username,
+						SalesOrder.PaymentTerms,
+						Product.Name AS ProductName,
+						Customer.Name AS CustomerName,
+						Broker.Name AS BrokerName,
+						SellingPriceAtOrderTime,
+						OrderQuantity,
+						OrderEntries.ProductionId,
+						ProductionTime,
+						Dispatch.DispatchID,
+						Dispatch.DispatchTime,
+						OrderEntries_Dispatch.DispatchQuantity,
+						OrderTime,
+						OrderEntries.Status
+						FROM
+						OrderEntries
+						LEFT JOIN
+						Production
+						ON
+						Production.ProductionId = OrderEntries.ProductionId
+						LEFT JOIN
+						SalesOrder
+						ON
+						OrderEntries.OrderId = SalesOrder.OrderId
+						LEFT JOIN
+						Customer
+						ON
+						SalesOrder.CustomerId = Customer.CustomerId
+						LEFT JOIN
+						Product
+						ON
+						OrderEntries.OrderedProductId = Product.ProductId
+						LEFT JOIN
+						Broker
+						ON
+						SalesOrder.LinkedBrokerId = Broker.BrokerId
+						LEFT JOIN
+						ApplicationUser
+						ON
+						SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
+						LEFT JOIN
+						OrderEntries_Dispatch
+						ON
+						OrderEntries.OrderEntryId = OrderEntries_Dispatch.OrderEntryId
+						LEFT JOIN
+						Dispatch
+						ON
+						OrderEntries_Dispatch.DispatchID = Dispatch.DispatchId
+						WHERE
+						OrderEntries.Status = "DISPATCHED" ||
+						OrderEntries.Status = "PARTIALLY_DISPATCHED"
+						ORDER BY
+						OrderEntries.OrderEntryId');
+			
+			return $query->result_array();		
+	}
+	
+	
+	/**
+	Get all APPROVED order entries
+	*/
+	public function get_all_approved_partially_dispatched_order_entries_with_balance(){
+
+			$query = $this->db->query('SELECT
+						OrderEntries.OrderEntryId,
+						OrderEntries.OrderId,
+						ApplicationUser.Username,
+						SalesOrder.PaymentTerms,
+						Product.Name AS ProductName,
+						Customer.Name AS CustomerName,
+						Broker.Name AS BrokerName,
+						SellingPriceAtOrderTime,
+						OrderQuantity,
+						OrderEntries.ProductionId,
+						ProductionTime,
+						Dispatch.DispatchID,
+						Dispatch.DispatchTime,
+						OrderEntries_Dispatch.DispatchQuantity,
+						OrderTime,
+						OrderEntries.Status,
+						(OrderEntries.OrderQuantity - SUM(OrderEntries_Dispatch.DispatchQuantity)) AS Balance
+						FROM
+						OrderEntries
+						LEFT JOIN
+						Production
+						ON
+						Production.ProductionId = OrderEntries.ProductionId
+						LEFT JOIN
+						SalesOrder
+						ON
+						OrderEntries.OrderId = SalesOrder.OrderId
+						LEFT JOIN
+						Customer
+						ON
+						SalesOrder.CustomerId = Customer.CustomerId
+						LEFT JOIN
+						Product
+						ON
+						OrderEntries.OrderedProductId = Product.ProductId
+						LEFT JOIN
+						Broker
+						ON
+						SalesOrder.LinkedBrokerId = Broker.BrokerId
+						LEFT JOIN
+						ApplicationUser
+						ON
+						SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
+						LEFT JOIN
+						OrderEntries_Dispatch
+						ON
+						OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+						LEFT JOIN
+						Dispatch
+						ON
+						OrderEntries_Dispatch.DispatchID = Dispatch.DispatchId
+						WHERE
+						OrderEntries.Status = "APPROVED" ||
+						OrderEntries.Status = "PARTIALLY_DISPATCHED"
+						GROUP BY OrderEntries.OrderEntryId
+						ORDER BY
+						OrderEntries.OrderEntryId');
+			
+			return $query->result_array();		
 	}
 	
 	public function get_all_orders_and_order_entries_pending_approval(){

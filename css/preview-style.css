@@ -13,7 +13,7 @@ textarea:focus {outline: none !important;border:0px solid red;box-shadow: 0 0 0p
 table { border-collapse: collapse;}
 table td, table th { border: 1px solid; padding: 4px; }
 
-#header { height: 15px; width: 100%; margin: 20px 0;/* background: #222;*/ text-align: center; color: #999; font: bold 15px Arial, Helvetica, sans-serif; text-decoration: uppercase; letter-spacing: 20px; padding: 8px 0px; }
+#header { height: 25px; width: 100%; margin: 20px 0;/* background: #222;*/ text-align: center; color: #999; font: bold 15px Arial, Helvetica, sans-serif; text-decoration: uppercase; letter-spacing: 20px; padding: 8px 0px; }
 
 #address { width: 250px; height: 150px; float: left; }
 #additionalInfo { width: 100%; }

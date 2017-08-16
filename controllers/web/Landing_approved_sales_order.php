@@ -23,7 +23,8 @@ class Landing_approved_sales_order extends Operations_controller {
 		
 		public function index()
 		{
-			$data['order_entries'] = $this->order_model->get_all_approved_order_entries();
+			$data['dispatched_order_entries'] = $this->order_model->get_all_approved_and_dispatched_order_entries();
+			$data['pending_dispatch_order_entries'] = $this->order_model->get_all_approved_partially_dispatched_order_entries_with_balance();
 			
 			$this->load->view('parmaroilmills/templates/header');
 			$this->load->view('parmaroilmills/templates/upper_menu');

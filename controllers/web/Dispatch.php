@@ -24,12 +24,25 @@ class Dispatch extends Operations_controller {
 			return;
 		}
 		
-		$data['title'] = 'DISP'.$id;
+		$data['id'] = $id;
 		$data['dispatchs'] = $this->dispatch_model->get_dispatch($id);
+		$data['routes'] = $this->dispatch_model->get_routes_for_dispatch($id);
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/templates/upper_menu');
 		$this->load->view('parmaroilmills/dispatch_view', $data);
 		$this->load->view('parmaroilmills/templates/footer');
+	}
+
+	public function view_print($id){
+		if($id == null){
+			redirect('ParmarOilMills/web/dispatch', 'refresh');
+			return;
+		}
+		
+		$data['id'] = $id;
+		$data['dispatchs'] = $this->dispatch_model->get_dispatch($id);
+		$data['routes'] = $this->dispatch_model->get_routes_for_dispatch($id); 
+		$this->load->view('parmaroilmills/dispatch_print', $data);
 	}
 	
 	public function estimate()
@@ -53,9 +66,10 @@ class Dispatch extends Operations_controller {
 	{
 		$entryIds = $_GET["entryId"];
 		$dispatch_changes = json_decode($this->input->raw_input_stream, true);
-
-		print_r($this->dispatch_model->confirm_dispatch($entryIds, $dispatch_changes));
-	//	redirect('ParmarOilMills/web/dispatch', 'refresh');		
+		
+		$dispatchId = $this->dispatch_model->confirm_dispatch($entryIds, $dispatch_changes);
+		echo base_url().'index.php/ParmarOilMills/web/dispatch/view/'.$dispatchId;
+		//redirect('ParmarOilMills/web/dispatch', 'refresh');		
 	}
 }
 ?>

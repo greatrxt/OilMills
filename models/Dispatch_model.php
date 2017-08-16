@@ -5,6 +5,17 @@ class Dispatch_model extends CI_Model {
 	{
 		$this->load->database();
 	}
+	public function get_routes_for_dispatch($id){
+		$query_string = 'SELECT DISTINCT(Route.RouteId) AS RouteID, Route.RouteName
+							FROM OrderEntries 
+							LEFT JOIN SalesOrder ON OrderEntries.OrderId = SalesOrder.OrderId
+							LEFT JOIN OrderEntries_Dispatch ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+							LEFT JOIN Customer ON SalesOrder.CustomerId = Customer.CustomerId
+							LEFT JOIN Route ON Customer.Route = Route.RouteId
+							WHERE OrderEntries_Dispatch.DispatchID = '.$id;
+		$result = $this->db->query($query_string);
+		return $result->result_array();	
+	}
 	
 	public function get_dispatch($id){
 		$query_string = 'SELECT Product.Name as ProductName, SUM(OrderEntries.OrderQuantity) as OrderQuantity, Customer.Name as CustomerName, Route.RouteName, Route.RouteId
@@ -13,7 +24,8 @@ class Dispatch_model extends CI_Model {
 									LEFT JOIN SalesOrder ON OrderEntries.OrderId = SalesOrder.OrderId
 									LEFT JOIN Customer ON SalesOrder.CustomerId = Customer.CustomerId
 									LEFT JOIN Route ON Customer.Route = Route.RouteId
-									WHERE OrderEntries.DispatchID = '.$id.'
+									LEFT JOIN OrderEntries_Dispatch ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+									WHERE OrderEntries_Dispatch.DispatchID = '.$id.'
 									GROUP BY CustomerName, ProductName
 									ORDER BY RouteId';
 		$result = $this->db->query($query_string);
@@ -42,7 +54,8 @@ class Dispatch_model extends CI_Model {
 						Product.Name,
 						SUM(OrderQuantity) as OrderQuantity,
 						RouteName,
-						RouteId
+						Route.RouteId,
+						(OrderEntries.OrderQuantity - SUM(OrderEntries_Dispatch.DispatchQuantity)) AS Balance
 						FROM
 						OrderEntries
 						LEFT JOIN
@@ -65,13 +78,22 @@ class Dispatch_model extends CI_Model {
 						Product
 						ON
 						OrderEntries.OrderedProductId = Product.ProductId
+						LEFT JOIN
+						OrderEntries_Dispatch
+						ON
+						OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+						LEFT JOIN
+						Dispatch
+						ON
+						OrderEntries_Dispatch.DispatchID = Dispatch.DispatchId
 						WHERE
 						(OrderEntries.Status = "APPROVED" ||
 						OrderEntries.Status = "PARTIALLY_DISPATCHED") &&
 						OrderEntries.OrderEntryId IN ('.$parameters.')
 						GROUP BY
 						Customer.CustomerId,
-						Product.ProductId';
+						Product.ProductId,
+						OrderEntries.OrderEntryId';
 		
 		$result = $this->db->query($query_string);
 		return $result->result_array();	
@@ -149,7 +171,7 @@ class Dispatch_model extends CI_Model {
 				//					LEFT JOIN Product ON OrderEntries.OrderedProductId = Product.ProductId
 					//				WHERE OrderEntries.OrderEntryId IN ('.$parameters.')';
 		$query_string = 'SELECT
-						OrderEntryId,
+						OrderEntries.OrderEntryId,
 						OrderEntries.OrderId,
 						ApplicationUser.Username,
 						SalesOrder.PaymentTerms,
@@ -163,7 +185,8 @@ class Dispatch_model extends CI_Model {
 						ProductionTime,
 						OrderTime,
 						OrderEntries.Status,
-						OrderEntries.ProductionId
+						OrderEntries.ProductionId,
+						(OrderEntries.OrderQuantity - SUM(OrderEntries_Dispatch.DispatchQuantity)) AS Balance
 						FROM
 						OrderEntries
 						LEFT JOIN
@@ -190,10 +213,19 @@ class Dispatch_model extends CI_Model {
 						ApplicationUser
 						ON
 						SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
+						LEFT JOIN
+						OrderEntries_Dispatch
+						ON
+						OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+						LEFT JOIN
+						Dispatch
+						ON
+						OrderEntries_Dispatch.DispatchID = Dispatch.DispatchId
 						WHERE
 						(OrderEntries.Status = "APPROVED" ||
 						OrderEntries.Status = "PARTIALLY_DISPATCHED") &&
 						OrderEntries.OrderEntryId IN ('.$parameters.')
+						GROUP BY OrderEntries.OrderEntryId
 						ORDER BY
 						OrderEntries.OrderId';
 		$result = $this->db->query($query_string);
@@ -202,11 +234,18 @@ class Dispatch_model extends CI_Model {
 	}		
 
 	public function get_all_dispatch(){
-		$result = $this->db->query('SELECT Dispatch.DispatchId, SUM(OrderEntries.OrderQuantity) as Quantity, DispatchTime, count(distinct OrderEntries.OrderedProductId) as ProductCount
+
+		/*$result = $this->db->query('SELECT Dispatch.DispatchId, SUM(OrderEntries.OrderQuantity) as Quantity, DispatchTime, count(distinct OrderEntries.OrderedProductId) as ProductCount
 									FROM Dispatch 
 									LEFT JOIN OrderEntries ON OrderEntries.DispatchId = Dispatch.DispatchId
-									GROUP BY DispatchId');
-		return $result->result_array();	
+									GROUP BY DispatchId');*/
+									
+		$query = $this->db->query('SELECT Dispatch.DispatchId, count(distinct OrderEntries.OrderedProductId) as ProductCount, SUM(OrderEntries.OrderQuantity) as Quantity,  DispatchTime
+									FROM Dispatch 
+									LEFT JOIN OrderEntries_Dispatch ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
+									LEFT JOIN OrderEntries ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+									GROUP BY Dispatch.DispatchId');
+		return $query->result_array();	
 	}
 	
 	public function confirm_dispatch($orderEntryIds, $customDispatch){
@@ -232,33 +271,32 @@ class Dispatch_model extends CI_Model {
 										ON SalesOrder.CustomerId = Customer.CustomerId
 										LEFT JOIN Route
 										ON Customer.Route = Route.RouteId
-										WHERE Status!= "PENDING_APPROVAL"
+										WHERE (OrderEntries.Status = "APPROVED" ||
+										OrderEntries.Status = "PARTIALLY_DISPATCHED")
 										&& OrderEntries.OrderEntryId = '.$orderEntryId);
 			
 			
 			if($query->num_rows() > 0) {
+				$orderEntry = $query->result_array()[0];
 				if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) > 0){
-					$orderEntry = $query->result_array()[0];
 					
-					$dispatchQuantity = $orderEntry['OrderQuantity'];
-					$routeId = $orderEntry['RouteId'];
+					$dispatchQuantity = $orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity'];
+					$routeId = $orderEntry['Route'];
 					$customer_id = $orderEntry['CustomerId'];
 					
 					$customDispatchQuantity = $customDispatch['customDispatchQuantity'];
 					$customRoute = $customDispatch['customRoute'];
 					
 					if(isset($customDispatchQuantity[$orderEntryId])){
-						$dispatchQuantity = $customDispatchQuantity[$orderEntryId];
+						$dispatchQuantity = $customDispatchQuantity[$orderEntryId];						
+					}
 					
-						$this->db->where('OrderEntryId', $orderEntryId);
-						$this->db->where('Status!=', 'PENDING_APPROVAL');
-						
-						if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) > $dispatchQuantity){
-							$this->db->update('OrderEntries', array('Status' => 'PARTIALLY_DISPATCHED'));
-						} else if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) == $dispatchQuantity){
-							$this->db->update('OrderEntries', array('Status' => 'DISPATCHED'));
-						}
-						
+					$this->db->where('OrderEntryId', $orderEntryId);
+					
+					if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) > $dispatchQuantity){
+						$this->db->update('OrderEntries', array('Status' => 'PARTIALLY_DISPATCHED'));
+					} else if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) == $dispatchQuantity){
+						$this->db->update('OrderEntries', array('Status' => 'DISPATCHED'));
 					}
 					
 					if(isset($customRoute[$customer_id])){
@@ -291,9 +329,10 @@ class Dispatch_model extends CI_Model {
 		
 		if($count > 0){
 			$this->db->trans_commit();
+			return $dispatch_id;
 		} else {
 			$this->db->trans_rollback();
 		}
-		return $this->db->last_query();
+		return null;
 	}
 }
