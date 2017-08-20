@@ -14,47 +14,50 @@
 					<button type="button" class="btn btn-primary"  onclick = "changeSelectedOrderStatus('reject');">
 						Reject
 					</button>
-				
+					<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order">
+					<button type="button" class="btn btn-primary">
+                        View Approved Sales Orders
+                    </button>
+					</a>
                 </div>
                 Sales Order Approval
             </h2>
         </div>
         <div class="panel-body">
-            <table class="table table-hover nowrap" id="displayRoutesTable" width="100%">
+            <table class="table table-hover nowrap" id="displayTable" width="100%">
                 <thead class="thead-default">
                 <tr>
-					<th>Entry ID</th>
                     <th>Order ID</th>
                     <th>Date</th>				
-					<th>Customer Name</th>				
-                    <th>Broker Name</th>
+					<th>Customer</th>				
+                    <th>Broker</th>
 					<th>Payment</th>
 					<th>Product</th>
 					<th>Quantity</th>
-					<th>Rate</th>
-					<th>Order By User</th>
-					<th>Action</th>
+					<th>Ordered at Rate</th>
+					<th>Approved Rate</th>
+					<th>Ordered By</th>
+					<th><input type = "checkbox" style = "margin-right:5px" onchange = "toggleApprovalSelection(this)">Action</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-					<th>Entry ID</th>
                     <th>Order ID</th>
                     <th>Date</th>				
-					<th>Customer Name</th>				
-                    <th>Broker Name</th>
+					<th>Customer</th>				
+                    <th>Broker</th>
 					<th>Payment</th>
 					<th>Product</th>
 					<th>Quantity</th>
-					<th>Rate</th>
-					<th>Order By User</th>
+					<th>Ordered at Rate</th>
+					<th>Approved Rate</th>
+					<th>Ordered By</th>
 					<th>Action</th>
                 </tr>
                 </tfoot>
-                <tbody id = 'displayRoutesTableBody'>
+                <tbody>
 				<?php foreach ($order_entries as $order_entry): ?>
 				<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
-					<td>ODE<?php echo $order_entry['OrderEntryId']; ?></td>
 					<td>OD<?php echo $order_entry['OrderId']; ?></td>
                     <td><?php echo $order_entry['OrderTime']; ?></td>
                     <td><?php echo $order_entry['CustomerName']; ?></td>
@@ -63,8 +66,9 @@
 					<td><?php echo $order_entry['ProductName']; ?></td>
 					<td><?php echo $order_entry['OrderQuantity']; ?></td>
 					<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
+					<td><input type="number" step = "0.01" oninput = "addToCustomApprovalQuantity(<?php echo $order_entry['OrderEntryId']; ?>, <?php echo $order_entry['SellingPriceAtOrderTime']; ?>, this)" class="form-control width-100" value = "<?php echo $order_entry['SellingPriceAtOrderTime']; ?>"/></td>
 					<td><?php echo $order_entry['Username']; ?></td>
-					<td><input type = "checkbox" onchange = "addForReview(this, <?php echo $order_entry['OrderEntryId']; ?>)"></td>
+					<td><input class = "approvalItem" type = "checkbox" onchange = "addForReview(this, <?php echo $order_entry['OrderEntryId']; ?>)"></td>
 				</tr>
 				<?php endforeach; ?>
                 </tbody>
@@ -76,6 +80,16 @@
 </div>
 </section>
 <script>
+
+function toggleApprovalSelection(element){
+	var approvalCheckboxes =  document.getElementsByClassName('approvalItem');
+	for(var c = 0; c < approvalCheckboxes.length; c++){
+		if(!approvalCheckboxes[c].disabled){
+			approvalCheckboxes[c].checked = element.checked;
+			approvalCheckboxes[c].onchange();
+		}
+	}
+}
 var entriesToReview = new Array();
 var payload = new Object();
 function addForReview(checkbox, id){
@@ -85,6 +99,17 @@ function addForReview(checkbox, id){
 		entriesToReview.splice(entriesToReview.indexOf(id), 1);
 	}
 	payload.entries = entriesToReview;
+}
+
+var customRate = new Object();
+payload.customRate = customRate;
+
+function addToCustomApprovalQuantity(orderEntryId, orderRate, element){
+	if(element.value!=orderRate){
+		customRate[orderEntryId] = element.value;
+	} else {
+		delete customRate[orderEntryId];
+	}
 }
 
 function changeSelectedOrderStatus(status){
@@ -216,7 +241,7 @@ function closeOrderReviewModal(){
 </script>
 <script>
     $(function () {
-		$('#displayRoutesTable').DataTable({
+		$('#displayTable').DataTable({
 			"pageLength": 50,
 			"order": [
                       [2, 'desc'],[0, 'desc']      

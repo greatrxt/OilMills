@@ -77,9 +77,7 @@
 							
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" name="emailAddress" type="text" name="validation[email]"
-																					   data-validation="[L>=2]"
-																					   data-validation-message="email address must contain atleast 3 characters">
+                                <input class="form-control" name="emailAddress" type="text">
                             </div>
 							
 							<div class="form-group">

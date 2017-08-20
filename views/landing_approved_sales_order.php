@@ -44,11 +44,11 @@
 								<th>Order Qty</th>
 								<th>Rate</th>
 								<th>Ordered By</th>
-								<th>Production</th>
+								<th><input type = "checkbox" style = "margin-right:5px" onchange = "toggleProductionSelection(this)">Production</th>
 								<th>Production Date</th>
 								<th>Status</th>
 								<th>Balance</th>
-								<th>Dispatch</th>
+								<th><input type = "checkbox" style = "margin-right:5px" onchange = "toggleDispatchSelection(this)">Dispatch</th>
 							</tr>
 							</thead>
 							<tfoot>
@@ -88,13 +88,13 @@
 								<td><?php echo $order_entry['OrderQuantity']; ?></td>
 								<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
 								<td><?php echo $order_entry['Username']; ?></td>
-								<td><input type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+								<td><input class = "productionItem" type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
 								<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
 								</td>
 								<td><?php echo $order_entry['ProductionTime']; ?></td>
-								<td><?php echo $order_entry['Status']; ?></td>
+								<td><?php echo ucwords(strtolower(str_replace("_", " ", $order_entry['Status']))); ?></td>
 								<td><?php echo $order_entry['Balance']; ?></td>
-								<td><input type = "checkbox" onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)">
+								<td><input class = "dispatchItem" type = "checkbox" onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)">
 								</td>
 							</tr>
 							<?php endforeach; ?>
@@ -183,6 +183,26 @@
 </section>
 
 <script>
+
+function toggleProductionSelection(element){
+	var productionCheckboxes =  document.getElementsByClassName('productionItem');
+	for(var c = 0; c < productionCheckboxes.length; c++){
+		if(!productionCheckboxes[c].disabled){
+			productionCheckboxes[c].checked = element.checked;
+			productionCheckboxes[c].onchange();
+		}
+	}
+}
+
+function toggleDispatchSelection(element){
+	var dispatchCheckboxes =  document.getElementsByClassName('dispatchItem');
+	for(var c = 0; c < dispatchCheckboxes.length; c++){
+		if(!dispatchCheckboxes[c].disabled){
+			dispatchCheckboxes[c].checked = element.checked;
+			dispatchCheckboxes[c].onchange();
+		}
+	}
+}
 var entriesProduction = new Array();
 function addForProduction(checkbox, id){
 	if(checkbox.checked){

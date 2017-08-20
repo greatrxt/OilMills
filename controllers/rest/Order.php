@@ -19,6 +19,10 @@ class Order extends REST_Controller
 		$this->response($this->order_model->get_orders_for_customer($id), 200);
 	}
 	
+	public function user_get($id){
+		$this->response($this->order_model->get_orders_for_user($id), 200);
+	}
+	
 	public function entries_get($id){
 		if($id == null){
 			$this->response($this->order_model->get_all_orders_and_order_entries(), 200);
@@ -27,7 +31,7 @@ class Order extends REST_Controller
 		}
 	}
 	
-	public function index_post()
+	public function confirm_post()
 	{  
 		$data = $this->post('ProductList');
 		$headers=array();

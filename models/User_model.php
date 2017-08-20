@@ -79,6 +79,7 @@ class User_model extends CI_Model {
 								$result['Result'] = 'Success';
 								$result['Role'] = $application_user['Role'];
 								$result['Token'] = $token;
+								$result['UserId'] = $application_user['UserId'];
 								return $result;								
 							} else {
 								$result['Result'] = 'Failed';
@@ -99,6 +100,7 @@ class User_model extends CI_Model {
 								$result['Result'] = 'Success';
 								$result['Role'] = $application_user['Role'];
 								$result['Token'] = $token;
+								$result['UserId'] = $application_user['UserId'];
 								return $result;								
 							} else {
 								$result['Result'] = 'Failed';
@@ -134,6 +136,7 @@ class User_model extends CI_Model {
 								$result['Result'] = 'Success';
 								$result['Role'] = $application_user['Role'];
 								$result['Token'] = $token;
+								$result['UserId'] = $application_user['UserId'];
 								return $result;	
 							} else {
 								$result['Result'] = 'Failed';
@@ -154,6 +157,7 @@ class User_model extends CI_Model {
 								$result['Result'] = 'Success';
 								$result['Role'] = $application_user['Role'];
 								$result['Token'] = $token;
+								$result['UserId'] = $application_user['UserId'];
 								return $result;		
 							} else {
 								$result['Result'] = 'Failed';

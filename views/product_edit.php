@@ -39,7 +39,8 @@
                             <div class="form-group">
                                 <label for="productCategory">Product Category</label>
 								<select class="form-control" name  = "productCategory">
-									<option value="Vegetable Oil">Vegetable Oil</option>
+									<option value="RBD Palmolien Oil">RBD Palmolien Oil</option>
+									<option value="Refined Soyabean Oil">Refined Soyabean Oil</option>
 								</select>
                             </div>
                         </div>
@@ -49,8 +50,10 @@
                             <div class="form-group">
                                 <label for="unitOfMeasurement">Unit Of Measurement</label>
                                 <select class="form-control" name  = "unitOfMeasurement">
-									<option value="Kilograms" <?php if($product['UnitOfMeasurement'] == "Kilograms") echo "selected" ?>>Kilograms</option>
 									<option value="Litres" <?php if($product['UnitOfMeasurement'] == "Litres") echo "selected" ?>>Litres</option>
+									<option value="Millilitre" <?php if($product['UnitOfMeasurement'] == "Millilitre") echo "selected" ?>>Millilitre</option>
+									<option value="Kilograms" <?php if($product['UnitOfMeasurement'] == "Kilograms") echo "selected" ?>>Kilograms</option>
+									<option value="Gram" <?php if($product['UnitOfMeasurement'] == "Gram") echo "selected" ?>>Gram</option>
 								</select>
                             </div>
                         </div>

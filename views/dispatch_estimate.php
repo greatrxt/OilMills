@@ -67,6 +67,13 @@ function addToCustomRoute(customerId, defaultRoute, element){
     <section class="panel panel-with-borders">
         <div class="panel-heading">
             <h2>
+				<div class="dropdown pull-right">
+				<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order">
+					<button type="button" class="btn btn-primary">
+                        Cancel Dispatch
+                    </button>
+				</a>
+				</div>
                 Dispatch
             </h2>
         </div>
@@ -84,7 +91,6 @@ function addToCustomRoute(customerId, defaultRoute, element){
 							<table class="table table-hover nowrap" width="100%">
 								<thead class="thead-default">
 								<tr>
-									<th>Entry ID</th>
 									<th>Order ID</th>
 									<th>Date</th>				
 									<th>Customer Name</th>				
@@ -97,7 +103,6 @@ function addToCustomRoute(customerId, defaultRoute, element){
 								</thead>
 								<tfoot>
 								<tr>
-									<th>Entry ID</th>
 									<th>Order ID</th>
 									<th>Date</th>				
 									<th>Customer Name</th>				
@@ -112,8 +117,7 @@ function addToCustomRoute(customerId, defaultRoute, element){
 								<?php
 								foreach ($dispatchs as $dispatch): ?>
 								<tr>
-									<td>ODE<?php echo $dispatch['OrderEntryId']; ?></td>
-									<td><?php echo $dispatch['OrderId']; ?></td>
+									<td>OD<?php echo $dispatch['OrderId']; ?></td>
 									<td><?php echo $dispatch['OrderTime']; ?></td>
 									<td><?php echo $dispatch['CustomerName']; ?></td>
 									<td><?php echo $dispatch['PaymentTerms']; ?></td>

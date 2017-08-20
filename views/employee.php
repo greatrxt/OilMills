@@ -107,7 +107,7 @@
 						<div class = "col-lg-1">
 							<div class="form-group">
 								<label class="form-control-label" for="userActive">Active</label><br/>
-                                <input name = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on") echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
+                                <input name = "userActive" id = "userActive" type="checkbox"  style="margin:11px"<?php if(set_value('userActive') == "on" || set_value('userActive') == null) echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
                             </div>
 						</div>
 						<div class = "col-lg-9">							
@@ -154,6 +154,14 @@ function manageRoles(){
 }
 manageRoles();
 function validateForm(){
+	if(document.getElementById('userActive').checked){
+		if(document.getElementById('username').value.length < 3
+			|| document.getElementById('password').value.length < 3){
+			 $('.nav-tabs-horizontal li:eq(1) a').tab('show');
+			 
+			return false;
+		}
+	}
 	return true;
 }
 </script>

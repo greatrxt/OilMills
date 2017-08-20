@@ -33,24 +33,37 @@
 			?>	
 		</select> 
 	</div>
-	<textarea id="header" readonly>Dispatch</textarea>
-
+	<textarea id="header" readonly></textarea>
+	<textarea readonly>Dispatch : <?php echo "DISP".$id ?></textarea>
+	<textarea style="float:right" readonly><?php echo $dispatch_details['DispatchTime'] ?></textarea>
 <div id="identity">	
             <table class="table table-hover nowrap" id="displayDispatchsTable" width="100%">
                 <thead class="thead-default">
                 <tr>
                     <th>Sr No</th>
 					<th>Customer</th>
+					<th>Broker</th>
+					<th>Payment</th>
                     <th>Product Name</th>
-                    <th>Quantity</th>
+                    <th>Qty</th>
+					<th>Rate</th>
+					<th>Bill No</th>
+					<th>Amount</th>
+					<th>Remarks</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
                     <th>Sr No</th>
 					<th>Customer</th>
+					<th>Broker</th>
+					<th>Payment</th>
                     <th>Product Name</th>
-                    <th>Quantity</th>
+                    <th>Qty</th>
+					<th>Rate</th>
+					<th>Bill No</th>
+					<th>Amount</th>
+					<th>Remarks</th>
                 </tr>
                 </tfoot>
                 <tbody id = 'displayDispatchsTableBody'>
@@ -60,8 +73,14 @@
 				<tr class = "route" data-user = "<?php echo $dispatch['RouteId'] ?>">
 				    <td><center><?php echo $i; ?></center></td>
 					<td><center><?php echo $dispatch['CustomerName']; ?></center></td>
+					<td><center><?php echo $dispatch['BrokerName']; ?></center></td>
+					<td><center><?php echo $dispatch['PaymentTerms']; ?></center></td>
                     <td><center><?php echo $dispatch['ProductName']; ?></center></td>
                     <td><center><?php echo $dispatch['OrderQuantity']; ?></center></td>
+					<td><center><?php echo $dispatch['SellingPriceAtOrderTime']; ?></center></td>
+					<td><center></center></td>
+					<td><center><?php echo number_format($dispatch['SellingPriceAtOrderTime'] * $dispatch['OrderQuantity']); ?></center></td>
+					<td><center></center></td>
 				</tr>
 				<?php 
 				$i++;

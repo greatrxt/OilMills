@@ -29,8 +29,9 @@
                             </div>
 
 							<div class="form-group">
-								<label class="form-control-label" for="routeCode">Route Code</label>
-								<input class="form-control" tabindex="2" name="routeCode" type="text">
+								<label class="form-control-label" for="routeCode">Route Code*</label>
+								<input class="form-control" tabindex="2" name="routeCode" type="text" data-validation="[L>=1]"
+																						data-validation-message="Please enter a valid route code">
 							</div>
 						
 						</div>

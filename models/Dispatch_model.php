@@ -17,11 +17,19 @@ class Dispatch_model extends CI_Model {
 		return $result->result_array();	
 	}
 	
+	public function get_dispatch_details($id){
+		$this->db->where('DispatchId', $id);
+		$query = $this->db->get('Dispatch');
+		return $query->row_array();	
+	}
+	
 	public function get_dispatch($id){
-		$query_string = 'SELECT Product.Name as ProductName, SUM(OrderEntries.OrderQuantity) as OrderQuantity, Customer.Name as CustomerName, Route.RouteName, Route.RouteId
+		$query_string = 'SELECT Product.Name as ProductName, Broker.Name as BrokerName, PaymentTerms, SellingPriceAtOrderTime, GROUP_CONCAT(DISTINCT(SalesOrder.OrderId) SEPARATOR ", OD") as OrderId,
+									SUM(OrderEntries.OrderQuantity) as OrderQuantity, Customer.Name as CustomerName, Route.RouteName, Route.RouteId
 									FROM OrderEntries 
 									LEFT JOIN Product ON OrderEntries.OrderedProductId = Product.ProductId
 									LEFT JOIN SalesOrder ON OrderEntries.OrderId = SalesOrder.OrderId
+									LEFT JOIN Broker ON SalesOrder.LinkedBrokerId = Broker.BrokerId
 									LEFT JOIN Customer ON SalesOrder.CustomerId = Customer.CustomerId
 									LEFT JOIN Route ON Customer.Route = Route.RouteId
 									LEFT JOIN OrderEntries_Dispatch ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId

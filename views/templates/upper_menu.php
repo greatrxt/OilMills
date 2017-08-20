@@ -16,31 +16,6 @@
                     Home
                 </a>
             </li>
-
-            <li class="left-menu-list-separator"><!-- --></li>
-            <li class="left-menu-list-submenu">
-                <a class="left-menu-link" href="javascript: void(0);">
-                    <i class="left-menu-link-icon icmn-files-empty2"><!-- --></i>
-                    Dashboard
-                </a>
-                <ul class="left-menu-list list-unstyled">
-                    <li>
-                        <a class="left-menu-link" href="#">
-                            Purchase
-                        </a>
-                    </li>
-                    <li>
-                        <a class="left-menu-link" href="#">
-                            Inventory
-                        </a>
-                    </li>
-					<li>
-                        <a class="left-menu-link" href="#">
-                            Sales
-                        </a>
-                    </li>
-                </ul>
-            </li>
 			<li class="left-menu-list-separator"><!-- --></li>
             <li class="left-menu-list-submenu">
                 <a class="left-menu-link" href="javascript: void(0);">

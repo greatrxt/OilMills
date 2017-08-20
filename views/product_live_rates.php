@@ -2,10 +2,10 @@
 function limitWithin(element){
 	
 	if(element.value.trim() == ""){
-		element.value = 1;
+		element.value = 0;
 	} else {
-		if(element.value < 1){
-			element.value = 1;
+		if(element.value < 0){
+			element.value = 0;
 		} else if (element.value > 99999){
 			element.value = 99999;
 		}
@@ -28,7 +28,7 @@ function limitWithin(element){
 						</button>
 					</a>
                 </div>
-                Products List
+                Live Rates
             </h2>
         </div>
         <div class="panel-body">
@@ -79,7 +79,7 @@ function limitWithin(element){
 					</td>
                     <td><?php echo $product['Name']; ?></td>
                     <td><?php echo $product['ProductCategory']; ?></td>
-					<td><input name = "<?php echo $product['ProductId']; ?>" type = "number" class="form-control width-100" value = "<?php echo $product['SellingPrice']; ?>" min="1" step="1"
+					<td><input name = "<?php echo $product['ProductId']; ?>" type = "number" class="form-control width-100" value = "<?php echo $product['SellingPrice']; ?>" min="0" step="0.01"
 						oninput = "limitWithin(this)"/></td>
                     <td><?php echo $product['Status']; ?></td>
                     <td><?php echo $product['LastPriceUpdateTime']; ?></td>

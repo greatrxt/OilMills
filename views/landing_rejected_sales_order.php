@@ -19,7 +19,6 @@
             <table class="table table-hover nowrap" id="displayRejectedSalesOrdersTable" width="100%">
                 <thead class="thead-default">
                 <tr>
-					<th>Order Entry ID</th>
                     <th>Order ID</th>
                     <th>Date</th>				
 					<th>Customer Name</th>				
@@ -33,7 +32,6 @@
                 </thead>
                 <tfoot>
                 <tr>
-					<th>Order Entry ID</th>
                     <th>Order ID</th>
                     <th>Date</th>				
 					<th>Customer Name</th>				
@@ -46,10 +44,18 @@
                 </tr>
                 </tfoot>
                 <tbody id = 'displayRejectedSalesOrdersTableBody'>
-				<?php foreach ($order_entries as $order_entry): ?>
-				<tr <?php if(((int)$order_entry['OrderId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
-					<td><?php echo $order_entry['OrderEntryId']; ?></td>
-					<td><?php echo $order_entry['OrderId']; ?></td>
+				<?php 
+				$count = 0;
+				$orderId = 0;
+				foreach ($order_entries as $order_entry): ?>
+				<tr <?php 
+				if(((int)$order_entry['OrderId'])!= $orderId){
+					$count++;
+					$orderId = ((int)$order_entry['OrderId']);
+				}
+				
+				if($count%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
+					<td>OD<?php echo $order_entry['OrderId']; ?></td>
                     <td><?php echo $order_entry['OrderTime']; ?></td>
                     <td><?php echo $order_entry['CustomerName']; ?></td>
                     <td><?php echo $order_entry['BrokerName']; ?></td>

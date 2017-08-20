@@ -168,7 +168,11 @@
 <!-- Page Scripts -->
 <script>
     $(function () {
-		$('#displayProductsTable').DataTable();
+		$('#displayProductsTable').DataTable({
+			"pageLength": 25,
+			"order": [
+                      /*[2, 'desc'],*/[6, 'asc']      
+		]});
     });
 </script>
 

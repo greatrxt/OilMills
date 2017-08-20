@@ -10,9 +10,11 @@ class Landing_sales_order_approval extends Operations_controller {
         }
 		
 		public function approve(){
-			$data = json_decode($this->input->raw_input_stream);
-			$entries = $data->entries;
-			$this->order_model->reviewOrders($entries, 'APPROVED');
+			$data = json_decode($this->input->raw_input_stream, true);
+			//echo print_r($data);
+			$entries = $data['entries'];
+			$custom_rates = $data['customRate'];
+			$this->order_model->reviewOrdersWithCustomRates($entries, $custom_rates, 'APPROVED');
 		}
 
 		public function reject(){

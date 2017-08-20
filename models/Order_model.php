@@ -6,6 +6,20 @@ class Order_model extends CI_Model {
 		$this->load->database();
 	}
 	
+	public function reviewOrdersWithCustomRates($orderIds, $custom_rates, $status){
+		foreach($orderIds as $orderId)
+		{
+			$this->db->query('SET time_zone = "+05:30";');
+			$this->db->where('OrderEntryId', $orderId);
+			if(isset($custom_rates[$orderId])){
+			//if(array_key_exists(('ODE' + $orderId), $custom_rates)){
+				$this->db->set('SellingPriceAtOrderTime', $custom_rates[$orderId]);
+			}
+			$this->db->set('ApprovalTime', 'NOW()', FALSE);
+			$this->db->update('OrderEntries', array('Status' => $status));
+		}
+	}
+	
 	public function reviewOrders($orderIds, $status){
 		foreach($orderIds as $orderId)
 		{
@@ -93,7 +107,6 @@ class Order_model extends CI_Model {
 										SellingPriceAtOrderTime,
 										OrderQuantity,
 										ProductionTime,
-										DispatchID,
 										OrderTime,
 										OrderEntries.Status,
 										OrderEntries.ProductionId
@@ -134,51 +147,6 @@ class Order_model extends CI_Model {
 	Get all APPROVED order entries
 	*/
 	public function get_all_approved_and_dispatched_order_entries(){
-			/*$query = $this->db->query('SELECT
-										OrderEntryId,
-										OrderEntries.OrderId,
-										ApplicationUser.Username,
-										SalesOrder.PaymentTerms,
-										Product.Name AS ProductName,
-										Customer.Name AS CustomerName,
-										Broker.Name AS BrokerName,
-										SellingPriceAtOrderTime,
-										OrderQuantity,
-										ProductionTime,
-										OrderTime,
-										OrderEntries.Status,
-										OrderEntries.ProductionId
-										FROM
-										OrderEntries
-										LEFT JOIN
-										Production
-										ON
-										Production.ProductionId = OrderEntries.ProductionId
-										LEFT JOIN
-										SalesOrder
-										ON
-										OrderEntries.OrderId = SalesOrder.OrderId
-										LEFT JOIN
-										Customer
-										ON
-										SalesOrder.CustomerId = Customer.CustomerId
-										LEFT JOIN
-										Product
-										ON
-										OrderEntries.OrderedProductId = Product.ProductId
-										LEFT JOIN
-										Broker
-										ON
-										SalesOrder.LinkedBrokerId = Broker.BrokerId
-										LEFT JOIN
-										ApplicationUser
-										ON
-										SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
-										WHERE
-										OrderEntries.Status = "APPROVED" ||
-										OrderEntries.Status = "PARTIALLY_DISPATCHED"
-										ORDER BY
-										OrderEntries.OrderId');*/
 			
 			$query = $this->db->query('SELECT
 						OrderEntries.OrderEntryId,
@@ -364,7 +332,9 @@ class Order_model extends CI_Model {
 						  Product
 						ON
 						  OrderEntries.OrderedProductId = Product.ProductId
-						WHERE OrderId = "'.$id.'"');
+						WHERE OrderId = "'.$id.'"
+						ORDER BY
+						OrderEntries.OrderId');
 			
 			return $result->result_array();
 	}
@@ -411,6 +381,29 @@ class Order_model extends CI_Model {
 			
 			return $result->result_array();
 	}	
+	
+	public function get_orders_for_user($id){
+		$result = $this->db->query('SELECT
+					  OrderID,
+					  Customer.Name AS CustomerName,
+					  Broker.Name AS BrokerName,
+					  PaymentTerms,
+					  SalesOrder.RecordCreationTime
+						FROM
+						  SalesOrder
+						LEFT JOIN
+						  Customer
+						ON
+						  SalesOrder.CustomerId = Customer.CustomerId
+						LEFT JOIN
+						  Broker
+						ON
+						  SalesOrder.LinkedBrokerId = Broker.BrokerId
+						WHERE SalesOrder.OrderPlacedByUser = "'.$id.'"');
+			
+			return $result->result_array();
+	}	
+	
 	public function place_order($data, $order_placed_by_application_user){
 		//Order  	 --- CustomerId OrderPlacedByUser LinkedBrokerId PaymentTerms
 		//OrderEntry --- OrderedProductId SellingPriceAtOrderTime OrderQuantity

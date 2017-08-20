@@ -38,7 +38,7 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=3]"
 																						data-validation-message="Please enter a valid address">
 							</div>
 
@@ -62,14 +62,13 @@
 						
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
-                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value="<?php echo set_value('contactPerson'); ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value="<?php echo set_value('contactPerson'); ?>" data-validation="[L>=3]"
 																					   data-validation-message="Please enter a valid name">
                             </div>
 							
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>" data-validation="[L>=2]"
-																					   data-validation-message="email address must contain atleast 3 characters">
+                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>">
                             </div>
 						</div>
 						
@@ -186,6 +185,14 @@
 <script>
 
 function validateForm(){
+	if(document.getElementById('name').value.length < 3
+		|| document.getElementById('contactPerson').value.length < 3
+		|| document.getElementById('contactNumber').value.length < 3
+		|| document.getElementById('address').value.length < 3){
+		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
+		 
+		return false;
+	}
 	if(document.getElementById('userIsActive').checked){
 		if(document.getElementById('username').value.length < 3
 			|| document.getElementById('password').value.length < 3){

@@ -16,6 +16,11 @@
                         Go to Approved Orders
                     </button>
 				</a>
+				<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/production/view_print/<?php echo $id?>">
+					<button type="button" class="btn btn-primary">
+                        Print
+                    </button>
+				</a>
                 </div>
                 Production Details : <?php echo $title ?>
             </h2>
@@ -26,7 +31,6 @@
                 <tr>
                     <th>Sr No</th>
 					<th>Order ID</th>
-					<th>Order Entry ID</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
                 </tr>
@@ -35,7 +39,6 @@
                 <tr>
                     <th>Sr No</th>
 					<th>Order ID</th>
-					<th>Order Entry ID</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
                 </tr>
@@ -47,7 +50,6 @@
 				<tr>
 				    <td><?php echo $i; ?></td>
 					<td>OD<?php echo $production['OrderId']; ?></td>
-					<td><?php echo $production['OrderEntryId']; ?></td>
                     <td><?php echo $production['Name']; ?></td>
                     <td><?php echo $production['Quantity']; ?></td>
 				</tr>

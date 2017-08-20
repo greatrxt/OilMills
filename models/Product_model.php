@@ -55,6 +55,7 @@ class Product_model extends CI_Model {
 	{
 		$result = $this->db->query('SELECT
 									  *,
+									  Product.RecordCreationTime,
 									  ApplicationUser.username
 									FROM
 									  Product

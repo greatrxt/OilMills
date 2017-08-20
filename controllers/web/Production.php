@@ -24,11 +24,23 @@ class Production extends Operations_controller {
 		}
 		
 		$data['title'] = 'PROD'.$id;
+		$data['id'] = $id;
 		$data['productions'] = $this->production_model->get_production($id);
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/templates/upper_menu');
 		$this->load->view('parmaroilmills/production_view', $data);
 		$this->load->view('parmaroilmills/templates/footer');
+	}
+	
+	public function view_print($id){
+		if($id == null){
+			redirect('ParmarOilMills/web/production', 'refresh');
+			return;
+		}
+		
+		$data['id'] = $id;
+		$data['productions'] = $this->production_model->get_production($id);
+		$this->load->view('parmaroilmills/production_print', $data);
 	}
 	
 	public function estimate()

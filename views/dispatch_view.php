@@ -24,7 +24,7 @@
                 </div>
                 Dispatch Details : DISP<?php echo $id ?>
             </h2>
-			<div class="form-group">
+			<div class="form-group" style = "width:50%">
 				<label for="route">Route</label>
 				<select class="form-control" id="route" name="Route" onchange = "refreshDispatchTable(this)">
 					<?php
@@ -44,6 +44,7 @@
                 <tr>
                     <th>Sr No</th>
 					<th>Customer</th>
+					<th>Order ID</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
 					<th>Route Name</th>
@@ -53,6 +54,7 @@
                 <tr>
                     <th>Sr No</th>
 					<th>Customer</th>
+					<th>Order ID</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
 					<th>Route Name</th>
@@ -65,6 +67,7 @@
 				<tr data-user = "<?php echo $dispatch['RouteId'] ?>" class = "route route_<?php echo $dispatch['RouteId'] ?>" <?php if(((int)$dispatch['RouteId'])%2 == 0) { echo 'style = "background-color:#eff0f1"'; } else { echo 'style = "background-color:#ffffff"'; }?> >
 				    <td><?php echo $i; ?></td>
 					<td><?php echo $dispatch['CustomerName']; ?></td>
+					<td>OD<?php echo $dispatch['OrderId']; ?></td>
                     <td><?php echo $dispatch['ProductName']; ?></td>
                     <td><?php echo $dispatch['OrderQuantity']; ?></td>
 					<td><?php echo $dispatch['RouteName']. '  ( RT'.$dispatch['RouteId'].' )'; ?></td>

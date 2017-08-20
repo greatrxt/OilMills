@@ -111,7 +111,8 @@ public function edit($id = NULL)
 	} else {
 		//print_r($result);
 	}
-	redirect('ParmarOilMills/web/product/view/'.$id, 'refresh');
+	//redirect('ParmarOilMills/web/product/view/'.$id, 'refresh');
+	redirect('ParmarOilMills/web/landing_product', 'refresh');
     
 }
 

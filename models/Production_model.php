@@ -7,7 +7,7 @@ class Production_model extends CI_Model {
 	}
 	
 	public function get_production($id){
-		$query_string = 'SELECT Product.Name, SUM(OrderEntries.OrderQuantity) as Quantity, OrderId, OrderEntryId
+		$query_string = 'SELECT Product.Name, SUM(OrderEntries.OrderQuantity) as Quantity, GROUP_CONCAT(DISTINCT(OrderId) SEPARATOR ", OD") as OrderId
 									FROM OrderEntries 
 									LEFT JOIN Product ON OrderEntries.OrderedProductId = Product.ProductId
 									WHERE OrderEntries.ProductionId = '.$id.'

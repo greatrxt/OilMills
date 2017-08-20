@@ -67,8 +67,7 @@
 							
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" id="emailAddress" type="text" name="emailAddress"  value = "<?php echo $customer['EmailAddress']; ?>" data-validation="[L>=2]"
-																					   data-validation-message="email address must contain atleast 3 characters">
+                                <input class="form-control" id="emailAddress" type="text" name="emailAddress"  value = "<?php echo $customer['EmailAddress']; ?>">
                             </div>
 						</div>
 						
@@ -184,6 +183,14 @@
 <script>
 
 function validateForm(){
+	if(document.getElementById('name').value.length < 3
+		|| document.getElementById('contactPerson').value.length < 3
+		|| document.getElementById('contactNumber').value.length < 3
+		|| document.getElementById('address').value.length < 3){
+		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
+		 
+		return false;
+	}
 	if(document.getElementById('userIsActive').checked){
 		if(document.getElementById('username').value.length < 3
 			|| document.getElementById('password').value.length < 3){

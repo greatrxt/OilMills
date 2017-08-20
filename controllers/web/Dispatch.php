@@ -40,6 +40,7 @@ class Dispatch extends Operations_controller {
 		}
 		
 		$data['id'] = $id;
+		$data['dispatch_details'] = $this->dispatch_model->get_dispatch_details($id);
 		$data['dispatchs'] = $this->dispatch_model->get_dispatch($id);
 		$data['routes'] = $this->dispatch_model->get_routes_for_dispatch($id); 
 		$this->load->view('parmaroilmills/dispatch_print', $data);

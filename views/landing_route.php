@@ -21,7 +21,7 @@
                 <tr>
                     <th>Route ID</th>
                     <th>Name</th>				
-					<th>Code</th>				
+					<th>Route Code</th>				
                     <th>Created By</th>
 					<th>Date Created</th>
 					<th>Action</th>
@@ -31,7 +31,7 @@
                 <tr>
                     <th>Route ID</th>
 					<th>Name</th>				
-					<th>Code</th>				
+					<th>Route Code</th>				
                     <th>Created By</th>
 					<th>Date Created</th>
 					<th>Action</th>

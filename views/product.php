@@ -39,7 +39,8 @@
                             <div class="form-group">
                                 <label for="productCategory">Product Category</label>
 								<select class="form-control" name  = "productCategory">
-									<option value="Vegetable Oil">Vegetable Oil</option>
+									<option value="RBD Palmolien Oil">RBD Palmolien Oil</option>
+									<option value="Refined Soyabean Oil">Refined Soyabean Oil</option>
 								</select>
                             </div>
                         </div>
@@ -49,8 +50,10 @@
                             <div class="form-group">
                                 <label for="unitOfMeasurement">Unit Of Measurement</label>
                                 <select class="form-control" name  = "unitOfMeasurement">
-									<option value="Kilograms">Kilograms</option>
 									<option value="Litres">Litres</option>
+									<option value="Millilitre">Millilitre</option>
+									<option value="Kilograms">Kilograms</option>
+									<option value="Gram">Gram</option>
 								</select>
                             </div>
                         </div>
