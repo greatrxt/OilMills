@@ -59,7 +59,7 @@ public function edit($id = NULL){
 		
 		$result = $this->employee_model->edit_employee($id, $this->input->post());
 		//print_r($result);
-		redirect('ParmarOilMills/web/employee/edit/'.$id, 'refresh');	
+		redirect('ParmarOilMills/web/landing_employee', 'refresh');
 	}		
 	//print_r($this->input->post());
 	

@@ -67,8 +67,8 @@
                             </div>
 							
 							<div class="form-group">
-                                <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>">
+                                <label for="emailAddress">Email Address</label>
+                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>" data-validation="[OPTIONAL, EMAIL]">
                             </div>
 						</div>
 						
@@ -79,8 +79,8 @@
 								<input class="form-control" id="customerId" type="text" readonly value = "Not Assigned Yet">
                             </div>	
 							<div class="form-group">
-								<label class="form-control-label" for="area">Area</label>
-                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>">
+								<label class="form-control-label" for="area">Area*</label>
+                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>" data-validation="[L>=3]">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -115,49 +115,48 @@
 						<div class = "col-lg-5">
 							<div class="form-group">
 								<label class="form-control-label" for="gstNumberApplicable">GST Number Available</label><br/>
-                                <input value="Yes" name = "GSTNumberStatus" type="radio" style="margin:11px" <?php if(set_value('GSTNumberStatus') == "Yes" || set_value('GSTNumberStatus') == null) echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = false">Yes
-								<input value="NA" name = "GSTNumberStatus" type="radio"  style="margin:11px" <?php if(set_value('GSTNumberStatus') == "NA") echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = true">NA
+                                <input value="Yes" name = "GSTNumberStatus" type="radio" style="margin:11px" <?php if(set_value('GSTNumberStatus') == "Yes") echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = false">Yes
+								<input value="NA" name = "GSTNumberStatus" type="radio"  style="margin:11px" <?php if(set_value('GSTNumberStatus') == "NA" || set_value('GSTNumberStatus') == null) echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = true">NA
 								<input value="Applied" name = "GSTNumberStatus" type="radio" style="margin:11px" <?php if(set_value('GSTNumberStatus') == "Applied") echo "checked" ?> onclick="document.getElementById('gstNumber').disabled = true">Applied
                             </div>
 							<div class="form-group">
                                 <label for="gstNumber">GST Number</label>
-                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value="<?php echo set_value('GSTNumber'); ?>">
+                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value="<?php echo set_value('GSTNumber'); ?>" data-validation="[L>=3]" disabled>
                             </div>
 
 						</div>
 						<div class = "col-lg-5">
 							<div class="form-group">
 								<label class="form-control-label" for="gstNumberApplicable">FSSAI Number</label><br/>
-                                <input value="Yes" name = "FSSAINumberStatus" type="radio" style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "Yes" || set_value('FSSAINumberStatus') == null) echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = false">Yes
-								<input value="NA" name = "FSSAINumberStatus" type="radio"  style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "NA") echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = true">NA
+                                <input value="Yes" name = "FSSAINumberStatus" type="radio" style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "Yes") echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = false">Yes
+								<input value="NA" name = "FSSAINumberStatus" type="radio"  style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "NA" || set_value('FSSAINumberStatus') == null) echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = true">NA
 								<input value="Applied" name = "FSSAINumberStatus" type="radio" style="margin:11px" <?php if(set_value('FSSAINumberStatus') == "Applied") echo "checked" ?> onclick="document.getElementById('fssaiNumber').disabled = true">Applied
                             </div>
 							<div class="form-group">
                                 <label for="fssaiNumber">FSSAI Number</label>
-                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value="<?php echo set_value('FSSAINumber'); ?>">
+                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value="<?php echo set_value('FSSAINumber'); ?>" data-validation="[L>=3]" disabled>
                             </div>
 
 						</div>
 					</div>
 
 					<div class="tab-pane" id="tab3" role="tabpanel" aria-expanded="true">
-
 						<div class = "col-lg-4">							
 							<div class="form-group">
-                                <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" value="<?php echo set_value('username'); ?>">
+                                <label for="username">Username</label><span id="usernameError"></span>
+                                <input class="form-control" id = "username" type="text" name = "username" value="<?php echo set_value('username'); ?>" data-validation="[L>=3]" disabled> 
                             </div>
 						</div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
-                                <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>" >
+                                <label for="password">Password</label><span id="passwordError"></span>
+                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>"  data-validation="[L>=3]" disabled>
                             </div>
 						</div>
 						<div class = "col-lg-1">
 							<div class="form-group">
 								<label class="form-control-label" for="userActive">Active</label><br/>
-                                <input id="userIsActive" name = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on" || set_value('userActive') == null) echo "checked"; ?>
+                                <input id="userIsActive" name = "userActive" type="checkbox" value = "1"  style="margin:11px" <?php if(set_value('userActive') == "on") echo "checked"; ?>
 								onclick="document.getElementById('username').disabled=!this.checked;
 											document.getElementById('password').disabled=!this.checked;">
                             </div>
@@ -166,7 +165,7 @@
 
 					<div class="form-group" >
 						<div class="col-md-9" style="padding-bottom:20px;">
-							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick = "return validateForm()">Save</button>
+							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick = "return validateForm();">Save</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnBack" style="margin:10px">Back</button>
 							<button type="button" class="btn width-150 btn-default" id = "btnNext" style="margin:10px">Next</button>
 							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_customer"><button type="button" class="btn width-150 btn-default" style="margin:10px" >Cancel</button></a>
@@ -183,26 +182,49 @@
 
 </section>
 <script>
-
+			
 function validateForm(){
+	document.getElementById("usernameError").innerHTML = '';
+	document.getElementById("passwordError").innerHTML = '';
+	
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('contactPerson').value.length < 3
-		|| document.getElementById('contactNumber').value.length < 3
+		|| document.getElementById('contactNumber').value.length < 8
 		|| document.getElementById('address').value.length < 3){
 		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
 		 
 		return false;
 	}
+	
+	if(!document.getElementById('gstNumber').disabled){
+		if(document.getElementById('gstNumber').value.length < 3){
+			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
+			return false;
+		}
+	}
+	
+	if(!document.getElementById('fssaiNumber').disabled){
+		if(document.getElementById('fssaiNumber').value.length < 3){
+			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
+			return false;
+		}
+	}
+	
 	if(document.getElementById('userIsActive').checked){
 		if(document.getElementById('username').value.length < 3
 			|| document.getElementById('password').value.length < 3){
-			 $('.nav-tabs-horizontal li:eq(2) a').tab('show');
-			 
+			 $('.nav-tabs-horizontal li:eq(2) a').tab('show');			 
 			return false;
 		}
 	}
 	return true;
 }
+// Show/Hide Password
+$('#password').password({
+	eyeClass: '',
+	eyeOpenClass: 'icmn-eye',
+	eyeCloseClass: 'icmn-eye-blocked'
+});
 </script>
 <script>
 		locationsArray = new Array();

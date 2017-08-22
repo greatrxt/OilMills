@@ -248,9 +248,10 @@ class Dispatch_model extends CI_Model {
 									LEFT JOIN OrderEntries ON OrderEntries.DispatchId = Dispatch.DispatchId
 									GROUP BY DispatchId');*/
 									
-		$query = $this->db->query('SELECT Dispatch.DispatchId, count(distinct OrderEntries.OrderedProductId) as ProductCount, SUM(OrderEntries.OrderQuantity) as Quantity,  DispatchTime
+		$query = $this->db->query('SELECT Dispatch.DispatchId, count(distinct OrderEntries.OrderedProductId) as ProductCount, SUM(OrderEntries.OrderQuantity) as Quantity,  DispatchTime, ApplicationUser.Username
 									FROM Dispatch 
 									LEFT JOIN OrderEntries_Dispatch ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
+									LEFT JOIN ApplicationUser ON Dispatch.DispatchedByUser = ApplicationUser.UserId
 									LEFT JOIN OrderEntries ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
 									GROUP BY Dispatch.DispatchId');
 		return $query->result_array();	

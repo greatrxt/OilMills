@@ -16,6 +16,7 @@
                     <th>Date</th>
                     <th>Number Of Products</th>
 					<th>Number Of Units</th>
+					<th>Dispatched By</th>
 					<th>Action</th>
                 </tr>
                 </thead>
@@ -25,6 +26,7 @@
                     <th>Date</th>
                     <th>Number Of Products</th>
 					<th>Number Of Units</th>
+					<th>Dispatched By</th>
 					<th>Action</th>
                 </tr>
                 </tfoot>
@@ -37,6 +39,7 @@
                     <td><?php echo $dispatch['DispatchTime']; ?></td>
 					<td><?php echo $dispatch['ProductCount']; ?></td>
 					<td><?php echo $dispatch['Quantity']; ?></td>
+					<td><?php echo $dispatch['Username']; ?></td>
 					<td><a href = "<?php echo 'dispatch/view/'.$dispatch['DispatchId']; ?>">View</a></td>
 				</tr>
 				<?php 

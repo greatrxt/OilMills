@@ -37,7 +37,7 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value = "<?php echo $customer['Address']; ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="address" type="text" name="address" value = "<?php echo $customer['Address']; ?>" data-validation="[L>=3]"
 																						data-validation-message="Please enter a valid address">
 							</div>
 
@@ -61,13 +61,13 @@
 						
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
-                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value = "<?php echo $customer['ContactPerson']; ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value = "<?php echo $customer['ContactPerson']; ?>" data-validation="[L>=3]"
 																					   data-validation-message="Please enter a valid name">
                             </div>
 							
 							<div class="form-group">
-                                <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" id="emailAddress" type="text" name="emailAddress"  value = "<?php echo $customer['EmailAddress']; ?>">
+                                <label for="emailAddress">Email Address</label>
+                                <input class="form-control" id="emailAddress" type="text" name="emailAddress"  value = "<?php echo $customer['EmailAddress']; ?>" data-validation="[OPTIONAL, EMAIL]">
                             </div>
 						</div>
 						
@@ -78,8 +78,8 @@
 								<input class="form-control" id="customerId" type="text" readonly value = "CUST<?php echo $customer['CustomerId']; ?>">
                             </div>	
 							<div class="form-group">
-								<label class="form-control-label" for="area">Area</label>
-                                <input class="form-control" id="area" type="text" name="area" value = "<?php echo $customer['Area']; ?>">
+								<label class="form-control-label" for="area">Area*</label>
+                                <input class="form-control" id="area" type="text" name="area" value = "<?php echo $customer['Area']; ?>"  data-validation="[L>=3]">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -120,7 +120,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="gstNumber">GST Number</label>
-                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value = "<?php if($customer['GSTNumberStatus'] == "Yes") echo $customer['GSTNumber'] ?>" <?php if(!($customer['GSTNumberStatus'] == "Yes")) echo "disabled" ?>>
+                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value = "<?php if($customer['GSTNumberStatus'] == "Yes") echo $customer['GSTNumber'] ?>" <?php if(!($customer['GSTNumberStatus'] == "Yes")) echo "disabled" ?> data-validation="[L>=3]">
                             </div>
 
 						</div>
@@ -133,7 +133,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="fssaiNumber">FSSAI Number</label>
-                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value = "<?php if($customer['FSSAINumberStatus'] == "Yes") echo $customer['FSSAINumber'] ?>" <?php if(!($customer['FSSAINumberStatus'] == "Yes")) echo "disabled" ?>>
+                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value = "<?php if($customer['FSSAINumberStatus'] == "Yes") echo $customer['FSSAINumber'] ?>" <?php if(!($customer['FSSAINumberStatus'] == "Yes")) echo "disabled" ?> data-validation="[L>=3]">
                             </div>
 
 						</div>
@@ -144,12 +144,12 @@
 						<div class = "col-lg-4">							
 						<div class="form-group">
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" <?php if($customer['Active'] != "1") echo "disabled" ?>  value = "<?php echo $customer['Username']; ?>">
+                                <input class="form-control" id="username" type="text" name = "username" <?php if($customer['Active'] != "1") echo "disabled" ?>  value = "<?php echo $customer['Username']; ?>" data-validation="[L>=3]">
                             </div></div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" <?php if($customer['Active'] != "1") echo "disabled" ?> value = "<?php echo $customer['Password']; ?>">
+                                <input class="form-control" id="password" type="password" name = "password" <?php if($customer['Active'] != "1") echo "disabled" ?> value = "<?php echo $customer['Password']; ?>" data-validation="[L>=3]">
                             </div>
 						</div>
 						<div class = "col-lg-1">
@@ -182,25 +182,50 @@
 </section>
 <script>
 
+			
 function validateForm(){
+	document.getElementById("usernameError").innerHTML = '';
+	document.getElementById("passwordError").innerHTML = '';
+	
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('contactPerson').value.length < 3
-		|| document.getElementById('contactNumber').value.length < 3
+		|| document.getElementById('contactNumber').value.length < 8
 		|| document.getElementById('address').value.length < 3){
 		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
 		 
 		return false;
 	}
+	
+	if(!document.getElementById('gstNumber').disabled){
+		if(document.getElementById('gstNumber').value.length < 3){
+			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
+			return false;
+		}
+	}
+	
+	if(!document.getElementById('fssaiNumber').disabled){
+		if(document.getElementById('fssaiNumber').value.length < 3){
+			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
+			return false;
+		}
+	}
+	
 	if(document.getElementById('userIsActive').checked){
 		if(document.getElementById('username').value.length < 3
 			|| document.getElementById('password').value.length < 3){
-			 $('.nav-tabs-horizontal li:eq(2) a').tab('show');
-			 
+			 $('.nav-tabs-horizontal li:eq(2) a').tab('show');			 
 			return false;
 		}
 	}
 	return true;
 }
+
+// Show/Hide Password
+$('#password').password({
+	eyeClass: '',
+	eyeOpenClass: 'icmn-eye',
+	eyeCloseClass: 'icmn-eye-blocked'
+});
 </script>
 <script>
 		locationsArray = new Array();

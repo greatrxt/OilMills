@@ -1,4 +1,6 @@
-
+<div style = "padding-top:20px;padding-left:20px;padding-right:20px;">
+	<?php echo validation_errors('  <div style = "border-color: #ebccd1;background-color:#f2dede; color:#a94442" class="alert alert-danger alert-dismissable"><a style = "padding-bottom:10px" href="#" class="close" data-dismiss="alert" aria-label="close">×</a>', '</div>'); ?>
+</div>
 <section class = "page-content">
 <div class="page-content-inner">
 	
@@ -27,11 +29,11 @@
 							<div class="form-group">
                                 <label for="city">City Name*</label>
                                 <input class="form-control" tabindex="1" name="city" type="text" data-validation="[L>=2]"
-																						data-validation-message="Please enter a valid city name" >
+																						data-validation-message="Please enter a valid city name"  value="<?php echo set_value('city'); ?>" >
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="district">District</label>
-								<input class="form-control" tabindex="2" name="district" type="text">
+								<input class="form-control" tabindex="2" name="district" type="text" value="<?php echo set_value('district'); ?>">
 							</div>
 						
 						</div>

@@ -24,18 +24,8 @@
                 </a>
                 <ul class="left-menu-list list-unstyled">
                     <li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_sales_order_approval">
-                            Orders Received
-                        </a>
-                    </li>
-                    <li>
                         <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order">
                             View Approved Orders
-                        </a>
-                    </li>
-                    <li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_rejected_sales_order">
-                            View Rejected Orders
                         </a>
                     </li>
 					<li>
@@ -51,47 +41,6 @@
                 </ul>
             </li>
 
-            <li class="left-menu-list-separator"><!-- --></li>
-
-            <li class="left-menu-list-submenu">
-                <a class="left-menu-link" href="javascript: void(0);">
-                    <i class="left-menu-link-icon icmn-files-empty2"><!-- --></i>
-                    Masters
-                </a>
-                <ul class="left-menu-list list-unstyled">
-                    <li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_broker">
-                            Broker
-                        </a>
-                    </li>
-                    <li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_customer">
-                            Customer
-                        </a>
-                    </li>
-					<li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_employee">
-                            Employee
-                        </a>
-                    </li>
-					<li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_location">
-                            Location
-                        </a>
-                    </li>
-					<li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_product">
-                            Product
-                        </a>
-                    </li>
-					<li>
-                        <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_route">
-                            Route
-                        </a>
-                    </li>
-                </ul>
-            </li>
-			
 			<li class="left-menu-list-submenu" style = "display:none"><!-- DO NOT DELETE MENU ITEM. NEEDED TO SHOW COLOR BAND OVER MENU ITEM WHILE HOVERING MOUSE -->
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon icmn-cog util-spin-delayed-pseudo"></i>
@@ -143,7 +92,7 @@
     </div>
 </nav>
 
-<nav style = "height:0px;" class="top-menu" ng-class="{'hidden-top-menu': hideTopMenu}">
+<nav class="top-menu" ng-class="{'hidden-top-menu': hideTopMenu}">
     <div class="menu-icon-container hidden-md-up">
         <div class="animate-menu-button left-menu-toggle">
             <div><!-- --></div>

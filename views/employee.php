@@ -35,7 +35,7 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=3]"
 																						data-validation-message="Please enter a valid address">
 							</div>
 
@@ -59,7 +59,7 @@
 						
 							<div class="form-group">
                                 <label for="department">Department*</label>
-                                <input class="form-control" id="contactPerson" type="text" name="department" value="<?php echo set_value('department'); ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="department" type="text" name="department" value="<?php echo set_value('department'); ?>" data-validation="[L>=2]"
 																					   data-validation-message="Must contain atleast 2 characters">
                             </div>
 
@@ -72,8 +72,8 @@
 								<input class="form-control" id="employeeId" type="text" readonly value = "Not Assigned Yet">
                             </div>	
 							<div class="form-group">
-								<label class="form-control-label" for="area">Area</label>
-                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>">
+								<label class="form-control-label" for="area">Area*</label>
+                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>" data-validation="[L>=3]">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -82,7 +82,7 @@
 							
 							<div class="form-group">
                                 <label for="designation">Designation*</label>
-                                <input class="form-control" id="contactNumber" type="text" name="designation" value="<?php echo set_value('designation'); ?>" data-validation="[L>=2]"
+                                <input class="form-control" id="designation" type="text" name="designation" value="<?php echo set_value('designation'); ?>" data-validation="[L>=2]"
 																					   data-validation-message="Must contain atleast 2 characters">
                             </div>
 
@@ -95,19 +95,19 @@
 						<div class = "col-lg-4">							
 						<div class="form-group">
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" value="<?php echo set_value('username'); ?>">
+                                <input class="form-control" id="username" type="text" name = "username" value="<?php echo set_value('username'); ?>" disabled data-validation="[L>=3]">
                             </div>
 						</div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>">
+                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>" disabled data-validation="[L>=3]">
                             </div>
 						</div>
 						<div class = "col-lg-1">
 							<div class="form-group">
 								<label class="form-control-label" for="userActive">Active</label><br/>
-                                <input name = "userActive" id = "userActive" type="checkbox"  style="margin:11px"<?php if(set_value('userActive') == "on" || set_value('userActive') == null) echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
+                                <input name = "userActive" id = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on") echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
                             </div>
 						</div>
 						<div class = "col-lg-9">							
@@ -115,7 +115,7 @@
                                 <label for="role">Role</label><br/>
 								<input id = "roleSales" name = "role[]" type="checkbox" value = "SALES"  style="margin:11px" onclick="manageRoles()">Sales
 								<input id = "roleOperations" name = "role[]" type="checkbox" value = "OPERATIONS"  style="margin:11px" checked onclick="manageRoles()">Operations
-								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN"  style="margin:11px" onclick="manageRoles()">Admin
+								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN"  style="margin:11px" onclick="manageRoles()">Management
                             </div>
 						</div>
 					</div>
@@ -154,6 +154,14 @@ function manageRoles(){
 }
 manageRoles();
 function validateForm(){
+	if(document.getElementById('name').value.length < 3
+		|| document.getElementById('department').value.length < 2
+		|| document.getElementById('designation').value.length < 2
+		|| document.getElementById('address').value.length < 3){
+		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
+		 
+		return false;
+	}
 	if(document.getElementById('userActive').checked){
 		if(document.getElementById('username').value.length < 3
 			|| document.getElementById('password').value.length < 3){
@@ -164,6 +172,12 @@ function validateForm(){
 	}
 	return true;
 }
+// Show/Hide Password
+$('#password').password({
+	eyeClass: '',
+	eyeOpenClass: 'icmn-eye',
+	eyeCloseClass: 'icmn-eye-blocked'
+});
 </script>
 <script>
 		locationsArray = new Array();

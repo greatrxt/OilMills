@@ -44,6 +44,7 @@
 								<th>Order Qty</th>
 								<th>Rate</th>
 								<th>Ordered By</th>
+								<th>Approved By</th>
 								<th><input type = "checkbox" style = "margin-right:5px" onchange = "toggleProductionSelection(this)">Production</th>
 								<th>Production Date</th>
 								<th>Status</th>
@@ -61,6 +62,7 @@
 								<th>Order Qty</th>
 								<th>Rate</th>
 								<th>Ordered By</th>
+								<th>Approved By</th>
 								<th>Production</th>
 								<th>Production Date</th>
 								<th>Status</th>
@@ -87,7 +89,8 @@
 								<td><?php echo $order_entry['ProductName']; ?></td>
 								<td><?php echo $order_entry['OrderQuantity']; ?></td>
 								<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
-								<td><?php echo $order_entry['Username']; ?></td>
+								<td><?php echo $order_entry['OrderBy']; ?></td>
+								<td><?php echo $order_entry['ApprovedBy']; ?></td>
 								<td><input class = "productionItem" type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
 								<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
 								</td>
@@ -116,6 +119,7 @@
 								<th>Order Qty</th>
 								<th>Rate</th>
 								<th>Ordered By</th>
+								<th>Approved By</th>
 								<th>Production</th>
 								<th>Production Date</th>
 								<th>Dispatch</th>
@@ -133,6 +137,7 @@
 								<th>Order Qty</th>
 								<th>Rate</th>
 								<th>Ordered By</th>
+								<th>Approved By</th>
 								<th>Production</th>
 								<th>Production Date</th>
 								<th>Dispatch</th>
@@ -159,7 +164,8 @@
 								<td><?php echo $order_entry['ProductName']; ?></td>
 								<td><?php echo $order_entry['OrderQuantity']; ?></td>
 								<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
-								<td><?php echo $order_entry['Username']; ?></td>
+								<td><?php echo $order_entry['OrderBy']; ?></td>
+								<td><?php echo $order_entry['ApprovedBy']; ?></td>
 								<td><input type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
 								<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
 								</td>

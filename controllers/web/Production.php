@@ -12,7 +12,11 @@ class Production extends Operations_controller {
 	public function index(){
 		$data['productions'] = $this->production_model->get_all_production();
 		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
+		if ($this->session->userdata('role') == 'ADMIN'){ 
+			$this->load->view('parmaroilmills/templates/upper_menu');
+		} else {
+			$this->load->view('parmaroilmills/templates/upper_menu_operations');
+		}
 		$this->load->view('parmaroilmills/landing_production', $data);
 		$this->load->view('parmaroilmills/templates/footer');
 	}
@@ -27,7 +31,11 @@ class Production extends Operations_controller {
 		$data['id'] = $id;
 		$data['productions'] = $this->production_model->get_production($id);
 		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
+		if ($this->session->userdata('role') == 'ADMIN'){ 
+			$this->load->view('parmaroilmills/templates/upper_menu');
+		} else {
+			$this->load->view('parmaroilmills/templates/upper_menu_operations');
+		}
 		$this->load->view('parmaroilmills/production_view', $data);
 		$this->load->view('parmaroilmills/templates/footer');
 	}
@@ -50,7 +58,11 @@ class Production extends Operations_controller {
 		$data['entryIds'] = $entryIds;
 		//print_r($data);
 		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
+		if ($this->session->userdata('role') == 'ADMIN'){ 
+			$this->load->view('parmaroilmills/templates/upper_menu');
+		} else {
+			$this->load->view('parmaroilmills/templates/upper_menu_operations');
+		}
 		$this->load->view('parmaroilmills/production_estimate', $data);
 		$this->load->view('parmaroilmills/templates/footer');	
 	}

@@ -16,6 +16,7 @@
                     <th>Date</th>
                     <th>Number Of Products</th>
 					<th>Number Of Units</th>
+					<th>Sent For Production By</th>
 					<th>Action</th>
                 </tr>
                 </thead>
@@ -25,6 +26,7 @@
                     <th>Date</th>
                     <th>Number Of Products</th>
 					<th>Number Of Units</th>
+					<th>Sent For Production By</th>
 					<th>Action</th>
                 </tr>
                 </tfoot>
@@ -37,6 +39,7 @@
                     <td><?php echo $production['ProductionTime']; ?></td>
 					<td><?php echo $production['ProductCount']; ?></td>
 					<td><?php echo $production['Quantity']; ?></td>
+					<td><?php echo $production['Username']; ?></td>
 					<td><a href = "<?php echo 'production/view/'.$production['ProductionId']; ?>">View</a></td>
 				</tr>
 				<?php 

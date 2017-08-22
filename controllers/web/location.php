@@ -33,21 +33,21 @@ public function view($id = NULL)
 
 public function edit($id = NULL)
 {
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('city', 'City', 'required');
+	$this->load->library('form_validation');
+	$this->form_validation->set_rules('city', 'City', 'required');
 
-		if ($this->form_validation->run())
-		{
-			$data = array(
-					'city' => $this->input->post('city'),
-					'district' => $this->input->post('district'),
-					'state' => $this->input->post('state'),
-					'RecordCreatedBy' => 1
-			);
+	if ($this->form_validation->run())
+	{
+		$data = array(
+				'city' => $this->input->post('city'),
+				'district' => $this->input->post('district'),
+				'state' => $this->input->post('state')
+		);
 
-			$result = $this->location_model->edit_location($id, $data);
-			redirect('ParmarOilMills/web/location/view/'.$id, 'refresh');
-		} 
+		$result = $this->location_model->edit_location($id, $data);	
+		//print_r($result);		
+	} 
+	redirect('ParmarOilMills/web/landing_location', 'refresh');
 }
 
 
@@ -55,10 +55,19 @@ public function create()
 {
     $this->load->helper('form');
     $this->load->library('form_validation');
-
+	$this->form_validation->set_error_delimiters('<div class="error" style="display:none;width:82%;padding:10px;margin-top:20px;border: 1px solid #FF0000">', '</div>'); 
     $data['title'] = 'Parmar Oil Mills';
 
-    $this->form_validation->set_rules('city', 'City', 'required');
+    //$this->form_validation->set_rules('city', 'City', 'required');
+
+	$this->form_validation->set_rules(
+		'city', 'City',
+		'required|min_length[2]|max_length[35]|is_unique[Location.City]',
+		array(
+				'required'      => 'You have not provided a valid %s.',
+				'is_unique'     => 'This %s already exists.'
+		)
+	);
 
     if ($this->form_validation->run() === FALSE)
     {

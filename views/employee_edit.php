@@ -64,7 +64,7 @@
 						
 							<div class="form-group">
                                 <label for="department">Department*</label>
-                                <input class="form-control" type="text" name="department" value="<?php if(set_value('department')!=null) echo set_value('department'); else echo $employee['Department']; ?>" data-validation="[L>=2]"  data-validation-message="Must contain atleast 2 characters">
+                                <input class="form-control" id = "department" type="text" name="department" value="<?php if(set_value('department')!=null) echo set_value('department'); else echo $employee['Department']; ?>" data-validation="[L>=2]"  data-validation-message="Must contain atleast 2 characters">
                             </div>
 
 						</div>
@@ -76,8 +76,8 @@
 								<input class="form-control" name="employeeId" type="text" readonly value="EMP<?php if(set_value('employeeId')!=null) echo set_value('employeeId'); else echo $employee['EmployeeId']; ?>">
                             </div>	
 							<div class="form-group">
-								<label class="form-control-label" for="area">Area</label>
-                                <input class="form-control" name="area" type="text" name="area" value="<?php if(set_value('area')!=null) echo set_value('area'); else echo $employee['Area']; ?>">
+								<label class="form-control-label" for="area">Area*</label>
+                                <input class="form-control" name="area" type="text" name="area" value="<?php if(set_value('area')!=null) echo set_value('area'); else echo $employee['Area']; ?>" data-validation="[L>=3]">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -86,7 +86,7 @@
 							
 							<div class="form-group">
                                 <label for="designation">Designation*</label>
-                                <input class="form-control" type="text" name="designation"  value="<?php if(set_value('designation')!=null) echo set_value('designation'); else echo $employee['Designation']; ?>" data-validation="[L>=2]"
+                                <input class="form-control" id = "designation" type="text" name="designation"  value="<?php if(set_value('designation')!=null) echo set_value('designation'); else echo $employee['Designation']; ?>" data-validation="[L>=2]"
 																					   data-validation-message="Must contain atleast 2 characters">
                             </div>
 
@@ -99,13 +99,13 @@
 						<div class = "col-lg-4">							
 						<div class="form-group">
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" value="<?php if(set_value('username')!=null) echo set_value('username'); else echo $employee['Username']; ?>">
+                                <input class="form-control" id="username" type="text" name = "username" value="<?php if(set_value('username')!=null) echo set_value('username'); else echo $employee['Username']; ?>" data-validation="[L>=3]">
                             </div>
 						</div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value="<?php if(set_value('password')!=null) echo set_value('password'); else echo $employee['Password']; ?>">
+                                <input class="form-control" id="password" type="password" name = "password" value="<?php if(set_value('password')!=null) echo set_value('password'); else echo $employee['Password']; ?>" data-validation="[L>=3]">
                             </div>
 						</div>
 						<div class = "col-lg-1">
@@ -124,7 +124,7 @@
                                 <label for="role">Role</label><br/>
 								<input id = "roleSales" name = "role[]" type="checkbox" value = "SALES" <?php if(in_array('SALES', explode(",", $employee['Role']))) echo "checked"; ?> style="margin:11px" onclick="manageRoles()">Sales
 								<input id = "roleOperations" name = "role[]" type="checkbox" value = "OPERATIONS" <?php if(in_array('OPERATIONS', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Operations
-								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN" <?php if(in_array('ADMIN', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Admin
+								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN" <?php if(in_array('ADMIN', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Management
                             </div>
 						</div>
 					</div>
@@ -163,8 +163,30 @@ function manageRoles(){
 }
 manageRoles();
 function validateForm(){
+	if(document.getElementById('name').value.length < 3
+		|| document.getElementById('department').value.length < 2
+		|| document.getElementById('designation').value.length < 2
+		|| document.getElementById('address').value.length < 3){
+		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
+		 
+		return false;
+	}
+	if(document.getElementById('userActive').checked){
+		if(document.getElementById('username').value.length < 3
+			|| document.getElementById('password').value.length < 3){
+			 $('.nav-tabs-horizontal li:eq(1) a').tab('show');
+			 
+			return false;
+		}
+	}
 	return true;
 }
+// Show/Hide Password
+$('#password').password({
+	eyeClass: '',
+	eyeOpenClass: 'icmn-eye',
+	eyeCloseClass: 'icmn-eye-blocked'
+});
 </script>
 <script>
 		locationsArray = new Array();

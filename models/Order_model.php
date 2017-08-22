@@ -12,9 +12,9 @@ class Order_model extends CI_Model {
 			$this->db->query('SET time_zone = "+05:30";');
 			$this->db->where('OrderEntryId', $orderId);
 			if(isset($custom_rates[$orderId])){
-			//if(array_key_exists(('ODE' + $orderId), $custom_rates)){
 				$this->db->set('SellingPriceAtOrderTime', $custom_rates[$orderId]);
 			}
+			$this->db->set('ApprovedByUser', $this->session->userdata('userid'));
 			$this->db->set('ApprovalTime', 'NOW()', FALSE);
 			$this->db->update('OrderEntries', array('Status' => $status));
 		}
@@ -26,6 +26,7 @@ class Order_model extends CI_Model {
 			$this->db->query('SET time_zone = "+05:30";');
 			$this->db->where('OrderEntryId', $orderId);
 			$this->db->set('ApprovalTime', 'NOW()', FALSE);
+			$this->db->set('ApprovedByUser', $this->session->userdata('userid'));
 			$this->db->update('OrderEntries', array('Status' => $status));
 		}
 	}
@@ -151,7 +152,8 @@ class Order_model extends CI_Model {
 			$query = $this->db->query('SELECT
 						OrderEntries.OrderEntryId,
 						OrderEntries.OrderId,
-						ApplicationUser.Username,
+						OrderedByUser.Username AS OrderBy,
+						ApprovedByUser.Username AS ApprovedBy,
 						SalesOrder.PaymentTerms,
 						Product.Name AS ProductName,
 						Customer.Name AS CustomerName,
@@ -188,9 +190,13 @@ class Order_model extends CI_Model {
 						ON
 						SalesOrder.LinkedBrokerId = Broker.BrokerId
 						LEFT JOIN
-						ApplicationUser
+						ApplicationUser AS OrderedByUser
 						ON
-						SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
+						SalesOrder.OrderPlacedByUser = OrderedByUser.UserId
+						LEFT JOIN
+						ApplicationUser AS ApprovedByUser
+						ON
+						OrderEntries.ApprovedByUser = ApprovedByUser.UserId
 						LEFT JOIN
 						OrderEntries_Dispatch
 						ON
@@ -210,14 +216,15 @@ class Order_model extends CI_Model {
 	
 	
 	/**
-	Get all APPROVED order entries
+	Get all APPROVED order entries with Balance left for dispatch ( in case of partial dispatch )
 	*/
 	public function get_all_approved_partially_dispatched_order_entries_with_balance(){
 
 			$query = $this->db->query('SELECT
 						OrderEntries.OrderEntryId,
 						OrderEntries.OrderId,
-						ApplicationUser.Username,
+						OrderedByUser.Username AS OrderBy,
+						ApprovedByUser.Username AS ApprovedBy,
 						SalesOrder.PaymentTerms,
 						Product.Name AS ProductName,
 						Customer.Name AS CustomerName,
@@ -226,6 +233,7 @@ class Order_model extends CI_Model {
 						OrderQuantity,
 						OrderEntries.ProductionId,
 						ProductionTime,
+						ApprovedByUser,
 						Dispatch.DispatchID,
 						Dispatch.DispatchTime,
 						OrderEntries_Dispatch.DispatchQuantity,
@@ -255,9 +263,13 @@ class Order_model extends CI_Model {
 						ON
 						SalesOrder.LinkedBrokerId = Broker.BrokerId
 						LEFT JOIN
-						ApplicationUser
+						ApplicationUser AS OrderedByUser
 						ON
-						SalesOrder.OrderPlacedByUser = ApplicationUser.UserId
+						SalesOrder.OrderPlacedByUser = OrderedByUser.UserId
+						LEFT JOIN
+						ApplicationUser AS ApprovedByUser
+						ON
+						OrderEntries.ApprovedByUser = ApprovedByUser.UserId
 						LEFT JOIN
 						OrderEntries_Dispatch
 						ON

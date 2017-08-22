@@ -11,14 +11,18 @@ class Login extends CI_Controller {
 	
 	public function index()
 	{
+		$this->session->sess_destroy();
+		//print_r($_COOKIE); 
 		$this->load->helper('form');
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/login');
 		$this->load->view('parmaroilmills/templates/footer');
+		
 	}
 	
 	public function authenticate()
 	{
+		
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$applicationuser = $this->user_model->get_user_id($username, $password);
@@ -27,7 +31,13 @@ class Login extends CI_Controller {
 		if($userid > 0){
 			$this->session->set_userdata('userid', $userid);
 			$this->session->set_userdata('role', $role);
-			redirect('ParmarOilMills/web/home', 'refresh');
+			if($role == 'ADMIN'){
+				redirect('ParmarOilMills/web/home', 'refresh');
+			} else if($role == 'OPERATIONS'){
+				redirect('ParmarOilMills/web/home_operations', 'refresh');
+			} else {
+				redirect('ParmarOilMills/web/Login/', 'refresh');
+			}
 		} else {
 			redirect('ParmarOilMills/web/Login/', 'refresh');
 		}
@@ -35,6 +45,8 @@ class Login extends CI_Controller {
 	
 	public function signout()
 	{
+		$this->session->set_userdata('userid', '');
+		$this->session->set_userdata('role', '');
 		$this->session->unset_userdata('userid');
 		$this->session->unset_userdata('role');
 		redirect('ParmarOilMills/web/login/', 'refresh');

@@ -38,9 +38,10 @@ class Production_model extends CI_Model {
 	}	
 	
 	public function get_all_production(){
-		$result = $this->db->query('SELECT Production.ProductionId, SUM(OrderEntries.OrderQuantity) as Quantity, ProductionTime, count(distinct OrderEntries.OrderedProductId) as ProductCount
+		$result = $this->db->query('SELECT Production.ProductionId, SUM(OrderEntries.OrderQuantity) as Quantity, ProductionTime, count(distinct OrderEntries.OrderedProductId) as ProductCount, ApplicationUser.Username
 									FROM Production 
 									LEFT JOIN OrderEntries ON OrderEntries.ProductionId = Production.ProductionId
+									LEFT JOIN ApplicationUser ON Production.SentForProductionByUser = ApplicationUser.UserId
 									GROUP BY ProductionId');
 		return $result->result_array();	
 	}

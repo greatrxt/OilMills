@@ -1,6 +1,6 @@
 <?php
 
-class Sales_controller extends MY_Controller {
+class Sales_controller extends Auth_controller {
     public function __construct() {
        parent::__construct();
 	   	$this->load->library('session');

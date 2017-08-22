@@ -27,7 +27,11 @@ class Landing_approved_sales_order extends Operations_controller {
 			$data['pending_dispatch_order_entries'] = $this->order_model->get_all_approved_partially_dispatched_order_entries_with_balance();
 			
 			$this->load->view('parmaroilmills/templates/header');
-			$this->load->view('parmaroilmills/templates/upper_menu');
+			if ($this->session->userdata('role') == 'ADMIN'){ 
+				$this->load->view('parmaroilmills/templates/upper_menu');
+			} else {
+				$this->load->view('parmaroilmills/templates/upper_menu_operations');
+			}
 			$this->load->view('parmaroilmills/landing_approved_sales_order', $data);
 			$this->load->view('parmaroilmills/templates/footer');					
 		}

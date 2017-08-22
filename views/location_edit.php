@@ -92,7 +92,7 @@
 					</div>
 					<div class="form-group" >
 						<div class="col-md-9" style="padding-bottom:20px;">
-							<button type="submit" class="btn width-150 btn-primary" style="margin:10px" name="submit" tabindex="4">Save</button>
+							<button type="submit" class="btn width-150 btn-primary" style="margin:10px" tabindex="4">Save</button>
 							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_location"><button type="button" class="btn width-150 btn-default" style="margin:10px" tabindex="5">Cancel</button></a>
 						</div>
                     </div>

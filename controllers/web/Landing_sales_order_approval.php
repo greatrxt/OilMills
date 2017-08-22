@@ -1,5 +1,5 @@
 <?php
-class Landing_sales_order_approval extends Operations_controller {
+class Landing_sales_order_approval extends Admin_controller {
 
         public function __construct()
         {

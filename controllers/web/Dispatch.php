@@ -13,7 +13,11 @@ class Dispatch extends Operations_controller {
 	public function index(){
 		$data['dispatchs'] = $this->dispatch_model->get_all_dispatch();
 		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
+		if ($this->session->userdata('role') == 'ADMIN'){ 
+			$this->load->view('parmaroilmills/templates/upper_menu');
+		} else {
+			$this->load->view('parmaroilmills/templates/upper_menu_operations');
+		}
 		$this->load->view('parmaroilmills/landing_dispatch', $data);
 		$this->load->view('parmaroilmills/templates/footer');
 	}
@@ -28,7 +32,11 @@ class Dispatch extends Operations_controller {
 		$data['dispatchs'] = $this->dispatch_model->get_dispatch($id);
 		$data['routes'] = $this->dispatch_model->get_routes_for_dispatch($id);
 		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
+		if ($this->session->userdata('role') == 'ADMIN'){ 
+			$this->load->view('parmaroilmills/templates/upper_menu');
+		} else {
+			$this->load->view('parmaroilmills/templates/upper_menu_operations');
+		}
 		$this->load->view('parmaroilmills/dispatch_view', $data);
 		$this->load->view('parmaroilmills/templates/footer');
 	}
@@ -58,7 +66,11 @@ class Dispatch extends Operations_controller {
 		$data['entryIds'] = $entryIds;
 		//print_r($data);
 		$this->load->view('parmaroilmills/templates/header');
-		$this->load->view('parmaroilmills/templates/upper_menu');
+		if ($this->session->userdata('role') == 'ADMIN'){ 
+			$this->load->view('parmaroilmills/templates/upper_menu');
+		} else {
+			$this->load->view('parmaroilmills/templates/upper_menu_operations');
+		}
 		$this->load->view('parmaroilmills/dispatch_estimate', $data);
 		$this->load->view('parmaroilmills/templates/footer');	
 	}

@@ -1,5 +1,5 @@
 <?php
-class Landing_rejected_sales_order extends Operations_controller {
+class Landing_rejected_sales_order extends Admin_controller {
 
         public function __construct()
         {

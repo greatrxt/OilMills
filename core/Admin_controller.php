@@ -1,6 +1,6 @@
 <?php
 
-class Admin_controller extends MY_controller {
+class Admin_controller extends Auth_controller {
     public function __construct() {
        parent::__construct();
 	   	$this->load->library('session');

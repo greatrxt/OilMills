@@ -61,7 +61,7 @@ public function edit($id = NULL){
 	} else {
 		
 		$result = $this->customer_model->edit_customer($id, $this->input->post());
-		redirect('ParmarOilMills/web/customer/edit/'.$id, 'refresh');	
+		redirect('ParmarOilMills/web/landing_customer', 'refresh');
 	}		
 	//print_r($this->input->post());
 	//print_r($data);
