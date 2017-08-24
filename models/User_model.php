@@ -6,6 +6,12 @@ class User_model extends CI_Model {
 		$this->load->database();
 	}
 	
+	public function get_user_count(){
+		$query_string = 'SELECT COUNT(UserId) AS count from ApplicationUser';
+		$result = $this->db->query($query_string);
+		return $result->row_array();
+	}
+	
 	public function get_user_from_token($token){
 		$this->db->where('key', $token);
 		$query = $this->db->get('keys');

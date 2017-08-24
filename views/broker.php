@@ -19,7 +19,7 @@
 				<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/broker/create/', $attributes); ?>
 				<div id = "form-validation" name="form-validation" class="tab-content padding-vertical-20">
 					<div class="tab-pane active" id="tab1" role="tabpanel" aria-expanded="false">
-						
+
 						<div class = "col-lg-5">
 							<div class="form-group">
                                 <label for="name">Broker / Company Name*</label>
@@ -44,12 +44,12 @@
 									}
 									?>
 								</select>
-                            </div>								
+                            </div>
 							<div class="form-group">
                                 <label for="state">State*</label>
 								<input class="form-control" name="state" id="state" type="text" readonly>
                             </div>
-						
+
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
                                 <input class="form-control" name="contactPerson" type="text"
@@ -58,34 +58,34 @@
                             </div>
 
 						</div>
-						
-						
+
+
 						<div class = "col-lg-5" style="padding-left:100px;">
 							<div class="form-group">
                                 <label for="customerId">Broker ID</label>
 								<input class="form-control" name="customerId" type="text" readonly value = "Not Assigned Yet">
-                            </div>	
+                            </div>
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area</label>
                                 <input class="form-control" name="area" type="text">
-							</div>						
+							</div>
 							<div class="form-group">
                                 <label for="district">District</label>
                                 <input class="form-control" name="district" id="district" type="text" readonly>
-                            </div>							
-							
-							
+                            </div>
+
+
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
                                 <input class="form-control" name="emailAddress" type="text">
                             </div>
-							
+
 							<div class="form-group">
                                 <label for="contactNumber">Contact Number*</label>
                                 <input class="form-control" name="contactNumber" type="text" name="validation[contact number]"
 																					   data-validation="[L>=8]"
 																					   data-validation-message="Please enter a valid Contact Number" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                            </div>							
+                            </div>
 						</div>
 					</div>
 					<div class="form-group" >
@@ -101,7 +101,7 @@
 
 		</div>
 	</section>
-</div>	
+</div>
 </section>
 <script>
 		locationsArray = new Array();

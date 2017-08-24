@@ -6,6 +6,12 @@ class Employee_model extends CI_Model {
             $this->load->database();
         }
 		
+		public function get_employee_count(){
+			$query_string = 'SELECT COUNT(EmployeeId) AS count from Employee';
+			$result = $this->db->query($query_string);
+			return $result->row_array();
+		}
+		
 		function deleteEmployeeBy($id) {
 
 			$query = $this->db->get_where('Employee', array('EmployeeId' => $id));

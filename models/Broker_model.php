@@ -17,6 +17,12 @@ class Broker_model extends CI_Model {
 			}
 		}
 
+		public function get_broker_count(){
+			$query_string = 'SELECT COUNT(BrokerId) AS count from Broker';
+			$result = $this->db->query($query_string);
+			return $result->row_array();
+		}
+		
 		public function get_all_brokers()
 		{
 			$result = $this->db->query('SELECT BrokerID,

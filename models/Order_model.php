@@ -6,6 +6,72 @@ class Order_model extends CI_Model {
 		$this->load->database();
 	}
 	
+	/**
+	For Dashboard
+	*/
+	public function get_pending_approval_orders_entries(){
+		$query_string = 'SELECT
+						COUNT(OrderEntries.OrderEntryId) AS OrderEntryCount,
+						COUNT(DISTINCT(OrderEntries.OrderId)) AS OrderCount,
+						COUNT(DISTINCT(SalesOrder.CustomerId)) AS CustomerCount
+						FROM
+						OrderEntries
+						LEFT JOIN
+						SalesOrder
+						ON 
+						OrderEntries.OrderId = SalesOrder.OrderId
+						LEFT JOIN
+						Customer
+						ON
+						SalesOrder.CustomerId = Customer.CustomerId
+						WHERE
+						OrderEntries.Status = "PENDING_APPROVAL"';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+
+	public function get_rejected_orders_entries_count(){
+		$query_string = 'SELECT
+					COUNT(OrderEntries.OrderEntryId) AS count
+					FROM
+					OrderEntries
+					WHERE
+					OrderEntries.Status = "REJECTED"';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+	
+	public function get_approved_orders_entries_count(){
+		$query_string = 'SELECT
+					COUNT(OrderEntries.OrderEntryId) AS count
+					FROM
+					OrderEntries
+					WHERE
+					OrderEntries.Status = "APPROVED"';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+
+	public function get_orders_received_today(){
+		$query_string = 'SELECT
+						COUNT(DISTINCT(OrderEntries.OrderId)) AS count,
+						SUM(SellingPriceAtOrderTime * OrderQuantity) AS value
+						FROM
+						OrderEntries
+						LEFT JOIN
+						SalesOrder
+						ON 
+						OrderEntries.OrderId = SalesOrder.OrderId
+						WHERE
+						DATE(RecordCreationTime) = CURDATE()';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();		
+	}
+	
 	public function reviewOrdersWithCustomRates($orderIds, $custom_rates, $status){
 		foreach($orderIds as $orderId)
 		{

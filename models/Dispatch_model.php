@@ -5,6 +5,48 @@ class Dispatch_model extends CI_Model {
 	{
 		$this->load->database();
 	}
+	
+	/**
+	For dashboard. Calculates total dispatch value for current date in INR
+	*/
+	public function get_orders_entries_dispatched_today_amount(){
+		$query_string = 'SELECT
+						SUM(SellingPriceAtOrderTime * OrderEntries_Dispatch.DispatchQuantity) AS total
+						FROM
+						OrderEntries_Dispatch
+						LEFT JOIN
+						OrderEntries
+						ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+						LEFT JOIN
+						Dispatch
+						ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
+						WHERE 
+						DATE(Dispatch.DispatchTime) = CURDATE()';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+	
+	public function get_orders_entries_dispatched_today_count(){
+		$query_string = 'SELECT
+						COUNT(DISTINCT(OrderEntries.OrderEntryId)) AS OrderEntryCount,
+						COUNT(DISTINCT(OrderId)) AS OrderCount
+						FROM
+						OrderEntries_Dispatch
+						LEFT JOIN
+						Dispatch
+						ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
+						LEFT JOIN
+						OrderEntries
+						ON
+						OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+						WHERE 
+						DATE(Dispatch.DispatchTime) = CURDATE()';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+	
 	public function get_routes_for_dispatch($id){
 		$query_string = 'SELECT DISTINCT(Route.RouteId) AS RouteID, Route.RouteName
 							FROM OrderEntries 

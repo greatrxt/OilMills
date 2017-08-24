@@ -6,6 +6,12 @@ class Customer_model extends CI_Model {
             $this->load->database();
         }
 		
+		public function get_customer_count(){
+			$query_string = 'SELECT COUNT(CustomerId) AS count from Customer';
+			$result = $this->db->query($query_string);
+			return $result->row_array();
+		}
+		
 		function deleteCustomerBy($id) {
 
 			$query = $this->db->get_where('Customer', array('CustomerId' => $id));

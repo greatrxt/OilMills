@@ -1,5 +1,5 @@
 
-		
+
 <nav class="left-menu" left-menu ng-class="{'hidden-left-menu': hideLeftMenu}">
     <div class="logo-container">
         <a href="http://1qubit.com" target="_blank" class="logo">
@@ -8,8 +8,8 @@
         </a>
     </div>
     <div class="left-menu-inner scroll-pane">
-        <ul class="left-menu-list left-menu-list-root list-unstyled">   
-		
+        <ul class="left-menu-list left-menu-list-root list-unstyled">
+
             <li>
                 <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/home">
                     <i class="left-menu-link-icon icmn-home2"></i>
@@ -73,13 +73,6 @@
                         </div>
                     </li>
                 </ul>
-            </li>
-			<li class="left-menu-list-separator"><!-- --></li>
-            <li>
-                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/product/live">
-                    <i class="left-menu-link-icon icmn-profile"><!-- --></i>
-                    Live Rates
-                </a>
             </li>
             <li class="left-menu-list-separator"><!-- --></li>
             <li>

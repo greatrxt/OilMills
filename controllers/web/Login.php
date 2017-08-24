@@ -34,7 +34,7 @@ class Login extends CI_Controller {
 			if($role == 'ADMIN'){
 				redirect('ParmarOilMills/web/home', 'refresh');
 			} else if($role == 'OPERATIONS'){
-				redirect('ParmarOilMills/web/home_operations', 'refresh');
+				redirect('ParmarOilMills/web/home/operations', 'refresh');
 			} else {
 				redirect('ParmarOilMills/web/Login/', 'refresh');
 			}
