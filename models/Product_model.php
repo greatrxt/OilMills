@@ -29,7 +29,8 @@ class Product_model extends CI_Model {
 			}
 			$data = array(
 						'SellingPrice' => $value,
-						'LastPriceUpdateTime' => date("Y-m-d H:i:s")
+						'LastPriceUpdateTime' => date("Y-m-d H:i:s"),
+						'PriceLastUpdatedBy' => $this->session->userdata('userid')
 						);
 			$this->db->where('ProductId', $key);
 			$this->db->update('Product', $data); 
@@ -55,14 +56,20 @@ class Product_model extends CI_Model {
 	{
 		$result = $this->db->query('SELECT
 									  *,
+									  
 									  Product.RecordCreationTime,
-									  ApplicationUser.username
+									  t1.username as username,
+									  t2.username as PriceLastUpdatedBy
 									FROM
 									  Product
 									LEFT JOIN
-									  ApplicationUser
+									  ApplicationUser AS t1
 									ON
-									  Product.RecordCreatedBy = ApplicationUser.UserId;');
+									  Product.RecordCreatedBy = t1.UserId
+									LEFT JOIN
+									  ApplicationUser AS t2
+									ON
+									  Product.PriceLastUpdatedBy = t2.UserId;');
 		return $result->result_array();
 	}
 	

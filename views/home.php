@@ -140,7 +140,7 @@
                             <div class="carousel-item active">
                                 <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/production" class="widget-body">
                                     <h2>
-                                        <i class="icmn-database"></i> Production Summary
+                                        <i class="icmn-database"></i> Production for today
                                     </h2>
                                     <p>
                                         Total Orders : <?php echo $production['orderCount'] ?>
@@ -172,7 +172,7 @@
                             <div class="carousel-item active">
                                 <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/dispatch" class="widget-body">
                                     <h2>
-                                        <i class="icmn-books"></i>Dispatch Summary
+                                        <i class="icmn-books"></i> Dispatch for today
                                     </h2>
                                     <p>
                                         Total Orders : <?php echo $order_entries_dispatched_today['OrderCount']; ?>
@@ -234,20 +234,18 @@
 						<table class="table table-hover nowrap" width="100%" id = 'displayProductsTable'>
 							<thead class="thead-default">
 							<tr>
-								<th>ID</th>
 								<th>Name</th>
-								<th>ProductCategory</th>
 								<th>Live Rate</th>
+								<th>Price Last Updated By</th>
 								<th>Last Price Update Time</th>
 							</tr>
 							</thead>
 							<tbody >
 							<?php foreach ($products as $product): ?>
 							<tr>
-								<td>PRO<?php echo $product['ProductId']; ?></td>
 								<td><?php echo $product['Name']; ?></td>
-								<td><?php echo $product['ProductCategory']; ?></td>
 								<td>₹ <?php echo $product['SellingPrice']; ?></td>
+								<td><?php echo $product['PriceLastUpdatedBy']; ?></td>
 								<td><?php echo $product['LastPriceUpdateTime']; ?></td>
 							</tr>
 							<?php endforeach; ?>
@@ -263,70 +261,9 @@
                 </div>
             </div>
 		</div>
-        <div class="widget widget-four background-transparent">
-            <div class="row">
-                <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-					<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_customer" class="widget-body">
-                    <div class="step-block ">
-                        <span class="step-digit">
-                            <i class="icmn-database"><!-- --></i>
-                        </span>
-                        <div class="step-desc">
-                            <span class="step-title">Customers</span>
-                            <p>
-                                Total: <?php echo $customer['count'] ?>
-                            </p>
-                        </div>
-                    </div>
-					</a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-					<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_broker" class="widget-body">
-                    <div class="step-block">
-                        <span class="step-digit">
-                            <i class="icmn-users"><!-- --></i>
-                        </span>
-                        <div class="step-desc">
-                            <span class="step-title">Brokers</span>
-                            <p>Total: <?php echo $broker['count'] ?></p>
-                        </div>
-                    </div>
-					</a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-					<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_employee" class="widget-body">
-                    <div class="step-block step-warning">
-                        <span class="step-digit">
-                            <i class="icmn-stats-growth"><!-- --></i>
-                        </span>
-                        <div class="step-desc">
-                            <span class="step-title">Employees</span>
-                            <p>
-                                Total: <?php echo $employee['count'] ?>
-                            </p>
-                        </div>
-                    </div>
-					</a>
-                </div>
-                <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                    <div class="step-block step-primary">
-                        <span class="step-digit">
-                            <i class="icmn-stats-dots"><!-- --></i>
-                        </span>
-                        <div class="step-desc">
-                            <span class="step-title">Users</span>
-                            <p>
-                                <span><?php echo $user['count'] ?></span>
-                                <span>&nbsp;</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- End Dashboard -->
+   <!-- 
+   Closing tags commented out for home_footer in case of admin
+   </div> 
 
 </div>
 </section>
@@ -442,55 +379,6 @@
             responsive: true,
             "lengthMenu": [[6], [6]]
         });
-
-        ///////////////////////////////////////////////////////////
-        /* CHART 1
-        new Chartist.Line(".chart-line", {
-            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            series: [
-                [12, 9, 7, 8, 5],
-                [2, 1, 3.5, 7, 3],
-                [1, 3, 4, 5, 6]
-            ]
-        }, {
-            fullWidth: !0,
-            chartPadding: {
-                right: 40
-            },
-            plugins: [
-                Chartist.plugins.tooltip()
-            ]
-        });
-
-        ///////////////////////////////////////////////////////////
-        // CHART 2
-        var overlappingData = {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    series: [
-                        [5, 4, 3, 7, 5, 10, 3, 4, 8, 10, 6, 8],
-                        [3, 2, 9, 5, 4, 6, 4, 6, 7, 8, 7, 4]
-                    ]
-                },
-                overlappingOptions = {
-                    seriesBarDistance: 10,
-                    plugins: [
-                        Chartist.plugins.tooltip()
-                    ]
-                },
-                overlappingResponsiveOptions = [
-                    ["", {
-                        seriesBarDistance: 5,
-                        axisX: {
-                            labelInterpolationFnc: function(value) {
-                                return value[0]
-                            }
-                        }
-                    }]
-                ];
-
-        new Chartist.Bar(".chart-overlapping-bar", overlappingData, overlappingOptions, overlappingResponsiveOptions);*/
-
-
     });
 </script>
 <!-- End Page Scripts -->

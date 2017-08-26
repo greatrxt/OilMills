@@ -176,7 +176,7 @@ function addToCustomRoute(customerId, defaultRoute, element){
 									<td><?php echo $customer['CustomerName']; ?></td>
 									<td><?php echo $customer['ProductCount']; ?></td>
 									<td><?php echo $customer['OrderQuantity']; ?></td>
-									<td><span id = "customer_<?php echo $customer['CustomerId']; ?>"><?php echo $customer['OrderQuantity']; ?></span></td>
+									<td><span id = "customer_<?php echo $customer['CustomerId']; ?>"><?php echo $dispatch['Balance']; ?></span></td>
 									<td>
 									<select class="form-control" id="route" name="Route" onchange = "updateRoute(this, 'route_<?php echo $customer['CustomerId']?>');
 																									addToCustomRoute(<?php echo $customer['CustomerId']; ?>, <?php echo $customer['RouteId']; ?>, this);" >

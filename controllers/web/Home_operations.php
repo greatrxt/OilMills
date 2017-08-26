@@ -1,5 +1,5 @@
 <?php
-class Home extends Admin_controller {
+class Home_operations extends Operations_controller {
 
 	public function __construct()
 	{
@@ -7,10 +7,6 @@ class Home extends Admin_controller {
 		$this->load->helper('url_helper');
 		$this->load->library('session');
 		$this->load->model('order_model');
-		$this->load->model('broker_model');
-		$this->load->model('customer_model');
-		$this->load->model('employee_model');
-		$this->load->model('user_model');
 		$this->load->model('product_model');
 		$this->load->model('production_model');
 		$this->load->model('dispatch_model');
@@ -29,16 +25,9 @@ class Home extends Admin_controller {
 		$data['orders'] = $this->order_model->get_orders_received_today();
 		$data['production'] = $this->production_model->get_production_details_for_current_date();
 		$data['products'] = $this->product_model->get_all_products();
-		
-		$footer_data['broker'] = $this->broker_model->get_broker_count();
-		$footer_data['customer'] = $this->customer_model->get_customer_count();
-		$footer_data['employee'] = $this->employee_model->get_employee_count();
-		$footer_data['user'] = $this->user_model->get_user_count();
-		
-		//print_r($data);
-		$this->load->view('parmaroilmills/templates/upper_menu');
+
+		$this->load->view('parmaroilmills/templates/upper_menu_operations');
 		$this->load->view('parmaroilmills/home', $data);
-		$this->load->view('parmaroilmills/home_footer', $footer_data);
 		$this->load->view('parmaroilmills/templates/footer');
 	}
 }	

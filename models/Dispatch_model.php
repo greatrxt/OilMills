@@ -10,8 +10,9 @@ class Dispatch_model extends CI_Model {
 	For dashboard. Calculates total dispatch value for current date in INR
 	*/
 	public function get_orders_entries_dispatched_today_amount(){
+		$this->db->query('SET time_zone = "+05:30";');
 		$query_string = 'SELECT
-						SUM(SellingPriceAtOrderTime * OrderEntries_Dispatch.DispatchQuantity) AS total
+						IFNULL(SUM(SellingPriceAtOrderTime * OrderEntries_Dispatch.DispatchQuantity), 0) AS total
 						FROM
 						OrderEntries_Dispatch
 						LEFT JOIN
@@ -28,6 +29,7 @@ class Dispatch_model extends CI_Model {
 	}
 	
 	public function get_orders_entries_dispatched_today_count(){
+		$this->db->query('SET time_zone = "+05:30";');
 		$query_string = 'SELECT
 						COUNT(DISTINCT(OrderEntries.OrderEntryId)) AS OrderEntryCount,
 						COUNT(DISTINCT(OrderId)) AS OrderCount
@@ -53,7 +55,7 @@ class Dispatch_model extends CI_Model {
 							LEFT JOIN SalesOrder ON OrderEntries.OrderId = SalesOrder.OrderId
 							LEFT JOIN OrderEntries_Dispatch ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
 							LEFT JOIN Customer ON SalesOrder.CustomerId = Customer.CustomerId
-							LEFT JOIN Route ON Customer.Route = Route.RouteId
+							LEFT JOIN Route ON OrderEntries_Dispatch.RouteId = Route.RouteId
 							WHERE OrderEntries_Dispatch.DispatchID = '.$id;
 		$result = $this->db->query($query_string);
 		return $result->result_array();	
@@ -67,17 +69,17 @@ class Dispatch_model extends CI_Model {
 	
 	public function get_dispatch($id){
 		$query_string = 'SELECT Product.Name as ProductName, Broker.Name as BrokerName, PaymentTerms, SellingPriceAtOrderTime, GROUP_CONCAT(DISTINCT(SalesOrder.OrderId) SEPARATOR ", OD") as OrderId,
-									SUM(OrderEntries.OrderQuantity) as OrderQuantity, Customer.Name as CustomerName, Route.RouteName, Route.RouteId
+									SUM(OrderEntries_Dispatch.DispatchQuantity) as DispatchQuantity, Customer.Name as CustomerName, Route.RouteName, Route.RouteId
 									FROM OrderEntries 
 									LEFT JOIN Product ON OrderEntries.OrderedProductId = Product.ProductId
 									LEFT JOIN SalesOrder ON OrderEntries.OrderId = SalesOrder.OrderId
 									LEFT JOIN Broker ON SalesOrder.LinkedBrokerId = Broker.BrokerId
 									LEFT JOIN Customer ON SalesOrder.CustomerId = Customer.CustomerId
-									LEFT JOIN Route ON Customer.Route = Route.RouteId
 									LEFT JOIN OrderEntries_Dispatch ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+									LEFT JOIN Route ON OrderEntries_Dispatch.RouteId = Route.RouteId
 									WHERE OrderEntries_Dispatch.DispatchID = '.$id.'
 									GROUP BY CustomerName, ProductName
-									ORDER BY RouteId';
+									ORDER BY Route.RouteId';
 		$result = $this->db->query($query_string);
 		return $result->result_array();			
 	}

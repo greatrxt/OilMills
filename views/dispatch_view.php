@@ -69,7 +69,7 @@
 					<td><?php echo $dispatch['CustomerName']; ?></td>
 					<td>OD<?php echo $dispatch['OrderId']; ?></td>
                     <td><?php echo $dispatch['ProductName']; ?></td>
-                    <td><?php echo $dispatch['OrderQuantity']; ?></td>
+                    <td><?php echo $dispatch['DispatchQuantity']; ?></td>
 					<td><?php echo $dispatch['RouteName']. '  ( RT'.$dispatch['RouteId'].' )'; ?></td>
 				</tr>
 				<?php 

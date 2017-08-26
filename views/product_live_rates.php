@@ -14,7 +14,7 @@ function limitWithin(element){
 </script>
 <section class = "page-content">
 <?php echo validation_errors(); ?>
-<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/product/update_rates', $attributes); ?>
+<?php $attributes = array('name' => 'form-validation'); echo form_open('ParmarOilMills/web/Live_rates/update_rates', $attributes); ?>
 <div class="page-content-inner">
 
     <!-- Ecommerce Products List -->
@@ -41,6 +41,7 @@ function limitWithin(element){
                     <th>ProductCategory</th>
                     <th>SellingPrice</th>
                     <th>Status</th>
+                    <th>Last Updated By</th>
                     <th>Last Price Update Time</th>
                 </tr>
                 </thead>
@@ -52,6 +53,7 @@ function limitWithin(element){
                     <th>ProductCategory</th>
                     <th>SellingPrice</th>
                     <th>Status</th>
+					<th>Last Updated By</th>
                     <th>Last Price Update Time</th>
                 </tr>
                 </tfoot>
@@ -82,6 +84,7 @@ function limitWithin(element){
 					<td><input name = "<?php echo $product['ProductId']; ?>" type = "number" class="form-control width-100" value = "<?php echo $product['SellingPrice']; ?>" min="0" step="0.01"
 						oninput = "limitWithin(this)"/></td>
                     <td><?php echo $product['Status']; ?></td>
+					<td><?php echo $product['PriceLastUpdatedBy']; ?></td>
                     <td><?php echo $product['LastPriceUpdateTime']; ?></td>
 				</tr>
 				<?php endforeach; ?>

@@ -7,7 +7,7 @@ class Production_model extends CI_Model {
 	}
 	
 	public function get_production_details_for_current_date(){
-		$query_string = 'SELECT COUNT(DISTINCT(OrderId)) AS orderCount, SUM(SellingPriceAtOrderTime * OrderQuantity) AS value FROM `OrderEntries` 
+		$query_string = 'SELECT COUNT(DISTINCT(OrderId)) AS orderCount, IFNULL(SUM(SellingPriceAtOrderTime * OrderQuantity), 0) AS value FROM `OrderEntries` 
 							LEFT JOIN `Production` 
 							ON OrderEntries.ProductionId = Production.ProductionId 
 							WHERE DATE(ProductionTime) = CURDATE()';

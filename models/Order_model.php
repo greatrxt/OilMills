@@ -56,6 +56,7 @@ class Order_model extends CI_Model {
 	}
 
 	public function get_orders_received_today(){
+		$this->db->query('SET time_zone = "+05:30";');
 		$query_string = 'SELECT
 						COUNT(DISTINCT(OrderEntries.OrderId)) AS count,
 						SUM(SellingPriceAtOrderTime * OrderQuantity) AS value

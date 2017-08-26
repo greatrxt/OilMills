@@ -34,28 +34,6 @@ public function view($id = NULL)
 }
 
 
-public function live()
-{       
-	$data['title'] = 'Parmar Oil Mills';
-	$data['products'] = $this->product_model->get_all_products();
-
-	if (empty($data['products']))
-	{
-			show_404();
-	}
-
-	$this->load->view('parmaroilmills/templates/header', $data);
-	$this->load->view('parmaroilmills/templates/upper_menu', $data);
-	$this->load->view('parmaroilmills/product_live_rates', $data);
-	$this->load->view('parmaroilmills/templates/footer');
-}
-
-public function update_rates()
-{       
-	$this->product_model->update_rates($this->input->post());
-	redirect('ParmarOilMills/web/product/live', 'refresh');
-}
-
 public function edit($id = NULL)
 {
 
@@ -149,7 +127,8 @@ public function create()
 				'SellingPrice' => $this->input->post('sellingPrice'),
 				'Status' => $this->input->post('productStatus'),
 				'ProductImage' => $file_location,
-				'RecordCreatedBy' => $this->session->userdata('userid')
+				'RecordCreatedBy' => $this->session->userdata('userid'),
+				'PriceLastUpdatedBy' => $this->session->userdata('userid')
 		);
 		
 		//echo $data['city'];

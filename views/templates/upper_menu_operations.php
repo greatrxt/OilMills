@@ -85,7 +85,7 @@
     </div>
 </nav>
 
-<nav class="top-menu" ng-class="{'hidden-top-menu': hideTopMenu}">
+<nav style = "height:0px;" class="top-menu" ng-class="{'hidden-top-menu': hideTopMenu}">
     <div class="menu-icon-container hidden-md-up">
         <div class="animate-menu-button left-menu-toggle">
             <div><!-- --></div>

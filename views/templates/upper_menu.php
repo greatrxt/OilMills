@@ -127,7 +127,7 @@
             </li>
 			<li class="left-menu-list-separator"><!-- --></li>
             <li>
-                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/product/live">
+                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/Live_rates">
                     <i class="left-menu-link-icon icmn-profile"><!-- --></i>
                     Live Rates
                 </a>

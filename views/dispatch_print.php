@@ -33,7 +33,7 @@
 			?>	
 		</select> 
 	</div>
-	<textarea id="header" readonly></textarea>
+	<textarea id="header" readonly style = "height:50px"></textarea>
 	<textarea readonly>Dispatch : <?php echo "DISP".$id ?></textarea>
 	<textarea style="float:right" readonly><?php echo $dispatch_details['DispatchTime'] ?></textarea>
 <div id="identity">	
@@ -76,10 +76,10 @@
 					<td><center><?php echo $dispatch['BrokerName']; ?></center></td>
 					<td><center><?php echo $dispatch['PaymentTerms']; ?></center></td>
                     <td><center><?php echo $dispatch['ProductName']; ?></center></td>
-                    <td><center><?php echo $dispatch['OrderQuantity']; ?></center></td>
+                    <td><center><?php echo $dispatch['DispatchQuantity']; ?></center></td>
 					<td><center><?php echo $dispatch['SellingPriceAtOrderTime']; ?></center></td>
 					<td><center></center></td>
-					<td><center><?php echo number_format($dispatch['SellingPriceAtOrderTime'] * $dispatch['OrderQuantity']); ?></center></td>
+					<td><center><?php echo number_format($dispatch['SellingPriceAtOrderTime'] * $dispatch['DispatchQuantity']); ?></center></td>
 					<td><center></center></td>
 				</tr>
 				<?php 
