@@ -45,7 +45,7 @@
                 <div class="widget widget-seven">
                     <div class="carousel-widget carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
-                            <div class="carousel-item">
+                            <div class="carousel-item active">
                                 <div class="widget-body">
 									<div href="javascript: void(0);" class="widget-body-inner">
 										<h5 class="text-uppercase">Items For Approval</h5>
@@ -57,6 +57,15 @@
 									</div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
+                <div class="widget widget-seven">
+                    <div class="carousel-widget carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
 							<div class="carousel-item  background-default active">
 							       <div class="widget-body">
 									<div href="javascript: void(0);" class="widget-body-inner">
@@ -69,25 +78,23 @@
 									</div>
 								</div>
 							</div>
+							<div class="carousel-item">
+							<div class="widget-body">
+								<div href="javascript: void(0);" class="widget-body-inner">
+									<h5 class="text-uppercase">Today's Dispatch Value (INR)</h5>
+									<i class="counter-icon icmn-cash4"></i>
+									<span class="counter-count">
+										<i class="icmn-arrow-up5"></i>
+										₹ <span class="counter-init" data-from="0" data-to="<?php echo $get_orders_entries_dispatched_today_amount['total']; ?>"></span>
+									</span>
+								</div>
+							</div>
+							</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
-                <div class="widget widget-seven">
-                    <div class="widget-body">
-                        <div href="javascript: void(0);" class="widget-body-inner">
-                            <h5 class="text-uppercase">Today's Dispatch Value (INR)</h5>
-                            <i class="counter-icon icmn-cash4"></i>
-                            <span class="counter-count">
-                                <i class="icmn-arrow-up5"></i>
-                                ₹ <span class="counter-init" data-from="0" data-to="<?php echo $get_orders_entries_dispatched_today_amount['total']; ?>"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  
             <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
                 <div class="widget widget-seven">
                     <div class="widget-body">
@@ -113,7 +120,7 @@
                                 <div class="widget-body">
                                     <div class="widget-body-icon">
                                     </div>
-                                    <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/product/live" class="widget-body-inner">
+                                    <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/Live_rates" class="widget-body-inner">
                                         <h2>Live Rates</h2>
                                     </a>
                                 </div>
@@ -140,7 +147,7 @@
                             <div class="carousel-item active">
                                 <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/production" class="widget-body">
                                     <h2>
-                                        <i class="icmn-database"></i> Production for today
+                                        <i class="icmn-database"></i> Monthly Production
                                     </h2>
                                     <p>
                                         Total Orders : <?php echo $production['orderCount'] ?>
@@ -172,12 +179,12 @@
                             <div class="carousel-item active">
                                 <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/dispatch" class="widget-body">
                                     <h2>
-                                        <i class="icmn-books"></i> Dispatch for today
+                                        <i class="icmn-books"></i> Monthly Dispatch
                                     </h2>
                                     <p>
-                                        Total Orders : <?php echo $order_entries_dispatched_today['OrderCount']; ?>
+                                        Total Orders : <?php echo $order_entries_dispatched_for_current_month['OrderCount']; ?>
                                         <br />
-                                        Total Value : ₹ <?php echo $get_orders_entries_dispatched_today_amount['total']; ?>
+                                        Total Value : ₹ <?php echo $order_entries_dispatched_for_current_month['total']; ?>
                                     </p>
                                 </a>
                             </div>
@@ -203,11 +210,11 @@
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active">
                                 <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_sales_order_approval" class="widget-body">
-                                    <h2>Pending Orders</h2>
+                                    <h2>Pending Dispatch Orders</h2>
                                     <p>
-                                        Number Of Orders : <?php echo $pending_approval_order_entries['OrderCount']; ?>
+                                        Number Of Orders : <?php echo $approved_and_pending_dispatch_orders_entries['OrderCount']; ?>
                                         <br />
-                                        Number Of Customers : <?php echo $pending_approval_order_entries['CustomerCount']; ?>
+                                        Number Of Customers : <?php echo $approved_and_pending_dispatch_orders_entries['CustomerCount']; ?>
                                     </p>
                                 </a>
                             </div>

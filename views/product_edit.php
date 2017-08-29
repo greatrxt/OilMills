@@ -32,7 +32,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="productCode">Product Code</label>
-                                <input type="text" name = "productCode" class="form-control"  value="<?php if(set_value('productCode')!=null) echo set_value('productCode'); else echo $product['Code']; ?>">
+                                <input type="text" name = "productCode" data-validation="[L>=2]" class="form-control"  value="<?php if(set_value('productCode')!=null) echo set_value('productCode'); else echo $product['Code']; ?>">
                             </div>
                         </div>
                         <div class="col-lg-6">

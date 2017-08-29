@@ -20,12 +20,12 @@
             </div>
         </div>
     </div>
-    <div class="single-page-block">
+    <div class="single-page-block" style = "padding-top:8%">
         <div class="single-page-block-inner effect-3d-element">
             <div class="blur-placeholder"><!-- --></div>
             <div class="single-page-block-form">
                 <h3 class="text-center">
-                    <i class="icmn-enter margin-right-10"></i>
+                    <i class="fa fa-tint margin-right-10"></i>
                     Parmar Oil Mills
                 </h3>
                 <br />
@@ -66,7 +66,6 @@
             <li><a href="javascript: void(0);">Terms of Use</a></li>
             <li class="active"><a href="javascript: void(0);">Compliance</a></li>
             <li><a href="javascript: void(0);">Confidential Information</a></li>
-            <li><a href="javascript: void(0);">Support</a></li>
             <li><a href="javascript: void(0);">Contacts</a></li>
         </ul>
     </div>

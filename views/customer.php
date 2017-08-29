@@ -34,17 +34,17 @@
 							<div class="form-group">
                                 <label for="name">Customer / Company Name*</label>
                                 <input class="form-control" id="name" type="text" name="name" value="<?php echo set_value('name'); ?>" data-validation="[L>=3]"
-																					   data-validation-message = "Must contain atleast 3 characters" >
+																					   data-validation-message = "Must contain atleast 3 characters" tabindex = "1">
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
                                 <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=3]"
-																						data-validation-message="Please enter a valid address">
+																						data-validation-message="Please enter a valid address" tabindex = "2">
 							</div>
 
 							<div class="form-group">
                                 <label for="city">City*</label>
-								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()">
+								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" tabindex = "4">
 								<?php
 									foreach($location as $loc)
 									{
@@ -62,13 +62,13 @@
 						
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
-                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value="<?php echo set_value('contactPerson'); ?>" data-validation="[L>=3]"
+                                <input class="form-control" id="contactPerson" type="text" name="contactPerson" value="<?php echo set_value('contactPerson'); ?>" data-validation="[L>=3]" tabindex = "6"
 																					   data-validation-message="Please enter a valid name">
                             </div>
 							
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label>
-                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>" data-validation="[OPTIONAL, EMAIL]">
+                                <input class="form-control" id="emailAddress" type="text" name="emailAddress" value="<?php echo set_value('emailAddress'); ?>" data-validation="[OPTIONAL, EMAIL]" tabindex = "8">
                             </div>
 						</div>
 						
@@ -80,7 +80,7 @@
                             </div>	
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area*</label>
-                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>" data-validation="[L>=3]">
+                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>" data-validation="[L>=3]" tabindex = "3">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -89,7 +89,7 @@
 							
 							<div class="form-group">
                                 <label for="route">Route</label>
-								<select class="form-control" id="route" name="Route">
+								<select class="form-control" id="route" name="Route" tabindex = "5">
 									<?php
 									foreach($routes as $route)
 									{
@@ -103,7 +103,7 @@
 							
 							<div class="form-group">
                                 <label for="contactNumber">Contact Number*</label>
-                                <input class="form-control" id="contactNumber" type="text" data-validation="[L>=8]"
+                                <input class="form-control" id="contactNumber" type="text" data-validation="[L>=8]" tabindex = "7"
 																					   data-validation-message="Please enter a valid Contact Number" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="contactNumber" value="<?php echo set_value('contactNumber'); ?>">
                             </div>
 
@@ -121,7 +121,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="gstNumber">GST Number</label>
-                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value="<?php echo set_value('GSTNumber'); ?>" data-validation="[L>=3]" disabled>
+                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value="<?php echo set_value('GSTNumber'); ?>" data-validation="[L>=15]" disabled>
                             </div>
 
 						</div>
@@ -134,7 +134,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="fssaiNumber">FSSAI Number</label>
-                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value="<?php echo set_value('FSSAINumber'); ?>" data-validation="[L>=3]" disabled>
+                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value="<?php echo set_value('FSSAINumber'); ?>" data-validation="[L>=14]" disabled>
                             </div>
 
 						</div>
@@ -197,14 +197,14 @@ function validateForm(){
 	}
 	
 	if(!document.getElementById('gstNumber').disabled){
-		if(document.getElementById('gstNumber').value.length < 3){
+		if(document.getElementById('gstNumber').value.length < 15){
 			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
 			return false;
 		}
 	}
 	
 	if(!document.getElementById('fssaiNumber').disabled){
-		if(document.getElementById('fssaiNumber').value.length < 3){
+		if(document.getElementById('fssaiNumber').value.length < 14){
 			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
 			return false;
 		}

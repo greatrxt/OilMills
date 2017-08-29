@@ -14,6 +14,16 @@ class Production_model extends CI_Model {
 		$result = $this->db->query($query_string);
 		return $result->row_array();							
 	}
+	
+	public function get_production_details_for_current_month(){
+		$query_string = 'SELECT COUNT(DISTINCT(OrderId)) AS orderCount, IFNULL(SUM(SellingPriceAtOrderTime * OrderQuantity), 0) AS value FROM `OrderEntries` 
+							LEFT JOIN `Production` 
+							ON OrderEntries.ProductionId = Production.ProductionId 
+							WHERE ProductionTime between  DATE_FORMAT(NOW() ,"%Y-%m-01") AND NOW()';
+		$result = $this->db->query($query_string);
+		return $result->row_array();							
+	}
+	
 	public function get_production($id){
 		$query_string = 'SELECT Product.Name, SUM(OrderEntries.OrderQuantity) as Quantity, GROUP_CONCAT(DISTINCT(OrderId) SEPARATOR ", OD") as OrderId
 									FROM OrderEntries 

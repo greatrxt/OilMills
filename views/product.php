@@ -32,7 +32,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="productCode">Product Code</label>
-                                <input type="text" name = "productCode" class="form-control">
+                                <input type="text" name = "productCode" class="form-control" data-validation="[L>=2]">
                             </div>
                         </div>
                         <div class="col-lg-6">

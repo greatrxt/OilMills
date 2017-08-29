@@ -31,16 +31,16 @@
 							<div class="form-group">
                                 <label for="name">Employee Name*</label>
                                 <input class="form-control" id="name" type="text"  value="<?php if(set_value('name')!=null) echo set_value('name'); else echo $employee['Name']; ?>" name="name" data-validation="[L>=3]"
-																					   data-validation-message="Must contain atleast 3 characters">
+																					   data-validation-message="Must contain atleast 3 characters" tabindex = "1">
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
-                                <input class="form-control" id="address" type="text" name="address" value="<?php if(set_value('address')!=null) echo set_value('address'); else echo $employee['Address']; ?>" data-validation="[L>=2]" data-validation-message="Please enter a valid address">
+                                <input class="form-control" id="address" type="text" name="address" value="<?php if(set_value('address')!=null) echo set_value('address'); else echo $employee['Address']; ?>" data-validation="[L>=2]" data-validation-message="Please enter a valid address" tabindex = "2">
 							</div>
 
 							<div class="form-group">
                                 <label for="city">City*</label>
-								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()">
+								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" tabindex = "4">
 								<?php
 									foreach($location as $loc)
 									{
@@ -64,7 +64,12 @@
 						
 							<div class="form-group">
                                 <label for="department">Department*</label>
-                                <input class="form-control" id = "department" type="text" name="department" value="<?php if(set_value('department')!=null) echo set_value('department'); else echo $employee['Department']; ?>" data-validation="[L>=2]"  data-validation-message="Must contain atleast 2 characters">
+								<select class="form-control" name="department"  id="department" onChange = "refreshLocationDistrictAndState()" tabindex = "6">
+									<option <?php if($employee['Department'] == 'Management') echo "selected" ?> value="Management">Management</option>
+									<option <?php if($employee['Department'] == 'Purchase & Sales') echo "selected" ?> value="Purchase & Sales">Purchase & Sales</option>
+									<option <?php if($employee['Department'] == 'Production & Dispatch') echo "selected" ?> value="Production & Dispatch">Production & Dispatch</option>
+									<option <?php if($employee['Department'] == 'Accounts') echo "selected" ?> value="Accounts">Accounts</option>
+								</select>
                             </div>
 
 						</div>
@@ -77,7 +82,7 @@
                             </div>	
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area*</label>
-                                <input class="form-control" name="area" type="text" name="area" value="<?php if(set_value('area')!=null) echo set_value('area'); else echo $employee['Area']; ?>" data-validation="[L>=3]">
+                                <input class="form-control" name="area" type="text" name="area" value="<?php if(set_value('area')!=null) echo set_value('area'); else echo $employee['Area']; ?>" data-validation="[L>=3]" tabindex = "3">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -87,7 +92,7 @@
 							<div class="form-group">
                                 <label for="designation">Designation*</label>
                                 <input class="form-control" id = "designation" type="text" name="designation"  value="<?php if(set_value('designation')!=null) echo set_value('designation'); else echo $employee['Designation']; ?>" data-validation="[L>=2]"
-																					   data-validation-message="Must contain atleast 2 characters">
+																					   data-validation-message="Must contain atleast 2 characters" tabindex = "5">
                             </div>
 
 							
@@ -99,13 +104,18 @@
 						<div class = "col-lg-4">							
 						<div class="form-group">
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" value="<?php if(set_value('username')!=null) echo set_value('username'); else echo $employee['Username']; ?>" data-validation="[L>=3]">
+                                <input class="form-control" id="username" type="text" name = "username" value="<?php if(set_value('username')!=null) echo set_value('username'); else echo $employee['Username']; ?>" data-validation="[L>=3]" 
+								<?php 
+										$userActive = ($employee['Active'] == 1); 
+										if(set_value('userActive')!=null) $userActive = (set_value('userActive') == "on");
+										if(!$userActive) echo "disabled" ?> > 
                             </div>
 						</div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value="<?php if(set_value('password')!=null) echo set_value('password'); else echo $employee['Password']; ?>" data-validation="[L>=3]">
+                                <input class="form-control" id="password" type="password" name = "password" value="<?php if(set_value('password')!=null) echo set_value('password'); else echo $employee['Password']; ?>" data-validation="[L>=3]" 
+								<?php if(!$userActive) echo "disabled" ?> >
                             </div>
 						</div>
 						<div class = "col-lg-1">
@@ -113,18 +123,16 @@
 								<label class="form-control-label" for="userActive">Active</label><br/>
                                 <input name = "userActive" type="checkbox"  style="margin:11px"
 										<?php 
-										$userActive = ($employee['Active'] == 1); 
-										if(set_value('userActive')!=null) $userActive = (set_value('userActive') == "on");
 										if($userActive) echo "checked" ?> 
-										onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
+										onclick="manageRoles(); document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;toggleRoles(!this.checked);">
                             </div>
 						</div>
 						<div class = "col-lg-9">							
 						<div class="form-group">
                                 <label for="role">Role</label><br/>
-								<input id = "roleSales" name = "role[]" type="checkbox" value = "SALES" <?php if(in_array('SALES', explode(",", $employee['Role']))) echo "checked"; ?> style="margin:11px" onclick="manageRoles()">Sales
-								<input id = "roleOperations" name = "role[]" type="checkbox" value = "OPERATIONS" <?php if(in_array('OPERATIONS', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Operations
-								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN" <?php if(in_array('ADMIN', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Management
+								<input <?php if(!$userActive) echo "disabled" ?>  id = "roleSales" name = "role[]" type="checkbox" value = "SALES" <?php if(in_array('SALES', explode(",", $employee['Role']))) echo "checked"; ?> style="margin:11px" onclick="manageRoles()">Sales
+								<input <?php if(!$userActive) echo "disabled" ?> id = "roleOperations" name = "role[]" type="checkbox" value = "OPERATIONS" <?php if(in_array('OPERATIONS', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Operations
+								<input <?php if(!$userActive) echo "disabled" ?> id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN" <?php if(in_array('ADMIN', explode(",", $employee['Role']))) echo "checked"; ?>  style="margin:11px" onclick="manageRoles()">Management
                             </div>
 						</div>
 					</div>
@@ -161,7 +169,13 @@ function manageRoles(){
 		document.getElementById('roleOperations').disabled = false;
 	}
 }
-manageRoles();
+
+function toggleRoles(status){
+	document.getElementById('roleAdmin').disabled = status;
+	document.getElementById('roleSales').disabled = status;
+	document.getElementById('roleOperations').disabled = status;
+}
+<?php if($userActive) echo "manageRoles();" ?>
 function validateForm(){
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('department').value.length < 2

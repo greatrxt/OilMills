@@ -31,17 +31,17 @@
 							<div class="form-group">
                                 <label for="name">Employee Name*</label>
                                 <input class="form-control" id="name" type="text" value="<?php echo set_value('name'); ?>" name="name" data-validation="[L>=3]"
-																					   data-validation-message="Must contain atleast 3 characters">
+																					   data-validation-message="Must contain atleast 3 characters" tabindex = "1">
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
                                 <input class="form-control" id="address" type="text" name="address" value="<?php echo set_value('address'); ?>" data-validation="[L>=3]"
-																						data-validation-message="Please enter a valid address">
+																						data-validation-message="Please enter a valid address" tabindex = "2">
 							</div>
 
 							<div class="form-group">
                                 <label for="city">City*</label>
-								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()">
+								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" tabindex = "4">
 								<?php
 									foreach($location as $loc)
 									{
@@ -59,8 +59,12 @@
 						
 							<div class="form-group">
                                 <label for="department">Department*</label>
-                                <input class="form-control" id="department" type="text" name="department" value="<?php echo set_value('department'); ?>" data-validation="[L>=2]"
-																					   data-validation-message="Must contain atleast 2 characters">
+								<select class="form-control" name="department"  id="department" onChange = "refreshLocationDistrictAndState()" tabindex = "7">
+									<option <?php if(set_value('department') == 'Management') echo "selected" ?> value="Management">Management</option>
+									<option <?php if(set_value('department') == 'Purchase & Sales') echo "selected" ?> value="Purchase & Sales">Purchase & Sales</option>
+									<option <?php if(set_value('department') == 'Production & Dispatch') echo "selected" ?> value="Production & Dispatch">Production & Dispatch</option>
+									<option <?php if(set_value('department') == 'Accounts') echo "selected" ?> value="Accounts">Accounts</option>
+								</select>
                             </div>
 
 						</div>
@@ -73,7 +77,7 @@
                             </div>	
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area*</label>
-                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>" data-validation="[L>=3]">
+                                <input class="form-control" id="area" type="text" name="area" value="<?php echo set_value('area'); ?>" data-validation="[L>=3]" tabindex = "3">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -83,7 +87,7 @@
 							<div class="form-group">
                                 <label for="designation">Designation*</label>
                                 <input class="form-control" id="designation" type="text" name="designation" value="<?php echo set_value('designation'); ?>" data-validation="[L>=2]"
-																					   data-validation-message="Must contain atleast 2 characters">
+																					   data-validation-message="Must contain atleast 2 characters" tabindex = "6">
                             </div>
 
 							

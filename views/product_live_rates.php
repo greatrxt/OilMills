@@ -1,7 +1,7 @@
 <script>
-function limitWithin(element){
+function limitWithin(element, checkForBlank){
 	
-	if(element.value.trim() == ""){
+	if(element.value.trim() == "" && checkForBlank){
 		element.value = 0;
 	} else {
 		if(element.value < 0){
@@ -82,7 +82,7 @@ function limitWithin(element){
                     <td><?php echo $product['Name']; ?></td>
                     <td><?php echo $product['ProductCategory']; ?></td>
 					<td><input name = "<?php echo $product['ProductId']; ?>" type = "number" class="form-control width-100" value = "<?php echo $product['SellingPrice']; ?>" min="0" step="0.01"
-						oninput = "limitWithin(this)"/></td>
+						onblur = "limitWithin(this, true)" oninput = "limitWithin(this, false)"/></td>
                     <td><?php echo $product['Status']; ?></td>
 					<td><?php echo $product['PriceLastUpdatedBy']; ?></td>
                     <td><?php echo $product['LastPriceUpdateTime']; ?></td>

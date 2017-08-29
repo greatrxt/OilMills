@@ -27,6 +27,27 @@ class Dispatch_model extends CI_Model {
 		$result = $this->db->query($query_string);
 		return $result->row_array();	
 	}
+
+	public function get_order_entries_dispatched_for_current_month(){
+		$this->db->query('SET time_zone = "+05:30";');
+		$query_string = 'SELECT
+						COUNT(DISTINCT(OrderEntries.OrderEntryId)) AS OrderEntryCount,
+						COUNT(DISTINCT(OrderId)) AS OrderCount,
+						IFNULL(SUM(SellingPriceAtOrderTime * OrderEntries_Dispatch.DispatchQuantity), 0) AS total
+						FROM
+						OrderEntries_Dispatch
+						LEFT JOIN
+						OrderEntries
+						ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
+						LEFT JOIN
+						Dispatch
+						ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
+						WHERE 
+						(DispatchTime between  DATE_FORMAT(NOW() ,"%Y-%m-01") AND NOW() )';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
 	
 	public function get_orders_entries_dispatched_today_count(){
 		$this->db->query('SET time_zone = "+05:30";');

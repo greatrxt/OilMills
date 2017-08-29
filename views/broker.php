@@ -24,17 +24,17 @@
 							<div class="form-group">
                                 <label for="name">Broker / Company Name*</label>
                                 <input class="form-control" name="name" type="text" data-validation="[L>=2]"
-																					   data-validation-message="Please enter a valid company name">
+																					   data-validation-message="Please enter a valid company name" tabindex = "1">
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="address">Address*</label>
                                 <input class="form-control" name="address" type="text" data-validation="[L>=2]"
-																						data-validation-message="Please enter a valid address">
+																						data-validation-message="Please enter a valid address" tabindex = "2">
 							</div>
 
 							<div class="form-group">
                                 <label for="city">City</label>
-								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" >
+								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" tabindex = "4">
 								<?php
 									foreach($location as $loc)
 									{
@@ -52,7 +52,7 @@
 
 							<div class="form-group">
                                 <label for="contactPerson">Contact Person*</label>
-                                <input class="form-control" name="contactPerson" type="text"
+                                <input class="form-control" name="contactPerson" type="text" tabindex = "6"
 																					   data-validation="[L>=2]"
 																					   data-validation-message="Please enter a valid name">
                             </div>
@@ -67,7 +67,7 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area</label>
-                                <input class="form-control" name="area" type="text">
+                                <input class="form-control" name="area" type="text" tabindex = "3">
 							</div>
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -77,12 +77,12 @@
 
 							<div class="form-group">
                                 <label for="emailAddress">Email Address</label><span id = "emailAddressError" style = "color:red; display:none;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please check email address format !</span>
-                                <input class="form-control" name="emailAddress" type="text">
+                                <input class="form-control" name="emailAddress" type="text" tabindex = "5">
                             </div>
 
 							<div class="form-group">
                                 <label for="contactNumber">Contact Number*</label>
-                                <input class="form-control" name="contactNumber" type="text" name="validation[contact number]"
+                                <input class="form-control" name="contactNumber" type="text" name="validation[contact number]" tabindex = "7"
 																					   data-validation="[L>=8]"
 																					   data-validation-message="Please enter a valid Contact Number" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                             </div>
@@ -90,8 +90,8 @@
 					</div>
 					<div class="form-group" >
 						<div class="col-md-9" style="padding-bottom:20px;">
-							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick="createOrUpdateCustomer()">Save</button>
-							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_broker"><button type="button" class="btn width-150 btn-default" style="margin:10px" >Cancel</button></a>
+							<button type="submit" class="btn width-150 btn-primary" id = "btnSave"  style="margin:10px" onclick="createOrUpdateCustomer()" tabindex = "8">Save</button>
+							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_broker"><button type="button" class="btn width-150 btn-default" style="margin:10px" tabindex = "9">Cancel</button></a>
 						</div>
                     </div>
 					</div>

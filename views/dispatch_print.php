@@ -52,20 +52,6 @@
 					<th>Remarks</th>
                 </tr>
                 </thead>
-                <tfoot>
-                <tr>
-                    <th>Sr No</th>
-					<th>Customer</th>
-					<th>Broker</th>
-					<th>Payment</th>
-                    <th>Product Name</th>
-                    <th>Qty</th>
-					<th>Rate</th>
-					<th>Bill No</th>
-					<th>Amount</th>
-					<th>Remarks</th>
-                </tr>
-                </tfoot>
                 <tbody id = 'displayDispatchsTableBody'>
 				<?php
 				$i = 1;

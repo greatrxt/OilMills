@@ -32,14 +32,6 @@
                     <th>Quantity</th>
                 </tr>
                 </thead>
-                <tfoot>
-                <tr>
-                    <th>Sr No</th>
-					<th>Order ID</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                </tr>
-                </tfoot>
                 <tbody id = 'displayProductionsTableBody'>
 				<?php
 				$i = 1;

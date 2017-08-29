@@ -33,7 +33,7 @@ class Login extends CI_Controller {
 			$this->session->set_userdata('role', $role);
 			if($role == 'ADMIN'){
 				redirect('ParmarOilMills/web/home', 'refresh');
-			} else if($role == 'OPERATIONS'){
+			} else if(strpos($role, 'OPERATIONS') !== FALSE){
 				redirect('ParmarOilMills/web/home_operations', 'refresh');
 			} else {
 				redirect('ParmarOilMills/web/Login/', 'refresh');

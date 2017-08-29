@@ -31,6 +31,29 @@ class Order_model extends CI_Model {
 		return $result->row_array();	
 	}
 
+	public function get_approved_and_pending_dispatch_orders_entries(){
+		$query_string = 'SELECT
+						COUNT(OrderEntries.OrderEntryId) AS OrderEntryCount,
+						COUNT(DISTINCT(OrderEntries.OrderId)) AS OrderCount,
+						COUNT(DISTINCT(SalesOrder.CustomerId)) AS CustomerCount
+						FROM
+						OrderEntries
+						LEFT JOIN
+						SalesOrder
+						ON 
+						OrderEntries.OrderId = SalesOrder.OrderId
+						LEFT JOIN
+						Customer
+						ON
+						SalesOrder.CustomerId = Customer.CustomerId
+						WHERE
+						OrderEntries.Status = "APPROVED"
+						|| OrderEntries.Status = "PARTIALLY_DISPATCHED"';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+	
 	public function get_rejected_orders_entries_count(){
 		$query_string = 'SELECT
 					COUNT(OrderEntries.OrderEntryId) AS count
@@ -55,6 +78,19 @@ class Order_model extends CI_Model {
 		return $result->row_array();	
 	}
 
+	public function get_approved_and_partially_dispatched_orders_entries_count(){
+		$query_string = 'SELECT
+					COUNT(OrderEntries.OrderEntryId) AS count
+					FROM
+					OrderEntries
+					WHERE
+					OrderEntries.Status = "APPROVED"
+					|| OrderEntries.Status = "PARTIALLY_DISPATCHED"';
+		
+		$result = $this->db->query($query_string);
+		return $result->row_array();	
+	}
+	
 	public function get_orders_received_today(){
 		$this->db->query('SET time_zone = "+05:30";');
 		$query_string = 'SELECT
