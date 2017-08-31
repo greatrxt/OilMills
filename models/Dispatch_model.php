@@ -191,14 +191,11 @@ class Dispatch_model extends CI_Model {
 						Customer.CustomerId,
 						Customer.Name AS CustomerName,
 						SUM(OrderQuantity) as OrderQuantity,
+						(SUM(OrderQuantity) - SUM(OrderEntries_Dispatch.DispatchQuantity)) AS Balance,
 						RouteName,
-						RouteId
+						Route.RouteId
 						FROM
 						OrderEntries
-						LEFT JOIN
-						Production
-						ON
-						Production.ProductionId = OrderEntries.ProductionId
 						LEFT JOIN
 						SalesOrder
 						ON
@@ -215,6 +212,10 @@ class Dispatch_model extends CI_Model {
 						Product
 						ON
 						OrderEntries.OrderedProductId = Product.ProductId
+						LEFT JOIN
+						OrderEntries_Dispatch
+						ON
+						OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
 						WHERE
 						(OrderEntries.Status = "APPROVED" ||
 						OrderEntries.Status = "PARTIALLY_DISPATCHED") &&
@@ -313,7 +314,7 @@ class Dispatch_model extends CI_Model {
 									LEFT JOIN OrderEntries ON OrderEntries.DispatchId = Dispatch.DispatchId
 									GROUP BY DispatchId');*/
 									
-		$query = $this->db->query('SELECT Dispatch.DispatchId, count(distinct OrderEntries.OrderedProductId) as ProductCount, SUM(OrderEntries.OrderQuantity) as Quantity,  DispatchTime, ApplicationUser.Username
+		$query = $this->db->query('SELECT Dispatch.DispatchId, count(distinct OrderEntries.OrderedProductId) as ProductCount, SUM(OrderEntries_Dispatch.DispatchQuantity) as Quantity,  DispatchTime, ApplicationUser.Username
 									FROM Dispatch 
 									LEFT JOIN OrderEntries_Dispatch ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
 									LEFT JOIN ApplicationUser ON Dispatch.DispatchedByUser = ApplicationUser.UserId

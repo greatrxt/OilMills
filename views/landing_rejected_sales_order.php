@@ -119,6 +119,10 @@ function changeSelectedOrderStatus(status){
 function closeOrderReviewModal(){
 	document.getElementById('reviewOrderEntryModal').style.display = 'none';
 }
+
+function closeErrorModal(){
+	document.getElementById('errorWhileReview').style.display = 'none';
+}
 </script>
 			
 <div id="reviewOrderEntryModal" class="modal-outer-body">
@@ -126,7 +130,7 @@ function closeOrderReviewModal(){
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <span class="close">&times;</span>
+      <span class="close" onclick = "closeOrderReviewModal();">&times;</span>
 		<h3 style="padding:5px;font-size:15px;">Confirm Action</h3>
     </div>
     <div class="modal-body">
@@ -148,7 +152,7 @@ function closeOrderReviewModal(){
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <span class="close">&times;</span>
+      <span class="close" onclick = "closeErrorModal();">&times;</span>
 		<h3 style="padding:5px;font-size:15px;">Notification</h3>
     </div>
     <div class="modal-body">

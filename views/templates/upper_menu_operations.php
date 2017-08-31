@@ -2,7 +2,7 @@
 
 <nav class="left-menu" left-menu ng-class="{'hidden-left-menu': hideLeftMenu}">
     <div class="logo-container">
-        <a href="http://1qubit.com" target="_blank" class="logo">
+        <a href="http://www.parmaroilmills.com" target="_blank" class="logo">
             <img src="<?php echo base_url();?>assets/common/img/logo.png" alt="Parmar Oil Mills" />
             <img class="logo-inverse" src="<?php echo base_url();?>assets/common/img/logo.png" alt="Parmar Oil Mills" />
         </a>
@@ -11,7 +11,7 @@
         <ul class="left-menu-list left-menu-list-root list-unstyled">
 
             <li>
-                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/home">
+                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/home_operations">
                     <i class="left-menu-link-icon icmn-home2"></i>
                     Home
                 </a>
@@ -75,11 +75,20 @@
                 </ul>
             </li>
             <li class="left-menu-list-separator"><!-- --></li>
-            <li>
-                <a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/login/signout">
-                    <i class="left-menu-link-icon icmn-profile"><!-- --></i>
-                    Sign Out
+			<li class="left-menu-list-submenu">
+                <a class="left-menu-link" href="javascript: void(0);">
+                    <i class="left-menu-link-icon icmn-user2"></i>
+                    Logged in as <?php echo $this->session->userdata('username')?>
                 </a>
+				<ul class="left-menu-list list-unstyled">
+				<li>
+					<a class="left-menu-link" href="<?php echo base_url() ?>index.php/ParmarOilMills/web/login/signout">
+						<i class="left-menu-link-icon icmn-profile"><!-- --></i>
+						Sign Out
+					</a>
+				</li>
+
+                </ul>
             </li>
         </ul>
     </div>

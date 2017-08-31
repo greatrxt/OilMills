@@ -115,7 +115,7 @@ public function create()
 		if(!empty($_FILES['productImage']['name'])){
 			$file_name_array = explode(".", $_FILES['productImage']['name']);
 			$file_type = $file_name_array[1];
-			$file_location = base_url()."uploads/product/".$current_time.".".$file_type;
+			$file_location = "/uploads/product/".$current_time.".".$file_type;
 		}
 		
 		//Text data

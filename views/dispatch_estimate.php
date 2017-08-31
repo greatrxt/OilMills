@@ -126,7 +126,7 @@ function addToCustomRoute(customerId, defaultRoute, element){
 									
 									<td>									
 										<input type="number" class="form-control width-100 customer_<?php echo $dispatch['CustomerId']; ?> customer_<?php echo $dispatch['CustomerId']?>_product_<?php echo $dispatch['ProductId']; ?>"
-										oninput = "limitWithin(this, 1, <?php if($dispatch['Balance']!=null) echo $dispatch['Balance']; else echo $dispatch['OrderQuantity']; ?>);	
+										onblur = "limitWithin(this, 1, <?php if($dispatch['Balance']!=null) echo $dispatch['Balance']; else echo $dispatch['OrderQuantity']; ?>);	
 													calculateDispatch('customer_<?php echo $dispatch['CustomerId']; ?>');
 													calculateDispatch('customer_<?php echo $dispatch['CustomerId']?>_product_<?php echo $dispatch['ProductId']; ?>');
 													addToCustomDispatch('<?php echo $dispatch['OrderEntryId']?>', '<?php echo $dispatch['Balance']; ?>', this);"
@@ -176,7 +176,7 @@ function addToCustomRoute(customerId, defaultRoute, element){
 									<td><?php echo $customer['CustomerName']; ?></td>
 									<td><?php echo $customer['ProductCount']; ?></td>
 									<td><?php echo $customer['OrderQuantity']; ?></td>
-									<td><span id = "customer_<?php echo $customer['CustomerId']; ?>"><?php echo $dispatch['Balance']; ?></span></td>
+									<td><span id = "customer_<?php echo $customer['CustomerId']; ?>"><?php if ($customer['Balance']!=null) echo $customer['Balance']; else echo $customer['OrderQuantity']; ?></span></td>
 									<td>
 									<select class="form-control" id="route" name="Route" onchange = "updateRoute(this, 'route_<?php echo $customer['CustomerId']?>');
 																									addToCustomRoute(<?php echo $customer['CustomerId']; ?>, <?php echo $customer['RouteId']; ?>, this);" >

@@ -35,7 +35,7 @@
 	</div>
 	<textarea id="header" readonly style = "height:50px"></textarea>
 	<textarea readonly>Dispatch : <?php echo "DISP".$id ?></textarea>
-	<textarea style="float:right" readonly><?php echo $dispatch_details['DispatchTime'] ?></textarea>
+	<span style="float:right" readonly>Date : <?php echo $dispatch_details['DispatchTime'] ?></span>
 <div id="identity">	
             <table class="table table-hover nowrap" id="displayDispatchsTable" width="100%">
                 <thead class="thead-default">

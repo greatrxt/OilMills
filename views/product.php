@@ -50,9 +50,9 @@
                             <div class="form-group">
                                 <label for="unitOfMeasurement">Unit Of Measurement</label>
                                 <select class="form-control" name  = "unitOfMeasurement">
-									<option value="Litres">Litres</option>
+									<option value="Litre">Litre</option>
 									<option value="Millilitre">Millilitre</option>
-									<option value="Kilograms">Kilograms</option>
+									<option value="Kilogram">Kilogram</option>
 									<option value="Gram">Gram</option>
 								</select>
                             </div>

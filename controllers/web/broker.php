@@ -51,7 +51,7 @@ class Broker extends Admin_controller {
 			
 			//print_r($result);
 		}
-		redirect('ParmarOilMills/web/Broker/view/'.$id, 'refresh');
+		redirect('ParmarOilMills/web/landing_broker', 'refresh');
 		//print_r($this->input->post());
 		//print_r($data);
 	}

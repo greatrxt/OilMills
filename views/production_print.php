@@ -22,6 +22,7 @@
 	<button id = "buttonPrintPage" class = "no-print" onClick="window.print();">Print</button>
 	<textarea id="header" readonly></textarea>
 	<textarea readonly>Production : <?php echo "PROD".$id ?></textarea>
+	<span style="float:right" readonly>Date : <?php echo $production_time['ProductionTime']; ?></span>
 <div id="identity">	
             <table class="table table-hover nowrap" id="displayProductionsTable" width="100%">
                 <thead class="thead-default">

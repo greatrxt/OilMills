@@ -46,6 +46,7 @@
                     <div class="carousel-widget carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active">
+							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_sales_order_approval">
                                 <div class="widget-body">
 									<div href="javascript: void(0);" class="widget-body-inner">
 										<h5 class="text-uppercase">Items For Approval</h5>
@@ -56,6 +57,7 @@
 										</span>
 									</div>
                                 </div>
+								</a>
                             </div>
                         </div>
                     </div>
@@ -209,7 +211,7 @@
                     <div class="carousel-widget-2 carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active">
-                                <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_sales_order_approval" class="widget-body">
+                                <a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order" class="widget-body">
                                     <h2>Pending Dispatch Orders</h2>
                                     <p>
                                         Number Of Orders : <?php echo $approved_and_pending_dispatch_orders_entries['OrderCount']; ?>

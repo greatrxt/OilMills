@@ -99,27 +99,34 @@
 						<div class = "col-lg-4">							
 						<div class="form-group">
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" name = "username" value="<?php echo set_value('username'); ?>" disabled data-validation="[L>=3]">
-                            </div>
+                                <input class="form-control" id="username" type="text" name = "username" value="<?php echo set_value('username'); ?>" data-validation="[L>=3]" 
+                            	<?php 
+										$userActive = false;
+										if(set_value('userActive')!=null) $userActive = (set_value('userActive') == "on");
+										if(!$userActive) echo "disabled"; ?> > 
+							</div>
 						</div>
 						<div class = "col-lg-4">						
 						<div class="form-group">
                                 <label for="password">Password</label>
-                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>" disabled data-validation="[L>=3]">
+                                <input class="form-control" id="password" type="password" name = "password" value="<?php echo set_value('password'); ?>" data-validation="[L>=3]" 
+								<?php 
+										if(set_value('userActive')!=null) $userActive = (set_value('userActive') == "on");
+										if(!$userActive) echo "disabled"; ?> > 
                             </div>
 						</div>
 						<div class = "col-lg-1">
 							<div class="form-group">
 								<label class="form-control-label" for="userActive">Active</label><br/>
-                                <input name = "userActive" id = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on") echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;">
+                                <input name = "userActive" id = "userActive" type="checkbox"  style="margin:11px" <?php if(set_value('userActive') == "on") echo "checked"; ?> onclick="document.getElementById('username').disabled=!this.checked;document.getElementById('password').disabled=!this.checked;toggleRoles(!this.checked);" >
                             </div>
 						</div>
 						<div class = "col-lg-9">							
 						<div class="form-group">
                                 <label for="role">Role</label><br/>
-								<input id = "roleSales" name = "role[]" type="checkbox" value = "SALES"  style="margin:11px" onclick="manageRoles()">Sales
-								<input id = "roleOperations" name = "role[]" type="checkbox" value = "OPERATIONS"  style="margin:11px" checked onclick="manageRoles()">Operations
-								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN"  style="margin:11px" onclick="manageRoles()">Management
+								<input id = "roleSales" name = "role[]" type="checkbox" value = "SALES"  style="margin:11px" onclick="manageRoles()" <?php if(!$userActive) echo "disabled" ?>>Sales
+								<input id = "roleOperations" name = "role[]" type="checkbox" value = "OPERATIONS"  style="margin:11px" onclick="manageRoles()" <?php if(!$userActive) echo "disabled" ?>>Operations
+								<input id = "roleAdmin" name = "role[]" type="checkbox" value = "ADMIN"  style="margin:11px" onclick="manageRoles()" <?php if(!$userActive) echo "disabled" ?>>Management
                             </div>
 						</div>
 					</div>
@@ -156,7 +163,12 @@ function manageRoles(){
 		document.getElementById('roleOperations').disabled = false;
 	}
 }
-manageRoles();
+//manageRoles();
+function toggleRoles(status){
+	document.getElementById('roleAdmin').disabled = status;
+	document.getElementById('roleSales').disabled = status;
+	document.getElementById('roleOperations').disabled = status;
+}
 function validateForm(){
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('department').value.length < 2

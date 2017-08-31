@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="logo">
-                    <a href="http://www.1qubit.com" target="_blank">
+                    <a href="http://www.parmaroilmills.com" target="_blank">
                         <img src="<?php echo base_url();?>assets/common/img/logo.png" alt="Parmar Oil Mills" />
                     </a>
                 </div>
@@ -13,8 +13,7 @@
             <div class="col-lg-8">
                 <div class="single-page-block-header-menu">
                     <ul class="list-unstyled list-inline">
-                        <li><a href="javascript: void(0);">About</a></li>
-                        <li><a href="javascript: void(0);">Support</a></li>
+                        <li><a href="http://www.1qubit.com">Support</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,7 +51,7 @@
 							   onkeydown = "if (event.keyCode == 13)
 								document.getElementById('btnLogin').click()">
                     </div>
-					<b><span id = "userNotification" style = "color:red; font-size:15px;"></span></b>
+					<b><span id = "userNotification" style = "color:#FFEEEE; font-size:15px;"><?php echo $this->session->flashdata('error_notification'); ?></span></b>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary width-150">Sign In</button>
                     </div>
@@ -63,10 +62,7 @@
     </div>
     <div class="single-page-block-footer text-center">
         <ul class="list-unstyled list-inline">
-            <li><a href="javascript: void(0);">Terms of Use</a></li>
-            <li class="active"><a href="javascript: void(0);">Compliance</a></li>
-            <li><a href="javascript: void(0);">Confidential Information</a></li>
-            <li><a href="javascript: void(0);">Contacts</a></li>
+            <li>Designed and Developed By <a href="http://www.1qubit.com">1Qubit Technologies</a></li>
         </ul>
     </div>
     <!-- End Login Omega Page -->
@@ -139,27 +135,5 @@
         }
 
     });
-	function login(){
-		document.getElementById('userNotification').innerHTML = "";
-		if(document.getElementById('validation-username').value.length > 2
-			&& document.getElementById('validation-password').value.length > 4){
-				var username = document.getElementById('validation-username').value;
-				var password = document.getElementById('validation-password').value;
-				
-				var request = new XMLHttpRequest();
-				request.onreadystatechange = function(){
-					if(request.readyState == 4 && request.status == 200){
-						localStorage.setItem("token", request.response);						
-						window.location = "home.html";
-					} else if(request.readyState == 4 && request.status == 401){
-						//window.location = "index.html";
-						document.getElementById('userNotification').innerHTML = "Incorrect Username Or Password";
-					}
-				};
-				request.open ("POST", base_url + "/AdValoramAdmin/authentication", true);				
-				request.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-				request.send("username="+username + "&password="+password);
-			}
-	}
 </script>
 <!-- End Page Scripts -->

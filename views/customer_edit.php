@@ -88,7 +88,8 @@
 							
 							<div class="form-group">
                                 <label for="route">Route</label>
-								<select class="form-control" id="route" name="Route" tabindex = "5">
+								<select class="form-control" id="route" name="Route" tabindex = "5" data-validation="[NOTEMPTY]">
+									<option value="">Choose a route</option>
 									<?php
 									foreach($routes as $route)
 									{
@@ -120,7 +121,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="gstNumber">GST Number</label>
-                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value = "<?php if($customer['GSTNumberStatus'] == "Yes") echo $customer['GSTNumber'] ?>" <?php if(!($customer['GSTNumberStatus'] == "Yes")) echo "disabled" ?> data-validation="[L>=15]">
+                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value = "<?php if($customer['GSTNumberStatus'] == "Yes") echo $customer['GSTNumber'] ?>" <?php if(!($customer['GSTNumberStatus'] == "Yes")) echo "disabled" ?> data-validation="[L>14, L<16]" data-validation-message="GST Number must contain 15 digits only">
                             </div>
 
 						</div>
@@ -133,7 +134,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="fssaiNumber">FSSAI Number</label>
-                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value = "<?php if($customer['FSSAINumberStatus'] == "Yes") echo $customer['FSSAINumber'] ?>" <?php if(!($customer['FSSAINumberStatus'] == "Yes")) echo "disabled" ?> data-validation="[L>=14]">
+                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value = "<?php if($customer['FSSAINumberStatus'] == "Yes") echo $customer['FSSAINumber'] ?>" <?php if(!($customer['FSSAINumberStatus'] == "Yes")) echo "disabled" ?> data-validation="[L>13, L<15]" data-validation-message="FSSAI Number must contain 14 digits only">
                             </div>
 
 						</div>
@@ -184,9 +185,7 @@
 
 			
 function validateForm(){
-	document.getElementById("usernameError").innerHTML = '';
-	document.getElementById("passwordError").innerHTML = '';
-	
+
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('contactPerson').value.length < 3
 		|| document.getElementById('contactNumber').value.length < 8
@@ -197,14 +196,14 @@ function validateForm(){
 	}
 	
 	if(!document.getElementById('gstNumber').disabled){
-		if(document.getElementById('gstNumber').value.length < 15){
+		if(document.getElementById('gstNumber').value.length != 15){
 			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
 			return false;
 		}
 	}
 	
 	if(!document.getElementById('fssaiNumber').disabled){
-		if(document.getElementById('fssaiNumber').value.length < 14){
+		if(document.getElementById('fssaiNumber').value.length != 14){
 			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
 			return false;
 		}

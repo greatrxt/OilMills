@@ -78,7 +78,7 @@
 						<div class = "col-lg-5" style="padding-left:100px;">
 							<div class="form-group">
                                 <label for="employeeId">Employee ID</label>
-								<input class="form-control" name="employeeId" type="text" readonly value="EMP<?php if(set_value('employeeId')!=null) echo set_value('employeeId'); else echo $employee['EmployeeId']; ?>">
+								<input class="form-control" name="employeeId" type="text" readonly value="EMP<?php echo $employee['EmployeeId']; ?>">
                             </div>	
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area*</label>

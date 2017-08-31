@@ -33,6 +33,7 @@ class User_model extends CI_Model {
 	public function token_based_login($username, $password){
 		$this->db->where('Username', $username);
 		$this->db->where('Password', $password);
+		
 		$query = $this->db->get('ApplicationUser');
 		$rowcount = $query->num_rows();
 		$application_user = $query->row_array();
@@ -94,9 +95,10 @@ class User_model extends CI_Model {
 							}
 						} else if ($application_user['Role'] == 'ADMIN' ||
 								$application_user['Role'] == 'SALES' ||
-								$application_user['Role'] == 'OPERATIONS' ||
-									strpos($application_user['Role'], 'SALES') ||
-									strpos($application_user['Role'], 'OPERATIONS')){
+								//$application_user['Role'] == 'OPERATIONS' ||	//No mobile login for operations
+									(strpos($application_user['Role'], 'SALES') !== FALSE)
+									//|| strpos($application_user['Role'], 'OPERATIONS')
+									){
 							$this->db->where('UserId', $application_user['UserId']);
 							$query = $this->db->get('Employee');
 							$rowcount = $query->num_rows();
@@ -113,6 +115,10 @@ class User_model extends CI_Model {
 								$result['Message'] = 'Could not find Employee linked to username';
 								return $result;
 							}										
+						} else {
+							$result['Result'] = 'Failed';
+							$result['Message'] = 'Mobile access not assigned to this user account';
+							return $result;
 						}
 						
 					} else {
@@ -151,9 +157,10 @@ class User_model extends CI_Model {
 							}
 						} else if ($application_user['Role'] == 'ADMIN' ||
 								$application_user['Role'] == 'SALES' ||
-								$application_user['Role'] == 'OPERATIONS' ||
-									strpos($application_user['Role'], 'SALES') ||
-									strpos($application_user['Role'], 'OPERATIONS')){
+								//$application_user['Role'] == 'OPERATIONS' ||
+									(strpos($application_user['Role'], 'SALES') !== FALSE)
+									//|| strpos($application_user['Role'], 'OPERATIONS')
+									){
 							$this->db->where('UserId', $application_user['UserId']);
 							$query = $this->db->get('Employee');
 							$rowcount = $query->num_rows();
@@ -172,7 +179,7 @@ class User_model extends CI_Model {
 							}										
 						} else {
 							$result['Result'] = 'Failed';
-							$result['Message'] = 'Invalid User Role - ' . $application_user['Role'];
+							$result['Message'] = 'Mobile access not assigned to this user account';
 							return $result;		
 						}
 						

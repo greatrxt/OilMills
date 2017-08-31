@@ -18,11 +18,6 @@ public function index()
 	$data['title'] = 'Parmar Oil Mills';
 	$data['products'] = $this->product_model->get_all_products();
 
-	if (empty($data['products']))
-	{
-			show_404();
-	}
-
 	$this->load->view('parmaroilmills/templates/header', $data);
 	$this->load->view('parmaroilmills/templates/upper_menu', $data);
 	$this->load->view('parmaroilmills/product_live_rates', $data);

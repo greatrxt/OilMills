@@ -30,12 +30,14 @@ public function edit($id = NULL){
 	$this->form_validation->set_rules('name', 'Name', 'required');
 	
 	if($this->input->post('username')!=null){
+		$this->form_validation->set_rules('role[]', 'Role', 'required');
 		$applicationuser = $this->user_model->user_exists($this->input->post('username'));
 		if($applicationuser!=null){		
 			if($applicationuser['UserId']!=$data['employee']['UserId']){
+				
 				$this->form_validation->set_rules(
 					'username', 'Username',
-					'required|min_length[5]|max_length[25]|is_unique[ApplicationUser.username]',
+					'required|is_unique[ApplicationUser.username]',
 					array(
 							'required'      => 'You have not provided %s.',
 							'is_unique'     => 'This %s already exists.'
@@ -48,7 +50,7 @@ public function edit($id = NULL){
 	if ($this->form_validation->run() == FALSE) {
 						
 		$data['location'] = $this->location_model->get_all_locations();
-	
+		//print_r($this->input->post());
 		$this->load->view('parmaroilmills/templates/header');
 		$this->load->view('parmaroilmills/templates/header_master');
 		$this->load->view('parmaroilmills/templates/upper_menu');
@@ -76,9 +78,10 @@ public function create()
 	
 	//while creating employee, if user is active then check if username exists
 	if (array_key_exists('userActive', $this->input->post())) {
+		$this->form_validation->set_rules('role[]', 'Role', 'required');
 		$this->form_validation->set_rules(
         'username', 'Username',
-        'required|min_length[5]|max_length[12]|is_unique[ApplicationUser.username]',
+        'required|is_unique[ApplicationUser.username]',
         array(
                 'required'      => 'You have not provided %s.',
                 'is_unique'     => 'The %s you entered already exists.'

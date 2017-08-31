@@ -30,6 +30,7 @@ class Production extends Operations_controller {
 		$data['title'] = 'PROD'.$id;
 		$data['id'] = $id;
 		$data['productions'] = $this->production_model->get_production($id);
+		
 		$this->load->view('parmaroilmills/templates/header');
 		if ($this->session->userdata('role') == 'ADMIN'){ 
 			$this->load->view('parmaroilmills/templates/upper_menu');
@@ -48,6 +49,7 @@ class Production extends Operations_controller {
 		
 		$data['id'] = $id;
 		$data['productions'] = $this->production_model->get_production($id);
+		$data['production_time'] = $this->production_model->get_production_time($id);
 		$this->load->view('parmaroilmills/production_print', $data);
 	}
 	

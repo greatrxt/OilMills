@@ -24,6 +24,13 @@ class Production_model extends CI_Model {
 		return $result->row_array();							
 	}
 	
+	
+	public function get_production_time($id){
+		$query_string = 'SELECT ProductionTime from Production WHERE Production.ProductionId = '.$id;
+		$result = $this->db->query($query_string);
+		return $result->row_array();			
+	}
+	
 	public function get_production($id){
 		$query_string = 'SELECT Product.Name, SUM(OrderEntries.OrderQuantity) as Quantity, GROUP_CONCAT(DISTINCT(OrderId) SEPARATOR ", OD") as OrderId
 									FROM OrderEntries 

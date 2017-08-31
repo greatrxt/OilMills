@@ -29,6 +29,7 @@ class Login extends CI_Controller {
 		$userid = $applicationuser['UserId'];
 		$role = $applicationuser['Role'];
 		if($userid > 0){
+			$this->session->set_userdata('username', $username);
 			$this->session->set_userdata('userid', $userid);
 			$this->session->set_userdata('role', $role);
 			if($role == 'ADMIN'){
@@ -36,9 +37,11 @@ class Login extends CI_Controller {
 			} else if(strpos($role, 'OPERATIONS') !== FALSE){
 				redirect('ParmarOilMills/web/home_operations', 'refresh');
 			} else {
+				$this->session->set_flashdata('error_notification', 'Web access not assigned to user');
 				redirect('ParmarOilMills/web/Login/', 'refresh');
 			}
 		} else {
+			$this->session->set_flashdata('error_notification','Invalid Username or Password');
 			redirect('ParmarOilMills/web/Login/', 'refresh');
 		}
 	}

@@ -89,7 +89,8 @@
 							
 							<div class="form-group">
                                 <label for="route">Route</label>
-								<select class="form-control" id="route" name="Route" tabindex = "5">
+								<select class="form-control" id="route" name="Route" tabindex = "5" data-validation="[NOTEMPTY]">
+								<option value="">Choose a route</option>
 									<?php
 									foreach($routes as $route)
 									{
@@ -121,7 +122,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="gstNumber">GST Number</label>
-                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value="<?php echo set_value('GSTNumber'); ?>" data-validation="[L>=15]" disabled>
+                                <input class="form-control" id="gstNumber" name="GSTNumber" type="text" value="<?php echo set_value('GSTNumber'); ?>" data-validation="[L>14, L<16]" data-validation-message="GST Number must contain 15 digits only" disabled>
                             </div>
 
 						</div>
@@ -134,7 +135,7 @@
                             </div>
 							<div class="form-group">
                                 <label for="fssaiNumber">FSSAI Number</label>
-                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value="<?php echo set_value('FSSAINumber'); ?>" data-validation="[L>=14]" disabled>
+                                <input class="form-control" name="FSSAINumber" id="fssaiNumber" type="text" value="<?php echo set_value('FSSAINumber'); ?>" data-validation="[L>13, L<15]" data-validation-message="FSSAI Number must contain 14 digits only" disabled>
                             </div>
 
 						</div>
@@ -184,8 +185,6 @@
 <script>
 			
 function validateForm(){
-	document.getElementById("usernameError").innerHTML = '';
-	document.getElementById("passwordError").innerHTML = '';
 	
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('contactPerson').value.length < 3
@@ -197,14 +196,14 @@ function validateForm(){
 	}
 	
 	if(!document.getElementById('gstNumber').disabled){
-		if(document.getElementById('gstNumber').value.length < 15){
+		if(document.getElementById('gstNumber').value.length != 15){
 			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
 			return false;
 		}
 	}
 	
 	if(!document.getElementById('fssaiNumber').disabled){
-		if(document.getElementById('fssaiNumber').value.length < 14){
+		if(document.getElementById('fssaiNumber').value.length != 14){
 			$('.nav-tabs-horizontal li:eq(1) a').tab('show');
 			return false;
 		}

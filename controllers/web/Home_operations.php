@@ -14,6 +14,11 @@ class Home_operations extends Operations_controller {
 	
 	public function index()
 	{
+		$role = $this->session->userdata('role');
+		if($role == 'ADMIN'){
+			redirect('ParmarOilMills/web/home', 'refresh');
+		} 
+		
 		$this->load->helper('form');
 		$this->load->view('parmaroilmills/templates/header');
 		

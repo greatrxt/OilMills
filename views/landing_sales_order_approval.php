@@ -145,6 +145,9 @@ function changeSelectedOrderStatus(status){
 function closeOrderReviewModal(){
 	document.getElementById('reviewOrderEntryModal').style.display = 'none';
 }
+function closeErrorModal(){
+	document.getElementById('errorWhileReview').style.display = 'none';
+}
 
 </script>
 			
@@ -153,7 +156,7 @@ function closeOrderReviewModal(){
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <span class="close">&times;</span>
+      <span class="close" onclick = "closeOrderReviewModal();">&times;</span>
 		<h3 style="padding:5px;font-size:15px;">Confirm Action</h3>
     </div>
     <div class="modal-body" >
@@ -175,7 +178,7 @@ function closeOrderReviewModal(){
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <span class="close">&times;</span>
+      <span class="close" onclick = "closeErrorModal();">&times;</span>
 		<h3 style="padding:5px;font-size:15px;">Notification</h3>
     </div>
     <div class="modal-body">
@@ -192,53 +195,6 @@ function closeOrderReviewModal(){
 
 </div>
 
-
-<script>
-	function showDeleteRouteDialog(id) {
-		document.getElementById('deleteRouteModal').style.display = "block";
-		document.getElementById('buttonConfirmDelete').onclick = function (){
-				var request = new XMLHttpRequest();
-				NProgress.start();
-				request.onreadystatechange = function(){
-					NProgress.inc();
-					if(request.readyState == 4){
-						var response = request.response;
-						if(request.status == 200){
-							if(response.trim() == "success"){
-								window.location = "landing_route"; //refresh
-							} else {
-								//show error dialog box
-									document.getElementById('errorWhileDeletingModal').style.display = "block";
-									document.getElementById('buttonCloseErrorWhileDeletingModal').onclick = function (){
-									window.location = "landing_route"; //refresh
-								}
-							}
-						} else {
-							window.location = "landing_route";
-						}
-						NProgress.done();
-					}
-				};
-				
-				request.open ("DELETE", "landing_route/delete/"+id, true);
-				request.send();
-		}
-	}
-
-	function closeDeleteRouteModal(){
-		document.getElementById('deleteRouteModal').style.display = 'none';
-	}
-	
-	// Get the modal
-	var modal = document.getElementById('deleteRouteModal');
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-</script>
 <script>
     $(function () {
 		$('#displayTable').DataTable({

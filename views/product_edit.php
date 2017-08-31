@@ -50,9 +50,9 @@
                             <div class="form-group">
                                 <label for="unitOfMeasurement">Unit Of Measurement</label>
                                 <select class="form-control" name  = "unitOfMeasurement">
-									<option value="Litres" <?php if($product['UnitOfMeasurement'] == "Litres") echo "selected" ?>>Litres</option>
+									<option value="Litre" <?php if($product['UnitOfMeasurement'] == "Litre") echo "selected" ?>>Litre</option>
 									<option value="Millilitre" <?php if($product['UnitOfMeasurement'] == "Millilitre") echo "selected" ?>>Millilitre</option>
-									<option value="Kilograms" <?php if($product['UnitOfMeasurement'] == "Kilograms") echo "selected" ?>>Kilograms</option>
+									<option value="Kilogram" <?php if($product['UnitOfMeasurement'] == "Kilogram") echo "selected" ?>>Kilogram</option>
 									<option value="Gram" <?php if($product['UnitOfMeasurement'] == "Gram") echo "selected" ?>>Gram</option>
 								</select>
                             </div>

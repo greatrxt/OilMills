@@ -38,8 +38,8 @@ function limitWithin(element, checkForBlank){
                     <th>ID</th>
                     <th>Thumbnail</th>
                     <th>Name</th>
-                    <th>ProductCategory</th>
-                    <th>SellingPrice</th>
+                    <th>Product Category</th>
+                    <th>Selling Price</th>
                     <th>Status</th>
                     <th>Last Updated By</th>
                     <th>Last Price Update Time</th>
@@ -50,8 +50,8 @@ function limitWithin(element, checkForBlank){
                     <th>ID</th>
                     <th>Thumbnail</th>
                     <th>Name</th>
-                    <th>ProductCategory</th>
-                    <th>SellingPrice</th>
+                    <th>Product Category</th>
+                    <th>Selling Price</th>
                     <th>Status</th>
 					<th>Last Updated By</th>
                     <th>Last Price Update Time</th>
