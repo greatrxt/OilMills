@@ -165,8 +165,7 @@ class Dispatch_model extends CI_Model {
 						OrderEntries.OrderEntryId IN ('.$parameters.')
 						GROUP BY
 						Customer.CustomerId,
-						Product.ProductId,
-						OrderEntries.OrderEntryId';
+						Product.ProductId';
 		
 		$result = $this->db->query($query_string);
 		return $result->result_array();	

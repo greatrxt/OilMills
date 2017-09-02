@@ -20,7 +20,8 @@ class Order extends REST_Controller
 	}
 	
 	public function user_get($id){
-		$this->response($this->order_model->get_orders_for_user($id), 200);
+		//$this->response($this->order_model->get_orders_for_user($id), 200);
+		$this->response($this->order_model->get_last_n_orders_for_user($id, 30), 200);
 	}
 	
 	public function entries_get($id){

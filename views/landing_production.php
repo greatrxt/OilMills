@@ -40,7 +40,7 @@
 					<td><?php echo $production['ProductCount']; ?></td>
 					<td><?php echo $production['Quantity']; ?></td>
 					<td><?php echo $production['Username']; ?></td>
-					<td><a href = "<?php echo 'production/view/'.$production['ProductionId']; ?>">View</a></td>
+					<td><a href = "<?php echo 'production/view/'.$production['ProductionId']; ?>"><i class='icmn-pencil5'></i> View</a></td>
 				</tr>
 				<?php 
 				$i++;

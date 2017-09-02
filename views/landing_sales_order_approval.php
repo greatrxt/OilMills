@@ -198,9 +198,9 @@ function closeErrorModal(){
 <script>
     $(function () {
 		$('#displayTable').DataTable({
-			"pageLength": 50,
+			"pageLength": 100,
 			"order": [
-                      [2, 'desc'],[0, 'desc']      
+                      [1, 'asc'],[0, 'asc']      
 		]});
     });
 </script>

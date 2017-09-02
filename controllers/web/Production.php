@@ -72,8 +72,8 @@ class Production extends Operations_controller {
 	public function confirm()
 	{
 		$entryIds = $_GET["entryId"];
-		$data['productions'] = $this->production_model->confirm_production($entryIds);
-		redirect('ParmarOilMills/web/production', 'refresh');		
+		$productionId = $this->production_model->confirm_production($entryIds);
+		redirect('ParmarOilMills/web/production/view/'.$productionId , 'refresh');		
 	}
 }
 ?>

@@ -151,6 +151,10 @@
 <!-- Page Scripts -->
 <script>
     $(function () {
-		$('#displayEmployeesTable').DataTable();
+		$('#displayEmployeesTable').DataTable({
+			"pageLength": 10,
+			"order": [
+                     [6, 'asc']      
+		]});
     });
 </script>

@@ -7,26 +7,41 @@
             <h2>
 				<div class="dropdown pull-right">
 
-					<button type="button" class="btn btn-primary"  onclick = "sendFor('production');">
+					<button type="button" id = "btnSendForProduction" class="btn btn-primary"  onclick = "sendFor('production');">
 						Send for Production
 					</button>
 
-					<button type="button" class="btn btn-primary"  onclick = "sendFor('dispatch');">
+					<button type="button" id = "btnSendForDispatch" class="btn btn-primary"  onclick = "sendFor('dispatch');">
 						Send for Dispatch
 					</button>
-				
+					<button type="button" id = "btnClose" class="btn btn-primary"  onclick = "sendFor('close');">
+						Close
+					</button>				
                 </div>
                 Approved Sales Orders
             </h2>
         </div>
+		<script>
+		function toggleButtonVisibility(visible){
+			if(visible){
+				document.getElementById('btnSendForDispatch').style.display = 'inline-block';
+				document.getElementById('btnSendForProduction').style.display = 'inline-block';
+				document.getElementById('btnClose').style.display = 'inline-block';
+			} else {
+				document.getElementById('btnSendForDispatch').style.display = 'none';
+				document.getElementById('btnSendForProduction').style.display = 'none';
+				document.getElementById('btnClose').style.display = 'none';
+			}
+		}
+		</script>
 
         <div class="panel-body">
 			<div class="nav-tabs-horizontal" id = "homeTabs">
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item">
+					<li class="nav-item" onclick = "toggleButtonVisibility(true)">
 						<a id = "0" class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab" aria-expanded="false">Pending Dispatch</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" onclick = "toggleButtonVisibility(false);">
 						<a id = "1" class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab" aria-expanded="true">Dispatched</a>
 					</li>
 				</ul>
@@ -166,12 +181,12 @@
 								<td><?php echo $order_entry['SellingPriceAtOrderTime']; ?></td>
 								<td><?php echo $order_entry['OrderBy']; ?></td>
 								<td><?php echo $order_entry['ApprovedBy']; ?></td>
-								<td><input type = "checkbox" <?php if($order_entry['ProductionId'] !=null) echo "checked disabled"?> <?php if($order_entry['DispatchID'] !=null) echo "disabled"?> onchange = "addForProduction(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
+								<td><input type = "checkbox" disabled <?php if($order_entry['ProductionId'] !=null) echo "checked"?> >
 								<?php if($order_entry['ProductionId'] !=null) echo "<a href = "."production/view/".$order_entry['ProductionId'].">  PROD".$order_entry['ProductionId']."</a>";?>
 								</td>
 								<td><?php echo $order_entry['ProductionTime']; ?></td>
-								<td><input type = "checkbox" <?php if($order_entry['DispatchID'] !=null) echo "checked disabled"?> onchange = "addForDispatch(this, <?php echo $order_entry['OrderEntryId']; ?>)" >
-								<?php if($order_entry['DispatchID'] !=null) echo "<a href = "."dispatch/view/".$order_entry['DispatchID'].">  DISP".$order_entry['DispatchID']."</a>";?>
+								<td><input type = "checkbox" disabled <?php if($order_entry['DispatchID'] !=null) echo "checked";?>>
+								<?php if($order_entry['DispatchID'] !=null) echo "<a href = "."dispatch/view/".$order_entry['DispatchID'].">  DISP".$order_entry['DispatchID']."</a>";?> <span style = "color:#d9534f"><?php if($order_entry['Status'] == 'CLOSED') echo 'CLOSED'; ?></span>
 								</td>
 								<td><?php echo $order_entry['DispatchQuantity']; ?></td>
 								<td><?php echo $order_entry['DispatchTime']; ?></td>
@@ -231,7 +246,7 @@ function sendFor(status){
 	var entries = null;
 	if(status == 'production'){
 		entries = entriesProduction;
-	} else if (status == 'dispatch'){
+	} else if (status == 'dispatch' || status == 'close'){
 		entries = entriesDispatch;
 	} else {
 		return;
@@ -239,7 +254,11 @@ function sendFor(status){
 	
 	if(entries.length == 0){
 		document.getElementById('error').style.display = "block";
-		document.getElementById('notification').innerHTML = "Please select at least 1 entry for " + status;
+		if(status == 'close'){
+			document.getElementById('notification').innerHTML = "Please select at least 1 entry to " + status;
+		} else {
+			document.getElementById('notification').innerHTML = "Please select at least 1 entry for " + status;
+		}
 		document.getElementById('buttonClose').onclick = function (){
 			document.getElementById('error').style.display = "none";
 		}
@@ -247,7 +266,11 @@ function sendFor(status){
 	}
 	
 	document.getElementById('reviewOrderEntryModal').style.display = "block";
-	document.getElementById('textConfirmReview').innerHTML = "Are you sure you want to send the selected Sales Order Entries for " + status +" ?";
+	if(status == 'close'){
+		document.getElementById('textConfirmReview').innerHTML = "Are you sure you want to close the selected Sales Order Entries ?";
+	} else {
+		document.getElementById('textConfirmReview').innerHTML = "Are you sure you want to send the selected Sales Order Entries for " + status +" ?";
+	}
 	var parameters = "";
 	
 	for(var i = 0; i < entries.length; i++){
@@ -257,7 +280,11 @@ function sendFor(status){
 		}
 	}
 	document.getElementById('buttonConfirmReview').onclick = function (){
-		window.location = status + '/estimate?' + parameters;
+		if(status == 'close'){
+			window.location = 'landing_approved_sales_order/close?' + parameters;
+		} else {
+			window.location = status + '/estimate?' + parameters;
+		}
 	}
 }
 

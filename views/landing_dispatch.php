@@ -40,7 +40,7 @@
 					<td><?php echo $dispatch['ProductCount']; ?></td>
 					<td><?php echo $dispatch['Quantity']; ?></td>
 					<td><?php echo $dispatch['Username']; ?></td>
-					<td><a href = "<?php echo 'dispatch/view/'.$dispatch['DispatchId']; ?>">View</a></td>
+					<td><a href = "<?php echo 'dispatch/view/'.$dispatch['DispatchId']; ?>"><i class='icmn-pencil5'></i> View</a></td>
 				</tr>
 				<?php 
 				$i++;

@@ -99,5 +99,7 @@ class Production_model extends CI_Model {
 		} else {
 			$this->db->trans_rollback();
 		}
+		
+		return $production_id;
 	}
 }

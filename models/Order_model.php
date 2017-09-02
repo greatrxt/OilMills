@@ -31,6 +31,7 @@ class Order_model extends CI_Model {
 		return $result->row_array();	
 	}
 
+	
 	public function get_approved_and_pending_dispatch_orders_entries(){
 		$query_string = 'SELECT
 						COUNT(OrderEntries.OrderEntryId) AS OrderEntryCount,
@@ -131,6 +132,14 @@ class Order_model extends CI_Model {
 			$this->db->set('ApprovalTime', 'NOW()', FALSE);
 			$this->db->set('ApprovedByUser', $this->session->userdata('userid'));
 			$this->db->update('OrderEntries', array('Status' => $status));
+		}
+	}
+	
+	public function close_order_entries($entryIds){
+		foreach($entryIds as $entryId)
+		{
+			$this->db->where('OrderEntryId', $entryId);
+			$this->db->update('OrderEntries', array('Status' => 'CLOSED'));
 		}
 	}
 	
@@ -250,7 +259,7 @@ class Order_model extends CI_Model {
 	/**
 	Get all APPROVED order entries
 	*/
-	public function get_all_approved_and_dispatched_order_entries(){
+	public function get_all_closed_and_dispatched_order_entries(){
 			
 			$query = $this->db->query('SELECT
 						OrderEntries.OrderEntryId,
@@ -310,6 +319,7 @@ class Order_model extends CI_Model {
 						OrderEntries_Dispatch.DispatchID = Dispatch.DispatchId
 						WHERE
 						OrderEntries.Status = "DISPATCHED" ||
+						OrderEntries.Status = "CLOSED" ||
 						OrderEntries.Status = "PARTIALLY_DISPATCHED"
 						ORDER BY
 						OrderEntries.OrderEntryId');
@@ -475,6 +485,29 @@ class Order_model extends CI_Model {
 			return $result->result_array();
 	}
 	
+	public function get_last_n_orders($n){
+		$result = $this->db->query('SELECT
+					  OrderID,
+					  Customer.Name AS CustomerName,
+					  Broker.Name AS BrokerName,
+					  PaymentTerms,
+					  SalesOrder.RecordCreationTime
+						FROM
+						  SalesOrder
+						LEFT JOIN
+						  Customer
+						ON
+						  SalesOrder.CustomerId = Customer.CustomerId
+						LEFT JOIN
+						  Broker
+						ON
+						  SalesOrder.LinkedBrokerId = Broker.BrokerId
+						ORDER BY OrderId DESC
+						LIMIT '.$n);
+			
+			return $result->result_array();
+	}
+	
 	public function get_orders_for_customer($id){
 		$result = $this->db->query('SELECT
 					  OrderID,
@@ -519,6 +552,30 @@ class Order_model extends CI_Model {
 			return $result->result_array();
 	}	
 	
+	public function get_last_n_orders_for_user($id, $n){
+		$result = $this->db->query('SELECT
+					  OrderID,
+					  Customer.Name AS CustomerName,
+					  Broker.Name AS BrokerName,
+					  PaymentTerms,
+					  SalesOrder.RecordCreationTime
+						FROM
+						  SalesOrder
+						LEFT JOIN
+						  Customer
+						ON
+						  SalesOrder.CustomerId = Customer.CustomerId
+						LEFT JOIN
+						  Broker
+						ON
+						  SalesOrder.LinkedBrokerId = Broker.BrokerId
+						WHERE SalesOrder.OrderPlacedByUser = "'.$id.'"
+						ORDER BY OrderId DESC
+						LIMIT '.$n);
+			
+			return $result->result_array();
+	}
+
 	public function place_order($data, $order_placed_by_application_user){
 		//Order  	 --- CustomerId OrderPlacedByUser LinkedBrokerId PaymentTerms
 		//OrderEntry --- OrderedProductId SellingPriceAtOrderTime OrderQuantity

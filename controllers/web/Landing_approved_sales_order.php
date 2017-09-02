@@ -8,22 +8,17 @@ class Landing_approved_sales_order extends Operations_controller {
 			$this->load->model('user_model');
 			$this->load->helper('url_helper');			
         }
-		
-		public function approve(){
-			$data = json_decode($this->input->raw_input_stream);
-			$entries = $data->entries;
-			$this->order_model->reviewOrders($entries, 'APPROVED');
-		}
 
-		public function reject(){
-			$data = json_decode($this->input->raw_input_stream);
-			$entries = $data->entries;
-			$this->order_model->reviewOrders($entries, 'REJECTED');
+		public function close()
+		{
+			$entryIds = $_GET["entryId"];
+			$this->order_model->close_order_entries($entryIds);
+			redirect('ParmarOilMills/web/landing_approved_sales_order', 'refresh');	
 		}
 		
 		public function index()
 		{
-			$data['dispatched_order_entries'] = $this->order_model->get_all_approved_and_dispatched_order_entries();
+			$data['dispatched_order_entries'] = $this->order_model->get_all_closed_and_dispatched_order_entries();
 			$data['pending_dispatch_order_entries'] = $this->order_model->get_all_approved_partially_dispatched_order_entries_with_balance();
 			
 			$this->load->view('parmaroilmills/templates/header');
