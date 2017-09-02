@@ -82,8 +82,46 @@ class Dispatch extends Operations_controller {
 		$dispatch_changes = json_decode($this->input->raw_input_stream, true);
 		
 		$dispatchId = $this->dispatch_model->confirm_dispatch($entryIds, $dispatch_changes);
+		//Send notification to devices
+		$customer_details = $this->dispatch_model->get_customer_details_for_dispatch_id($dispatchId);
+		
+		foreach($customer_details as $customer){
+			$ch = curl_init();
+			
+			$notification = array(
+				'title' => 'Dispatch Info',
+				'body' => $customer['OrderId'].' dispatched',
+				'sound' => 'default'
+			);
+			
+			$payload = array(
+				'notification' => $notification,
+				'to' => $customer['FirebaseInstanceToken']
+			);
+			$content = json_encode($payload);
+			
+			
+			curl_setopt($ch, CURLOPT_URL,"https://fcm.googleapis.com/fcm/send");
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $content);  //Post Fields
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+			$headers = [
+				'Content-Type: application/json',
+				'Authorization: key=AAAAcqcKp98:APA91bEJH9ThA4qg07XhkxTS2SizXAyF5SKxGiyYfwLKxk0jeoGdRi3A3CYm2RliXy0TSVzoVxHPtNW4Ad_zcNxeIhR_t26-HG54LaX0kGGk8ACTJdtYDyZN-2aafs4tdhDiS0UEE4QU'
+			];
+
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+			$server_output = curl_exec ($ch);
+			
+			curl_close ($ch);
+			
+			//print  $server_output ;		
+		}
+		
+		////
 		echo base_url().'index.php/ParmarOilMills/web/dispatch/view/'.$dispatchId;
-		//redirect('ParmarOilMills/web/dispatch', 'refresh');		
 	}
 }
 ?>

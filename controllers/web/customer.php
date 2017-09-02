@@ -37,7 +37,7 @@ public function edit($id = NULL){
 			if($applicationuser['UserId']!=$data['customer']['UserId']){
 				$this->form_validation->set_rules(
 					'username', 'Username',
-					'required|min_length[5]|max_length[25]|is_unique[ApplicationUser.username]',
+					'required|is_unique[ApplicationUser.username]',
 					array(
 							'required'      => 'You have not provided %s.',
 							'is_unique'     => 'This %s already exists.'
@@ -80,7 +80,7 @@ public function create()
 	if (array_key_exists('userActive', $this->input->post())) {
 		$this->form_validation->set_rules(
         'username', 'Username',
-        'required|min_length[5]|max_length[12]|is_unique[ApplicationUser.username]',
+        'required|is_unique[ApplicationUser.username]',
         array(
                 'required'      => 'You have not provided %s.',
                 'is_unique'     => 'The %s you entered already exists.'

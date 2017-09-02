@@ -30,6 +30,23 @@ class User_model extends CI_Model {
 		return null;
 	}
 	
+	public function update_firebase_user_token($application_user, $token){
+		//delete token if associated with previous login ID
+		$previous_user_firebase_token = array(
+			'FirebaseInstanceToken' => ''
+		);
+		
+		$this->db->where('FirebaseInstanceToken', $token);
+		$this->db->update('ApplicationUser', $previous_user_firebase_token);
+		
+		$firebase_token = array(
+			'FirebaseInstanceToken' => $token
+		);
+		
+		$this->db->where('UserId', $application_user['UserId']);
+		$this->db->update('ApplicationUser', $firebase_token);
+	}
+	
 	public function token_based_login($username, $password){
 		$this->db->where('Username', $username);
 		$this->db->where('Password', $password);
