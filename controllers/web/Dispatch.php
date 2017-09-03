@@ -83,20 +83,20 @@ class Dispatch extends Operations_controller {
 		
 		$dispatchId = $this->dispatch_model->confirm_dispatch($entryIds, $dispatch_changes);
 		//Send notification to devices
-		$customer_details = $this->dispatch_model->get_customer_details_for_dispatch_id($dispatchId);
+		$user_details = $this->dispatch_model->get_user_details_for_dispatch_id($dispatchId);
 		
-		foreach($customer_details as $customer){
+		foreach($user_details as $user){
 			$ch = curl_init();
 			
 			$notification = array(
 				'title' => 'Dispatch Info',
-				'body' => $customer['OrderId'].' dispatched',
+				'body' => $user['OrderId'].' sent for dispatch',
 				'sound' => 'default'
 			);
 			
 			$payload = array(
 				'notification' => $notification,
-				'to' => $customer['FirebaseInstanceToken']
+				'to' => $user['FirebaseInstanceToken']
 			);
 			$content = json_encode($payload);
 			

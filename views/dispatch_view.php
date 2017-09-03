@@ -24,7 +24,7 @@
                 </div>
                 Dispatch Details : DISP<?php echo $id ?>
             </h2>
-			<div class="form-group" style = "width:50%">
+			<div class="form-group" style = "width:20%">
 				<label for="route">Route</label>
 				<select class="form-control" id="route" name="Route" onchange = "refreshDispatchTable(this)">
 					<?php

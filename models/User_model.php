@@ -39,12 +39,24 @@ class User_model extends CI_Model {
 		$this->db->where('FirebaseInstanceToken', $token);
 		$this->db->update('ApplicationUser', $previous_user_firebase_token);
 		
-		$firebase_token = array(
-			'FirebaseInstanceToken' => $token
-		);
+		$firebase_token = null;
+		$this->load->helper('date');
+		$this->db->query('SET time_zone = "+05:30";');
 		
+		if($token == ""){
+			$firebase_token = array(
+				'FirebaseInstanceToken' => $token,
+				'LastLogoutTime' => date('Y-m-d H:i:s', now('Asia/Kolkata'))
+			);
+		} else {
+			$firebase_token = array(
+				'FirebaseInstanceToken' => $token,
+				'LastLoginTime' =>  date('Y-m-d H:i:s', now('Asia/Kolkata'))
+			);
+		}
 		$this->db->where('UserId', $application_user['UserId']);
 		$this->db->update('ApplicationUser', $firebase_token);
+		return $this->db->last_query();
 	}
 	
 	public function token_based_login($username, $password){

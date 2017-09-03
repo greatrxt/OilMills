@@ -413,16 +413,14 @@ class Dispatch_model extends CI_Model {
 	/**
 	* Used for fetching user details for notiication
 	*/
-	public function get_customer_details_for_dispatch_id($dispatch_id){
+	public function get_user_details_for_dispatch_id($dispatch_id){
 		$query_string = 'SELECT GROUP_CONCAT(DISTINCT(CONCAT("OD", SalesOrder.OrderId))) AS OrderId, ApplicationUser.UserId, ApplicationUser.FirebaseInstanceToken FROM OrderEntries_Dispatch 
 							LEFT JOIN OrderEntries
 							ON OrderEntries.OrderEntryId = OrderEntries_Dispatch .OrderEntryId
 							LEFT JOIN SalesOrder
 							ON SalesOrder.OrderId = OrderEntries.OrderId
-							LEFT JOIN Customer
-							ON SalesOrder.CustomerId = Customer.CustomerId
 							LEFT JOIN ApplicationUser
-							ON ApplicationUser.UserId = Customer.UserId
+							ON ApplicationUser.UserId = SalesOrder.OrderPlacedByUser
 							WHERE DispatchId = '.$dispatch_id.'
 							GROUP BY
 							ApplicationUser.UserId';

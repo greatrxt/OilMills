@@ -84,43 +84,35 @@
 
                 <div class="col-lg-4">
                     <h4>Product Image</h4>
-                    <div class="cui-ecommerce--catalog--item">
-                        <div id = "imagesToUpload" class="cui-ecommerce--catalog--item--img">
-                           <img style = 'height:100%;' 
-							src = "<?php 
-							
-							$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
-							$imageUrlJpg = base_url().$product['ProductImage'];
-							//$imageUrlPng = base_url()."/uploads/product/".$product['ProductId'].".png";
-							/*
-							$ch = curl_init();
-							curl_setopt($ch, CURLOPT_URL,$imageUrl);
-							// don't download content
-							curl_setopt($ch, CURLOPT_NOBODY, 1);
-							curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-							curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-							if(curl_exec($ch)!==FALSE)
-							{
-								echo $imageUrl;
-							}
-							else
-							{
-								echo $defaultImageURL;
-							}*/
-							
-							if(@getimagesize($imageUrlJpg)){
-								echo $imageUrlJpg;
-							//} else if (@getimagesize($imageUrlPng)){
-							//	echo $imageUrlPng;
-							} else {
-								echo $defaultImageURL;
-							}
-	
-							
-						?>">
+					<div class='preview-area' id = 'logo'>
+							<div id='logoctr'><i style='color:gray' id='delete-logo' class='fa fa-trash fa-2x' onclick='showDeleteFileDialog();'></i></div>
+								<div id = "imagesToUpload" class="cui-ecommerce--catalog--item--img">
+									<img style = 'height:100%;' src = "<?php 
+								
+										$defaultImageURL = base_url()."assets/common/img/temp/ecommerce/ecommerce-empty.jpg";
+										$imageUrlJpg = base_url().$product['ProductImage'];
+										if(@getimagesize($imageUrlJpg)){
+											echo $imageUrlJpg;
+										} else {
+											echo $defaultImageURL;
+										}
+		
+								
+								?>">
+								</div>
+							</br>
                         </div>
-                    </div>
-
+					<style>
+						#logo { margin-top: 5px; border: 0px solid #ccc; padding:20px; width:100%}
+						#logo:hover, #logo.edit { border: 0px solid #ccc; margin-top: 0px; }
+						#logoctr { position:absolute; display: none; cursor: pointer; cursor: hand;  z-index: 20}
+						#logo:hover #logoctr, #logo.edit #logoctr { display: block; line-height: 25px; padding: 10px; font-size: 20px;}
+						#logohelp { text-align: left; display: none; font-style: italic; padding: 10px 5px;}
+						#logohelp input { margin-bottom: 5px; }
+						.edit #logohelp { display: block; }
+						.edit #save-logo, .edit #cancel-logo { display: inline; }
+						.edit #image, #save-logo, #cancel-logo, .edit #change-logo, .edit #delete-logo { display: none; }
+					</style>
                     <div class="form-group">
                         <input id = "productImage" name = "productImage" type="file"  accept=".jpg" >
                         <br>
@@ -140,6 +132,16 @@
 							  window.URL.revokeObjectURL(fileList[i]);
 							}	
 						}
+						
+						function showDeleteFileDialog() {
+							document.getElementById('deleteFileModal').style.display = "block";
+							document.getElementById('buttonConfirmDelete').onclick = function (){
+								window.location = "<?php echo base_url(). "index.php/ParmarOilMills/web/product/delete_image/".$product['ProductId']; ?>";
+							}
+							document.getElementById('buttonCancel').onclick = function (){
+								document.getElementById('deleteFileModal').style.display = "none";
+							}
+						}
 					</script>
                 </div>
             </div>
@@ -147,6 +149,27 @@
 		</form>
 	</section>
     <!-- End Ecommerce Product Edit -->
+
+</div>
+<div id="deleteFileModal" class="modal-outer-body">
+
+<!-- Modal content -->
+<div class="modal-content">
+	<div class="modal-header">
+	<h3 style="padding:5px;font-size:15px;">Delete image ?</h3>
+	</div>
+	<div class="modal-body">
+	<span id = "confirmDeleteText">Product Image will be permanently deleted. Are you sure you want to continue ? ?</span>	
+	</div>
+	<div class="modal-footer" style="height:70px;">
+	<table>
+	<tr>
+	<td><button id="buttonConfirmDelete" style = "width:150px;height:40px;display:inline;" class="btn btn Primary">Yes</button></br></td>
+	<td><button id="buttonCancel" style = "width:150px;height:40px;display:inline;" class="btn btn Primary" onclick = "closeDeleteFileModal()">Cancel</button></td>
+	</tr>
+	</table>
+	</div>
+</div>
 
 </div>
 </section>

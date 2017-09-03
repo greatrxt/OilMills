@@ -7,7 +7,7 @@ CREATE TABLE `keys` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `ApplicationUser` ( `UserId` INT NOT NULL AUTO_INCREMENT , `Username` VARCHAR(255) NOT NULL , `Password` TEXT NOT NULL , `Active` TINYINT(1) , `TokenId` INT NULL , `Role` SET('ADMIN', 'SALES', 'CUSTOMER', 'OPERATIONS') NOT NULL, `FirebaseInstanceToken` TEXT,  `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`UserId`), FOREIGN KEY (`TokenId`) REFERENCES `keys`(`id`), UNIQUE (`Username`)) ENGINE = InnoDB;
+CREATE TABLE `ApplicationUser` ( `UserId` INT NOT NULL AUTO_INCREMENT , `Username` VARCHAR(255) NOT NULL , `Password` TEXT NOT NULL , `Active` TINYINT(1) , `TokenId` INT NULL , `Role` SET('ADMIN', 'SALES', 'CUSTOMER', 'OPERATIONS') NOT NULL, `FirebaseInstanceToken` TEXT,  `RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, `LastLoginTime` DATETIME, `LastLogoutTime` DATETIME, PRIMARY KEY (`UserId`), FOREIGN KEY (`TokenId`) REFERENCES `keys`(`id`), UNIQUE (`Username`)) ENGINE = InnoDB;
 
 CREATE TABLE `Location` ( `LocationID` INT NOT NULL AUTO_INCREMENT , `City` VARCHAR(255) NOT NULL , `District` VARCHAR(255) NULL , `State` VARCHAR(255) NOT NULL , `RecordCreatedBy` INT NOT NULL ,`RecordCreationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`LocationID`), FOREIGN KEY (`RecordCreatedBy`) REFERENCES `ApplicationUser`(`UserId`), UNIQUE (`City`, `District`, `State`)) ENGINE = InnoDB;
 

@@ -33,6 +33,17 @@ public function view($id = NULL)
 	$this->load->view('parmaroilmills/templates/footer');	
 }
 
+public function delete_image($id = NULL){
+	if($id!=NULL){
+		$product = $this->product_model->get_product_with_id($id);
+		$path = FCPATH.$product['ProductImage'];
+		//echo FCPATH.$path;
+		if(file_exists($path)){
+			unlink($path);
+		}
+	}
+	redirect('ParmarOilMills/web/product/view/'.$id, 'refresh');
+}
 
 public function edit($id = NULL)
 {
