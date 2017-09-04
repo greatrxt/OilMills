@@ -87,9 +87,9 @@
 	var dispatchTable = null;
     $(function () {
 		dispatchTable = $('#displayDispatchsTable').DataTable({
-			"pageLength": 10,
+			"pageLength": 100,
 			"order": [
-                      /*[2, 'desc'],*/[1, 'desc']      
+                      /*[2, 'desc'],*/[0, 'asc']      
 		]});
     });
 	
@@ -111,7 +111,9 @@
 	}*/
 	function refreshDispatchTable(element){
 		var selectedRouteId = element.options[element.selectedIndex].value;
+		var count = 0;
 		$('tr.route').each(function(){
+				console.log(count++);
 				if ($(this).attr('data-user') != selectedRouteId){
 					$(this).hide();
 				} else {

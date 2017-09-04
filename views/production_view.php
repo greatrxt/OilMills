@@ -69,7 +69,7 @@
 		$('#displayProductionsTable').DataTable({
 			"pageLength": 10,
 			"order": [
-                      /*[2, 'desc'],*/[1, 'desc']      
+                      /*[2, 'desc'],*/[0, 'asc']      
 		]});
     });
 

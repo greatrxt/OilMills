@@ -128,7 +128,7 @@ class Dispatch_model extends CI_Model {
 						SUM(OrderQuantity) as OrderQuantity,
 						RouteName,
 						Route.RouteId,
-						(OrderEntries.OrderQuantity - SUM(OrderEntries_Dispatch.DispatchQuantity)) AS Balance
+						(SUM(OrderEntries.OrderQuantity) - SUM(OrderEntries_Dispatch.DispatchQuantity)) AS Balance
 						FROM
 						OrderEntries
 						LEFT JOIN

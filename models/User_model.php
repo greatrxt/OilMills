@@ -30,7 +30,7 @@ class User_model extends CI_Model {
 		return null;
 	}
 	
-	public function update_firebase_user_token($application_user, $token){
+	public function update_firebase_user_token($application_user, $token, $appVersion){
 		//delete token if associated with previous login ID
 		$previous_user_firebase_token = array(
 			'FirebaseInstanceToken' => ''
@@ -46,12 +46,14 @@ class User_model extends CI_Model {
 		if($token == ""){
 			$firebase_token = array(
 				'FirebaseInstanceToken' => $token,
-				'LastLogoutTime' => date('Y-m-d H:i:s', now('Asia/Kolkata'))
+				'LastLogoutTime' => date('Y-m-d H:i:s', now('Asia/Kolkata')),
+				'AppVersion' => $appVersion
 			);
 		} else {
 			$firebase_token = array(
 				'FirebaseInstanceToken' => $token,
-				'LastLoginTime' =>  date('Y-m-d H:i:s', now('Asia/Kolkata'))
+				'LastLoginTime' =>  date('Y-m-d H:i:s', now('Asia/Kolkata')),
+				'AppVersion' => $appVersion
 			);
 		}
 		$this->db->where('UserId', $application_user['UserId']);

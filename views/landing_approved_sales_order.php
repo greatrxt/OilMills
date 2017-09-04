@@ -63,7 +63,7 @@
 								<th><input type = "checkbox" style = "margin-right:5px" onchange = "toggleProductionSelection(this)">Production</th>
 								<th>Production Date</th>
 								<th>Status</th>
-								<th>Balance</th>
+								<th>Balance Qty</th>
 								<th><input type = "checkbox" style = "margin-right:5px" onchange = "toggleDispatchSelection(this)">Dispatch</th>
 							</tr>
 							</thead>
@@ -81,7 +81,7 @@
 								<th>Production</th>
 								<th>Production Date</th>
 								<th>Status</th>
-								<th>Balance</th>
+								<th>Balance Qty</th>
 								<th>Dispatch</th>
 							</tr>
 							</tfoot>
@@ -345,7 +345,8 @@ function closeErrorModal(){
 <script>
     $(function () {
 		$('#displayDispatchedTable').DataTable({
-			"pageLength": 10,
+			"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+			"pageLength": 100,
 			"order": [
                       /*[2, 'desc'],*/[1, 'desc']      
 		]});
@@ -353,7 +354,8 @@ function closeErrorModal(){
 	
 	$(function () {
 		$('#displayPendingDispatchTable').DataTable({
-			"pageLength": 10,
+			"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+			"pageLength": 100,
 			"order": [
                      [1, 'asc']      
 		]});
