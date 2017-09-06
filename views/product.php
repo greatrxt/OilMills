@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name">Product Name</label>
+                                <label for="name">Product Name*</label>
                                 <input type="text" name = "name" class="form-control" data-validation="[L>=2]"
 																						data-validation-message="Please enter a valid product name">
                             </div>
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="productCode">Product Code</label>
+                                <label for="productCode">Product Code*</label>
                                 <input type="text" name = "productCode" class="form-control" data-validation="[L>=2]">
                             </div>
                         </div>
@@ -60,14 +60,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="sellingPrice">Selling Price</label>
-								<input type="text" name = "sellingPrice" class="form-control">
+								<input type="number" name = "sellingPrice" class="form-control" step="0.01">
                             </div>
                         </div>
                     </div>
                     <br />
 
                     <div class="form-group">
-						<div class="form-group">
+						<div class="form-group" style = "width:49%">
 							<label for="productStatus">Product Status</label>
 							<select class="form-control" name  = "productStatus">
 								<option value="Active">Active</option>

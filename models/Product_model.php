@@ -7,18 +7,26 @@ class Product_model extends CI_Model {
 	}
 	
 	function deleteProductBy($id) {
+		
+		log_message('debug', 'deleteProductBy. - $id = ' . print_r($id, 1));
+		
 		$this->db->where( 'ProductID', $id );
 		$this->db->delete('Product');
 
+		log_message('debug', 'deleteProductBy. - Query = ' . $this->db->last_query());
+		
 		if ($this->db->affected_rows() == '1') {
+			log_message('debug', 'deleteProductBy. - Product deleted ');
 			return TRUE;
 		} else {
+			log_message('debug', 'deleteProductBy. - Failed');
 			return FALSE;
 		}
 	}
 	
 	public function update_rates($products){
 		$this->db->query('SET time_zone = "+05:30";');
+		$ratesUpdated = false;
 		foreach ($products as $key => $value) {
 			if($key == 'displayProductsTable_length')
 				continue;
@@ -34,7 +42,11 @@ class Product_model extends CI_Model {
 						);
 			$this->db->where('ProductId', $key);
 			$this->db->update('Product', $data); 
+			log_message('debug', 'update_rates. - Query = ' . $this->db->last_query());
+			$ratesUpdated = true;
 		}
+		
+		return $ratesUpdated;
 	}
 		
 	public function get_activated_products()
@@ -81,6 +93,8 @@ class Product_model extends CI_Model {
 		
 	public function edit_product($id, $data)
 	{	
+		log_message('debug', 'edit_product. - $id = ' . print_r($id, 1) . '$data = ' . print_r($data, 1));
+		
 		$this->db->query('SET time_zone = "+05:30";');
 		$this->db->where('ProductId', $id);
 		$this->db->update('Product', $data);
@@ -93,11 +107,13 @@ class Product_model extends CI_Model {
 			$response['Result'] =  "No Records Updated";
 		}
 		$response['query'] = $this->db->last_query();
+		log_message('debug', 'edit_product. - response = ' . print_r($response, 1) );
 		return $response;
 	}
 	
 	public function add_product($data)
 	{	
+		log_message('debug', 'add_product. - $data = ' . print_r($data, 1));	
 		$this->db->query('SET time_zone = "+05:30";');
 		if($this->db->insert('Product', $data)){
 			$response['Result'] = "Success";
@@ -107,6 +123,10 @@ class Product_model extends CI_Model {
 			 $response['query'] = $this->db->last_query();
 			 $response['id'] = -1;
 		}
+		
+		log_message('debug', 'add_product. - Query = ' . $this->db->last_query());
+		
+		log_message('debug', 'add_product. - response = ' . print_r($response, 1) );
 		return $response;
 	}
 }

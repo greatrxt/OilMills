@@ -14,11 +14,16 @@ class Employee_model extends CI_Model {
 		
 		function deleteEmployeeBy($id) {
 
+			log_message('debug', 'deleteEmployeeBy. - $id = ' . print_r($id, 1));
+			
 			$query = $this->db->get_where('Employee', array('EmployeeId' => $id));
 			$employee_data =  $query->row_array();
 			
+			log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
+			
 			if(empty($employee_data)){
 				$response['Result'] =  "Employee not found";
+				log_message('debug', 'deleteEmployeeBy. - Employee not found ');	
 				return $response;
 			}
 			
@@ -26,14 +31,17 @@ class Employee_model extends CI_Model {
 			
 			$this->db->delete('Employee', array('EmployeeID' => $id));
 			$employees_deleted = $this->db->affected_rows();
-			
+			log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
 			if($application_user_id != NULL){
 				$this->db->delete('ApplicationUser', array('UserId' => $application_user_id));
+				log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
 			}
 			
 			if ($employees_deleted == '1') {
+				log_message('debug', 'deleteEmployeeBy. - EMPLOYEE DELETED ');
 				return TRUE;
 			} else {
+				log_message('debug', 'deleteEmployeeBy. - FAILED TO DELETE EMPLOYEE ');
 				return FALSE;
 			}
 		}
@@ -86,6 +94,8 @@ class Employee_model extends CI_Model {
 		
 		public function edit_employee($id, $data)
 		{	
+			log_message('debug', 'edit_employee. - $id = ' . print_r($id, 1) . '$data = ' . print_r($data, 1));
+			
 			$this->db->trans_begin();
 			$this->db->query('SET time_zone = "+05:30";');
 			$employee = array(
@@ -101,12 +111,17 @@ class Employee_model extends CI_Model {
 			$this->db->where('EmployeeId', $id);
 			$this->db->update('Employee', $employee);
 			
+			log_message('debug', 'edit_employee. - Query = ' . $this->db->last_query());
+			
 			//2) Add/edit applicationUser
 			$query = $this->db->get_where('Employee', array('EmployeeID' => $id));
 			$employee_data =  $query->row_array();
 			
+			log_message('debug', 'edit_employee. - Query = ' . $this->db->last_query());
+			
 			if(empty($employee_data)){
 				$response['Result'] =  "Unknown Error. ";
+				log_message('debug', 'edit_employee. - Error = ' . print_r($employee_data, 1));
 				return $response;
 			}
 			
@@ -149,6 +164,8 @@ class Employee_model extends CI_Model {
 				$application_user_id = $this->db->insert_id();
 			}
 			
+			log_message('debug', 'edit_employee. - Query = ' . $this->db->last_query());
+			
 			if(!$application_user_exists){ //connect this user with employee
 					
 				$employee = array(
@@ -158,16 +175,20 @@ class Employee_model extends CI_Model {
 				$this->db->update('Employee', $employee);					
 			}
 			 
+			log_message('debug', 'edit_employee. - Query = ' . $this->db->last_query());
 			
 			$this->db->trans_commit();
 			$response['Result'] = $this->db->last_query();
-
+			
+			log_message('debug', 'edit_employee. - Query = ' . print_r($response, 1));
+			
 			return $response;
 		}
 		
 		public function add_employee($data)
 		{	
-
+			log_message('debug', 'add_employee. - $data = ' . print_r($data, 1));
+			
 			$this->db->trans_begin();
 			$this->db->query('SET time_zone = "+05:30";');
 			$employee = array(
@@ -182,11 +203,13 @@ class Employee_model extends CI_Model {
 			
 			//1) Add to employee table 
 			$employee_added = $this->db->insert('Employee', $employee);
+			log_message('debug', 'add_employee. - Query = ' . $this->db->last_query());
 			
 			if(!$employee_added){
 					$response['Result'] = $this->db->error();
 					$response['query'] = $this->db->last_query();
 					$this->db->trans_rollback();
+					log_message('debug', 'add_employee. - Employee not added. Rolling back. '. print_r($response, 1));
 					return $response;
 			}
 			
@@ -215,7 +238,7 @@ class Employee_model extends CI_Model {
 				);
 				
 				$application_user_added = $this->db->insert('ApplicationUser', $application_user);
-				
+				log_message('debug', 'add_employee. - Query = ' . $this->db->last_query());
 				if($application_user_added){ //connect this user with employee
 					$application_user_id = $this->db->insert_id();
 					
@@ -225,13 +248,15 @@ class Employee_model extends CI_Model {
 			
 					$this->db->where('EmployeeId', $employee_id);
 					$this->db->update('Employee', $employee);
-					
+					log_message('debug', 'add_employee. - Query = ' . $this->db->last_query());
 					if($this->db->affected_rows() == 1){
 						$this->db->trans_commit();
 						$response['Result'] = "Success";
+						log_message('debug', 'add_employee. - Success');
 						return $response;
 					} else {
 						$application_user_added = false;
+						log_message('debug', 'add_employee. - $application_user_added = false;');
 					}
 					
 				} else {
@@ -241,6 +266,7 @@ class Employee_model extends CI_Model {
 					}
 					$response['query'] = $this->db->last_query();
 					$this->db->trans_rollback();
+					log_message('debug', 'add_employee. - Employee not added. Rolling back. '. print_r($response, 1));
 					return $response;
 				}
 				
@@ -250,15 +276,17 @@ class Employee_model extends CI_Model {
 			
 			if ($employee_added && $application_user_added)
 			{		$this->db->trans_commit();
+					log_message('debug', 'add_employee. - Success');
 					$response['Result'] = "Success";
 
 			} else {
 					$this->db->trans_rollback();
 					$response['Result'] = $this->db->error();
 					$response['query'] = $this->db->last_query();
-					$response['message'] = 'employee_added = ' . $application_user_added . '' .$application_user_added ;
+					$response['message'] = 'employee_added = '.$application_user_added ;
 			}
 
+			log_message('debug', 'add_employee. - '. print_r($response, 1));
 			return $response;
 		}
 }

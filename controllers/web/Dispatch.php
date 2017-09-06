@@ -88,14 +88,14 @@ class Dispatch extends Operations_controller {
 		foreach($user_details as $user){
 			$ch = curl_init();
 			
-			$notification = array(
+			$data = array(
 				'title' => 'Dispatch Info',
 				'body' => $user['OrderId'].' sent for dispatch',
 				'sound' => 'default'
 			);
 			
 			$payload = array(
-				'notification' => $notification,
+				'data' => $data,
 				'to' => $user['FirebaseInstanceToken']
 			);
 			$content = json_encode($payload);

@@ -348,7 +348,7 @@ function closeErrorModal(){
 			"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
 			"pageLength": 100,
 			"order": [
-                      /*[2, 'desc'],*/[1, 'desc']      
+                      /*[2, 'desc'],*/[13, 'desc']      
 		]});
     });
 	

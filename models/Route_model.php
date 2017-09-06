@@ -7,12 +7,18 @@ class Route_model extends CI_Model {
         }
 		
 		function deleteRouteBy($id) {
+			log_message('debug', 'deleteRouteBy. - $id = ' . print_r($id, 1));
+			
 			$this->db->where( 'RouteID', $id );
 			$this->db->delete('Route');
 
+			log_message('debug', 'deleteRouteBy. - Query = ' . $this->db->last_query());
+			
 			if ($this->db->affected_rows() == '1') {
+				log_message('debug', 'deleteRouteBy. - Route delete');
 				return TRUE;
 			} else {
+				log_message('debug', 'deleteRouteBy. - failed to delete');
 				return FALSE;
 			}
 		}
@@ -43,6 +49,8 @@ class Route_model extends CI_Model {
 		
 		public function edit_route($id, $data)
 		{	
+			log_message('debug', 'edit_route. - $id = ' . print_r($id, 1) . '$data = ' . print_r($data, 1));
+			
 			$this->db->query('SET time_zone = "+05:30";');
 			$this->db->where('RouteId', $id);
 			$this->db->update('Route', $data);
@@ -53,6 +61,7 @@ class Route_model extends CI_Model {
 				$response['Result'] =  "No Records Updated";
 			}
 			$response['query'] = $this->db->last_query();
+			log_message('debug', 'edit_route. - response = ' . print_r($response, 1));
 			return $response;
 		}
 		
@@ -65,6 +74,8 @@ class Route_model extends CI_Model {
 				 $response['Result'] = $this->db->error();
 				 $response['query'] = $this->db->last_query();
 			}
+			log_message('debug', 'add_route. - Query = ' . $this->db->last_query());
+			log_message('debug', 'add_route. - response = ' . print_r($response, 1));
 			return $response;
 		}
 }

@@ -73,6 +73,8 @@ class Production_model extends CI_Model {
 	
 	public function confirm_production($orderEntryIds){
 		
+		log_message('debug', 'confirm_production. - $orderEntryIds = ' . print_r($orderEntryIds, 1));
+		
 		$this->db->trans_begin();
 		$production = array(
 			'SentForProductionByUser' => $this->session->userdata('userid')
@@ -80,6 +82,7 @@ class Production_model extends CI_Model {
 		$this->db->query('SET time_zone = "+05:30";');
 		$this->db->insert('Production', $production);
 		$production_id = $this->db->insert_id();
+		log_message('debug', 'confirm_production. - Query = ' . $this->db->last_query());
 		$count = 0;
 		foreach($orderEntryIds as $orderEntryId){
 				$orderEntry = array(
@@ -92,13 +95,18 @@ class Production_model extends CI_Model {
 				if($this->db->affected_rows() == 1){
 					$count++;
 				}
+				log_message('debug', 'confirm_production. - Query = ' . $this->db->last_query());
 		}
 		
 		if($count > 0){
 			$this->db->trans_commit();
+			log_message('debug', 'confirm_production. - trans_commit');
 		} else {
+			log_message('debug', 'confirm_production. - trans_rollback');
 			$this->db->trans_rollback();
 		}
+		
+		log_message('debug', '$production_id. = '.$production_id);
 		
 		return $production_id;
 	}

@@ -14,11 +14,16 @@ class Customer_model extends CI_Model {
 		
 		function deleteCustomerBy($id) {
 
+			log_message('debug', 'deleteCustomerBy. - $id = ' . print_r($id, 1));
+		
 			$query = $this->db->get_where('Customer', array('CustomerId' => $id));
 			$customer_data =  $query->row_array();
 			
+			log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
+			
 			if(empty($customer_data)){
 				$response['Result'] =  "Customer not found";
+				log_message('debug', 'deleteCustomerBy. - Customer not found ');				
 				return $response;
 			}
 			
@@ -27,13 +32,18 @@ class Customer_model extends CI_Model {
 			$this->db->delete('Customer', array('CustomerID' => $id));
 			$customers_deleted = $this->db->affected_rows();
 			
+			log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
+			
 			if($application_user_id != NULL){
 				$this->db->delete('ApplicationUser', array('UserId' => $application_user_id));
+				log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
 			}
 			
 			if ($customers_deleted == '1') {
+				log_message('debug', 'deleteCustomerBy. - CUSTOMER DELETED ');
 				return TRUE;
 			} else {
+				log_message('debug', 'deleteCustomerBy. - FALIED TO DELETE CUSTOMER ');
 				return FALSE;
 			}
 		}
@@ -68,8 +78,6 @@ class Customer_model extends CI_Model {
 		
 		public function get_customer_with_id($id)
 		{
-			//$query = $this->db->get_where('customer', array('CustomerID' => $id));
-			//return $query->row_array();
 			$result = $this->db->query('SELECT *
 						FROM
 						  Customer
@@ -93,6 +101,7 @@ class Customer_model extends CI_Model {
 		
 		public function edit_customer($id, $data)
 		{	
+			log_message('debug', 'edit_customer. - $id = ' . print_r($id, 1) . '$data = ' . print_r($data, 1));
 
 			$this->db->trans_begin();
 			$this->db->query('SET time_zone = "+05:30";');
@@ -122,13 +131,18 @@ class Customer_model extends CI_Model {
 			$this->db->where('CustomerId', $id);
 			$this->db->update('Customer', $customer);
 			
+			log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
+			
 			//if($this->db->affected_rows() > 0){
 						//2) Add/edit applicationUser
 			$query = $this->db->get_where('Customer', array('CustomerId' => $id));
 			$customer_data =  $query->row_array();
 			
+			log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
+			
 			if(empty($customer_data)){
 				$response['Result'] =  "Unknown Error. ";
+				log_message('debug', 'edit_customer. - Error = ' . print_r($customer_data, 1));
 				return $response;
 			}
 			
@@ -161,10 +175,13 @@ class Customer_model extends CI_Model {
 			if($application_user_exists){
 				$this->db->where('UserId', $application_user_id);
 				$this->db->update('ApplicationUser', $application_user);
+				log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
+				
 			} else 	if(!empty($data['username']) 
 				AND !empty($data['password'])){
 				$this->db->insert('ApplicationUser', $application_user);
 				$application_user_id = $this->db->insert_id();
+				log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
 			}
 			
 			if(!$application_user_exists){ //connect this user with customer
@@ -173,19 +190,20 @@ class Customer_model extends CI_Model {
 					'UserId' => $application_user_id
 				);			
 				$this->db->where('CustomerId', $id);
-				$this->db->update('Customer', $customer);					
+				$this->db->update('Customer', $customer);	
+				log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());				
 			}
 			 
 			
 			$this->db->trans_commit();
 			$response['Result'] = "Success";
-			
+			log_message('debug', 'edit_customer. - Success');
 			return $response;
 		}
 		
 		public function add_customer($data)
 		{	
-
+			log_message('debug', 'add_customer. - $data = ' . print_r($data, 1));
 			$this->db->trans_begin();
 			$this->db->query('SET time_zone = "+05:30";');
 			$customer = array(
@@ -212,11 +230,13 @@ class Customer_model extends CI_Model {
 			}
 			//1) Add to customer table 
 			$customer_added = $this->db->insert('Customer', $customer);
+			log_message('debug', 'add_customer. - Query = ' . $this->db->last_query());
 			
 			if(!$customer_added){
 					$response['Result'] = $this->db->error();
 					$response['query'] = $this->db->last_query();
 					$this->db->trans_rollback();
+					log_message('debug', 'add_customer. - Customer not added. Rolling back. '. print_r($response, 1));
 					return $response;
 			}
 			
@@ -240,7 +260,7 @@ class Customer_model extends CI_Model {
 				);
 				
 				$application_user_added = $this->db->insert('ApplicationUser', $application_user);
-				
+				log_message('debug', 'add_customer. - Query = ' . $this->db->last_query());
 				if($application_user_added){ //connect this user with customer
 					$application_user_id = $this->db->insert_id();
 					
@@ -250,10 +270,12 @@ class Customer_model extends CI_Model {
 			
 					$this->db->where('CustomerId', $customer_id);
 					$this->db->update('Customer', $customer);
+					log_message('debug', 'add_customer. - Query = ' . $this->db->last_query());
 					
 					if($this->db->affected_rows() == 1){
 						$this->db->trans_commit();
 						$response['Result'] = "Success";
+						log_message('debug', 'add_customer. - Success');
 						return $response;
 					} else {
 						$application_user_added = false;
@@ -266,6 +288,7 @@ class Customer_model extends CI_Model {
 					}
 					$response['query'] = $this->db->last_query();
 					$this->db->trans_rollback();
+					log_message('debug', 'add_customer. - Rollback'. print_r($response, 1));
 					return $response;
 				}
 				
@@ -276,12 +299,14 @@ class Customer_model extends CI_Model {
 			if ($customer_added && $application_user_added)
 			{		$this->db->trans_commit();
 					$response['Result'] = "Success";
+					log_message('debug', 'add_customer. - Success');
 
 			} else {
 					$this->db->trans_rollback();
 					$response['Result'] = $this->db->error();
 					$response['query'] = $this->db->last_query();
-					$response['message'] = 'customer_added = ' . $application_user_added . '' .$application_user_added ;
+					$response['message'] = 'customer_added = ' .$application_user_added ;
+					log_message('debug', 'add_customer. - Rollback'.print_r($response, 1));
 			}
 
 			return $response;

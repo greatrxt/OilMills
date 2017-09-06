@@ -69,6 +69,7 @@
                     <div class="carousel-widget carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
 							<div class="carousel-item  background-default active">
+								<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/dispatch" class="widget-body-inner">
 							       <div class="widget-body">
 									<div href="javascript: void(0);" class="widget-body-inner">
 										<h5 style = "color:white" class="text-uppercase">Items Dispatched Today</h5>
@@ -77,10 +78,12 @@
 											<i class="icmn-arrow-up5"></i>
 											<span class="counter-init" data-from="0" data-to="<?php echo $order_entries_dispatched_today['OrderEntryCount']; ?>"></span>
 										</span>
+										</div>
 									</div>
-								</div>
+								</a>
 							</div>
 							<div class="carousel-item">
+							<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/dispatch" class="widget-body-inner">
 							<div class="widget-body">
 								<div href="javascript: void(0);" class="widget-body-inner">
 									<h5 class="text-uppercase">Today's Dispatch Value (INR)</h5>
@@ -91,6 +94,7 @@
 									</span>
 								</div>
 							</div>
+							</a>
 							</div>
                         </div>
                     </div>
@@ -99,6 +103,7 @@
   
             <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
                 <div class="widget widget-seven">
+					<a href="<?php echo base_url() ?>index.php/ParmarOilMills/web/landing_approved_sales_order" class="widget-body-inner">
                     <div class="widget-body">
                         <div href="javascript: void(0);" class="widget-body-inner">
                             <h5 class="text-uppercase">Items Pending Dispatch</h5>
@@ -109,6 +114,7 @@
                             </span>
                         </div>
                     </div>
+					</a>
                 </div>
             </div>
         </div>

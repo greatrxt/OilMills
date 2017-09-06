@@ -229,6 +229,7 @@ class Dispatch_model extends CI_Model {
 	}
 	
 	public function get_dispatch_estimate($orderEntryIds){
+		log_message('debug', 'get_dispatch_estimate. - $orderEntryIds = ' . print_r($orderEntryIds, 1));
 		$parameters = '';
 		$count = 0;
 		foreach($orderEntryIds as $orderEntryId){
@@ -238,11 +239,7 @@ class Dispatch_model extends CI_Model {
 				$parameters = $parameters.',';
 			}
 		}
-	
-		//$query_string = 'SELECT OrderEntryId, Product.Name, OrderEntries.OrderQuantity
-			//						FROM OrderEntries 
-				//					LEFT JOIN Product ON OrderEntries.OrderedProductId = Product.ProductId
-					//				WHERE OrderEntries.OrderEntryId IN ('.$parameters.')';
+
 		$query_string = 'SELECT
 						OrderEntries.OrderEntryId,
 						OrderEntries.OrderId,
@@ -302,17 +299,16 @@ class Dispatch_model extends CI_Model {
 						ORDER BY
 						OrderEntries.OrderId';
 		$result = $this->db->query($query_string);
+		
+		log_message('debug', 'get_dispatch_estimate. - Query = ' . $this->db->last_query());
+		log_message('debug', 'get_dispatch_estimate. - Query Result = ' . print_r($result->result_array(), 1));
+		
 		//return $query_string;	
 		return $result->result_array();	
 	}		
 
 	public function get_all_dispatch(){
 
-		/*$result = $this->db->query('SELECT Dispatch.DispatchId, SUM(OrderEntries.OrderQuantity) as Quantity, DispatchTime, count(distinct OrderEntries.OrderedProductId) as ProductCount
-									FROM Dispatch 
-									LEFT JOIN OrderEntries ON OrderEntries.DispatchId = Dispatch.DispatchId
-									GROUP BY DispatchId');*/
-									
 		$query = $this->db->query('SELECT Dispatch.DispatchId, count(distinct OrderEntries.OrderedProductId) as ProductCount, SUM(OrderEntries_Dispatch.DispatchQuantity) as Quantity,  DispatchTime, ApplicationUser.Username
 									FROM Dispatch 
 									LEFT JOIN OrderEntries_Dispatch ON Dispatch.DispatchId = OrderEntries_Dispatch.DispatchId
@@ -324,12 +320,15 @@ class Dispatch_model extends CI_Model {
 	
 	public function confirm_dispatch($orderEntryIds, $customDispatch){
 		
+		log_message('debug', 'confirm_dispatch. $orderEntryIds = ' . print_r($orderEntryIds, 1). ', $customDispatch = '. print_r($orderEntryIds, 1));
+		
 		$this->db->trans_begin();
 		$dispatch = array(
 			'DispatchedByUser' => $this->session->userdata('userid')
 		);
 		$this->db->query('SET time_zone = "+05:30";');
 		$this->db->insert('Dispatch', $dispatch);
+		log_message('debug', 'confirm_dispatch. - Query = ' . $this->db->last_query());
 		//return $this->db->last_query();
 		$dispatch_id = $this->db->insert_id();
 		$count = 0;
@@ -349,7 +348,7 @@ class Dispatch_model extends CI_Model {
 										OrderEntries.Status = "PARTIALLY_DISPATCHED")
 										&& OrderEntries.OrderEntryId = '.$orderEntryId);
 			
-			
+			log_message('debug', 'confirm_dispatch. - Query = ' . $this->db->last_query());
 			if($query->num_rows() > 0) {
 				$orderEntry = $query->result_array()[0];
 				if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) > 0){
@@ -372,7 +371,7 @@ class Dispatch_model extends CI_Model {
 					} else if(($orderEntry['OrderQuantity'] - $orderEntry['TotalDispatchQuantity']) == $dispatchQuantity){
 						$this->db->update('OrderEntries', array('Status' => 'DISPATCHED'));
 					}
-					
+					log_message('debug', 'confirm_dispatch. - Query = ' . $this->db->last_query());
 					if(isset($customRoute[$customer_id])){
 						$routeId = $customRoute[$customer_id];
 					}
@@ -385,28 +384,24 @@ class Dispatch_model extends CI_Model {
 					);
 					
 					$this->db->insert('OrderEntries_Dispatch', $order_entry_dispatch);
-					
+					log_message('debug', 'confirm_dispatch. - Query = ' . $this->db->last_query());
 					if($this->db->insert_id() > 0){
 						$count++;
 					}
 				}
 			}
 			
-	/*		$this->db->where('OrderEntryId', $orderEntryId);
-			$this->db->where('Status!=', 'PENDING_APPROVAL');
-			$this->db->update('OrderEntries', $orderEntry);
-			
-			if($this->db->affected_rows() == 1){
-				$count++;
-			}*/
 		}
 		
 		if($count > 0){
 			$this->db->trans_commit();
+			log_message('debug', 'confirm_dispatch. trans_commit. $dispatch_id = '.$dispatch_id);
 			return $dispatch_id;
 		} else {
+			log_message('debug', 'confirm_dispatch. ROLLBACK. ');
 			$this->db->trans_rollback();
 		}
+		
 		return null;
 	}
 	

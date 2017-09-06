@@ -87,6 +87,9 @@ var locationsArray = null;
 		var state = document.getElementById('state');
 		var city = document.getElementById('city');
 
+		district.value = '';
+		state.value = '';
+
 		if(locationsArray!=null){
 			for(var i = 0; i < locationsArray.length; i++){
 				var location = locationsArray[i];

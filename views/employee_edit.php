@@ -40,7 +40,8 @@
 
 							<div class="form-group">
                                 <label for="city">City*</label>
-								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" tabindex = "4">
+								<select class="form-control" name="city"  id="city" onChange = "refreshLocationDistrictAndState()" tabindex = "4"data-validation="[NOTEMPTY]">
+								<option value="">Choose a location</option>
 								<?php
 									foreach($location as $loc)
 									{
@@ -180,6 +181,7 @@ function validateForm(){
 	if(document.getElementById('name').value.length < 3
 		|| document.getElementById('department').value.length < 2
 		|| document.getElementById('designation').value.length < 2
+		|| document.getElementById('city').value.length < 1
 		|| document.getElementById('address').value.length < 3){
 		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
 		 
