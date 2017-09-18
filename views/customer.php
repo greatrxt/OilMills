@@ -89,7 +89,7 @@
                             </div>							
 							
 							<div class="form-group">
-                                <label for="route">Route</label>
+                                <label for="route">Route*</label>
 								<select class="form-control" id="route" name="Route" tabindex = "5" data-validation="[NOTEMPTY]">
 								<option value="">Choose a route</option>
 									<?php
@@ -191,6 +191,7 @@ function validateForm(){
 		|| document.getElementById('contactPerson').value.length < 3
 		|| document.getElementById('contactNumber').value.length < 8
 		|| document.getElementById('city').value.length < 1
+		|| document.getElementById('area').value.length < 1
 		|| document.getElementById('route').value.length < 1
 		|| document.getElementById('address').value.length < 3){
 		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');

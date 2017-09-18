@@ -34,8 +34,31 @@ class Customer_model extends CI_Model {
 			
 			log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
 			
+			$username_deleted = true;
+			
 			if($application_user_id != NULL){
+				//delete keys
+				$username_deleted = false;
+				
+				$application_user_query = $this->db->get_where('ApplicationUser', array('UserId' => $application_user_id));
+				
+				$application_user =  $application_user_query->row_array();
+				
+				log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
+				
+				log_message('debug', 'deleteCustomerBy. - $application_user = ' . print_r($application_user, 1));
+				
 				$this->db->delete('ApplicationUser', array('UserId' => $application_user_id));
+				log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
+				
+				if($this->db->affected_rows() == 1) $username_deleted = true;
+				
+				if($application_user['TokenId']!=null){
+					$username_deleted = false;
+					$this->db->delete('keys', array('id' => $application_user['TokenId']));
+					if($this->db->affected_rows() == 1) $username_deleted = true;
+				} 
+				
 				log_message('debug', 'deleteCustomerBy. - Query = ' . $this->db->last_query());
 			}
 			
@@ -152,12 +175,6 @@ class Customer_model extends CI_Model {
 			if($application_user_id != NULL){
 				$application_user_exists = true;
 			}
-				
-			$userActive = 0;
-			if (isset($data['userActive']) 
-				|| array_key_exists('userActive', $data)) {
-				$userActive = 1;
-			} 
 			
 			$role_string = 'CUSTOMER';
 			
@@ -170,8 +187,18 @@ class Customer_model extends CI_Model {
 				$application_user['Role'] = $role_string;
 			}
 			
+							
+			$userActive = 0;
+			if (isset($data['userActive']) 
+				|| array_key_exists('userActive', $data)) {
+				$userActive = 1;
+			} else {
+				$application_user['TokenId'] = NULL;
+			}
+			
 			$application_user['Active'] = $userActive;
-						
+			
+			log_message('debug', 'edit_customer. - application_user = ' . print_r($application_user, 1));			
 			if($application_user_exists){
 				$this->db->where('UserId', $application_user_id);
 				$this->db->update('ApplicationUser', $application_user);
@@ -183,6 +210,13 @@ class Customer_model extends CI_Model {
 				$application_user_id = $this->db->insert_id();
 				log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
 			}
+			
+			$this->db->query('DELETE FROM `keys`
+				USING `keys` 
+				LEFT JOIN ApplicationUser ON(ApplicationUser.TokenId = keys.id)
+				WHERE ApplicationUser.TokenId IS NULL');
+			
+			log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
 			
 			if(!$application_user_exists){ //connect this user with customer
 					

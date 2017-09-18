@@ -1,3 +1,6 @@
+<div style = "padding-top:20px;padding-left:20px;padding-right:20px;">
+	<?php echo validation_errors('  <div style = "border-color: #ebccd1;background-color:#f2dede; color:#a94442" class="alert alert-danger alert-dismissable"><a style = "padding-bottom:10px" href="#" class="close" data-dismiss="alert" aria-label="close">×</a>', '</div>'); ?>
+</div>
 <section class = "page-content">
 <div class="page-content-inner">
 
@@ -5,7 +8,7 @@
     <section class="panel panel-with-borders">
         <div class="panel-heading">
             <h2>
-                Product
+                Create New Product
             </h2>
         </div>
 		<?php echo validation_errors(); ?>
@@ -41,6 +44,8 @@
 								<select class="form-control" name  = "productCategory">
 									<option value="RBD Palmolien Oil">RBD Palmolien Oil</option>
 									<option value="Refined Soyabean Oil">Refined Soyabean Oil</option>
+									<option value="Vanaspati Oil">Vanaspati Oil</option>
+									<option value="Sunflower Oil">Sunflower Oil</option>
 								</select>
                             </div>
                         </div>

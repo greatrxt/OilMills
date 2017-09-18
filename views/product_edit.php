@@ -39,8 +39,10 @@
                             <div class="form-group">
                                 <label for="productCategory">Product Category</label>
 								<select class="form-control" name  = "productCategory">
-									<option value="RBD Palmolien Oil">RBD Palmolien Oil</option>
-									<option value="Refined Soyabean Oil">Refined Soyabean Oil</option>
+									<option value="RBD Palmolien Oil" <?php if($product['ProductCategory'] == "RBD Palmolien Oil") echo "selected" ?>>RBD Palmolien Oil</option>
+									<option value="Refined Soyabean Oil" <?php if($product['ProductCategory'] == "Refined Soyabean Oil") echo "selected" ?>>Refined Soyabean Oil</option>
+									<option value="Vanaspati Oil" <?php if($product['ProductCategory'] == "Vanaspati Oil") echo "selected" ?>>Vanaspati Oil</option>
+									<option value="Sunflower Oil" <?php if($product['ProductCategory'] == "Sunflower Oil") echo "selected" ?>>Sunflower Oil</option>
 								</select>
                             </div>
                         </div>

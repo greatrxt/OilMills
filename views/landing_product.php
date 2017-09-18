@@ -8,7 +8,7 @@
                 <div class="dropdown pull-right">
                     <a href="product/create">
 						<button type="button" class="btn btn-primary">
-							Add Product
+							Create New Product
 						</button>
 					</a>
                 </div>

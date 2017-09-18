@@ -110,8 +110,11 @@ public function create()
 {
     $data['title'] = 'Parmar Oil Mills';
 
-    $this->form_validation->set_rules('name', 'Name', 'required|is_unique[Product.name]');
-
+    $this->form_validation->set_rules('name', 'Product Name', 'required|is_unique[Product.name]', array(
+							'is_unique'     => '%s already exists.'
+					));
+	$this->form_validation->set_error_delimiters('<div class="error" style="display:none;width:82%;padding:10px;margin-top:20px;border: 1px solid #FF0000">', '</div>'); 
+	
     if ($this->form_validation->run() === FALSE)
     {
         $this->load->view('parmaroilmills/templates/header');

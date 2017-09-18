@@ -34,6 +34,7 @@
 		</select> 
 	</div>
 	<textarea id="header" readonly style = "height:50px"></textarea>
+	<span>Tempo Number : __________________________________ , Driver's Name : __________________________________</span></br></br>
 	<textarea readonly>Dispatch : <?php echo "DISP".$id ?></textarea>
 	<span style="float:right" readonly>Date : <?php echo $dispatch_details['DispatchTime'] ?></span>
 <div id="identity">	
@@ -52,19 +53,35 @@
 					<th>Remarks</th>
                 </tr>
                 </thead>
+				<?php
+				//get count of customer to combine rows with common customer name
+				$customerRowSpan = array();
+				foreach ($dispatchs as $dispatch): 
+				$customerName = $dispatch['CustomerName']; 
+				if(!isset($customerRowSpan[$customerName])){
+					$customerRowSpan[$customerName] = 0;
+				}
+				$customerRowSpan[$customerName]++;
+				endforeach;
+				?>
                 <tbody id = 'displayDispatchsTableBody'>
 				<?php
 				$i = 1;
 				foreach ($dispatchs as $dispatch): ?>
 				<tr class = "route" data-user = "<?php echo $dispatch['RouteId'] ?>">
 				    <td><center><?php echo $i; ?></center></td>
-					<td><center><?php echo $dispatch['CustomerName']; ?></center></td>
+					<?php
+					if(isset($customerRowSpan[$dispatch['CustomerName']])){
+						echo "<td rowspan = ".$customerRowSpan[$dispatch['CustomerName']]. " ><center>". $dispatch['CustomerName']."</center></td>";
+						unset($customerRowSpan[$dispatch['CustomerName']]);
+					}
+					?>
 					<td><center><?php echo $dispatch['BrokerName']; ?></center></td>
 					<td><center><?php echo $dispatch['PaymentTerms']; ?></center></td>
-                    <td><center><?php echo $dispatch['ProductName']; ?></center></td>
+                    <td><center><?php echo $dispatch['Code']; ?></center></td>
                     <td><center><?php echo $dispatch['DispatchQuantity']; ?></center></td>
 					<td><center><?php echo $dispatch['SellingPriceAtOrderTime']; ?></center></td>
-					<td><center></center></td>
+					<td width = "15%"><center></center></td>
 					<td><center><?php echo number_format($dispatch['SellingPriceAtOrderTime'] * $dispatch['DispatchQuantity']); ?></center></td>
 					<td><center></center></td>
 				</tr>

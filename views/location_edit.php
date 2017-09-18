@@ -6,7 +6,7 @@
     <section class="panel panel-with-borders" style="overflow:auto">
         <div class="panel-heading">
             <h2>
-                <div id = "locationTitle">Edit Location</div>
+                <div id = "locationTitle">Location</div>
             </h2>
         </div>
         <div class="panel-body">

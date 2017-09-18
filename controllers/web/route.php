@@ -40,7 +40,7 @@ public function edit($id = NULL)
 			$data = array(
 					'routeName' => $this->input->post('routeName'),
 					'routeCode' => $this->input->post('routeCode'),
-					'RecordCreatedBy' => 1
+					'RecordCreatedBy' => $this->session->userdata('userid')
 			);
 
 			$result = $this->route_model->edit_route($id, $data);
@@ -70,7 +70,7 @@ public function create()
 		$data = array(
 				'routeName' => $this->input->post('routeName'),
 				'routeCode' => $this->input->post('routeCode'),
-				'RecordCreatedBy' => 1
+				'RecordCreatedBy' => $this->session->userdata('userid')
 		);
 	
         $this->route_model->add_route($data);

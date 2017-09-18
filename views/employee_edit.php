@@ -8,7 +8,7 @@
     <section class="panel panel-with-borders" style="overflow:auto">
         <div class="panel-heading">
             <h2>
-                <div id = "employeeTitle">View Employee</div>
+                <div id = "employeeTitle">Employee</div>
             </h2>
         </div>
 
@@ -83,7 +83,7 @@
                             </div>	
 							<div class="form-group">
 								<label class="form-control-label" for="area">Area*</label>
-                                <input class="form-control" name="area" type="text" name="area" value="<?php if(set_value('area')!=null) echo set_value('area'); else echo $employee['Area']; ?>" data-validation="[L>=3]" tabindex = "3">
+                                <input class="form-control" name="area" type="text" id = "area" name="area" value="<?php if(set_value('area')!=null) echo set_value('area'); else echo $employee['Area']; ?>" data-validation="[L>=3]" tabindex = "3">
 							</div>						
 							<div class="form-group">
                                 <label for="district">District</label>
@@ -182,6 +182,7 @@ function validateForm(){
 		|| document.getElementById('department').value.length < 2
 		|| document.getElementById('designation').value.length < 2
 		|| document.getElementById('city').value.length < 1
+		|| document.getElementById('area').value.length < 1
 		|| document.getElementById('address').value.length < 3){
 		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
 		 

@@ -74,7 +74,7 @@ public function create()
     $this->load->library('form_validation');
 
 	$this->form_validation->set_error_delimiters('<div class="error" style="display:none;width:82%;padding:10px;margin-top:20px;border: 1px solid #FF0000">', '</div>'); 
-    $this->form_validation->set_rules('name', 'Name', 'required');
+    $this->form_validation->set_rules('name', 'Customer Name', 'required|is_unique[Customer.Name]');
 
 	//while creating employee, if user is active then check if username exists
 	if (array_key_exists('userActive', $this->input->post())) {

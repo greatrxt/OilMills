@@ -8,7 +8,7 @@
                 <div class="dropdown pull-right">
 				<a href="broker/create">
 					<button type="button" class="btn btn-primary"  onclick = "addBroker();">
-                        Add Broker
+                        Create New Broker
                     </button>
 				</a>
                 </div>

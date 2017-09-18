@@ -5,7 +5,7 @@
     <section class="panel panel-with-borders" style="overflow:auto">
         <div class="panel-heading">
             <h2>
-                <div id = "customerTitle">Edit Broker</div>
+                <div id = "customerTitle">Broker</div>
             </h2>
         </div>
         <div class="panel-body">

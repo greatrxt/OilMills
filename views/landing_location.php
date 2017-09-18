@@ -8,7 +8,7 @@
                 <div class="dropdown pull-right">
 					<a href="location/create">
 					<button type="button" class="btn btn-primary" >
-                        Add Location
+                        Create New Location
                     </button>
 					</a>
                 </div>

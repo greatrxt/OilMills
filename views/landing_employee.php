@@ -8,7 +8,7 @@
                 <div class="dropdown pull-right">
 				<a href="employee/create">
 					<button type="button" class="btn btn-primary">
-                        Add Employee
+                        Create New Employee
                     </button>
 				</a>
                 </div>
@@ -95,7 +95,7 @@
 		<h3 style="padding:5px;font-size:15px;">Error while deleting</h3>
     </div>
     <div class="modal-body">
-		<span id = "confirmDeleteText">Could not delete this employee since it is linked to other items in the system. Please delete those items first and try deleting again.</span>	
+		<span id = "confirmDeleteText">Could not delete this employee since this account is linked to certain Sales orders in the system. </span>	
     </div>
     <div class="modal-footer" style="height:70px;">
 		<table>

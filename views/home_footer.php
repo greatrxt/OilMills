@@ -52,7 +52,7 @@
                         <div class="step-desc">
                             <span class="step-title">Users</span>
                             <p>
-                                <span><?php echo $user['count'] ?></span>
+                                <span><?php echo ($user['count'] - 1) ?></span>
                                 <span>&nbsp;</span>
                             </p>
                         </div>

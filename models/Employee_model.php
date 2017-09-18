@@ -15,6 +15,7 @@ class Employee_model extends CI_Model {
 		function deleteEmployeeBy($id) {
 
 			log_message('debug', 'deleteEmployeeBy. - $id = ' . print_r($id, 1));
+			$this->db->trans_begin();
 			
 			$query = $this->db->get_where('Employee', array('EmployeeId' => $id));
 			$employee_data =  $query->row_array();
@@ -32,16 +33,42 @@ class Employee_model extends CI_Model {
 			$this->db->delete('Employee', array('EmployeeID' => $id));
 			$employees_deleted = $this->db->affected_rows();
 			log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
+			
+			$username_deleted = true;
+			
 			if($application_user_id != NULL){
+				//delete keys
+				$username_deleted = false;
+				
+				$application_user_query = $this->db->get_where('ApplicationUser', array('UserId' => $application_user_id));
+				
+				$application_user =  $application_user_query->row_array();
+				
+				log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
+				
+				log_message('debug', 'deleteEmployeeBy. - $application_user = ' . print_r($application_user, 1));
+				
 				$this->db->delete('ApplicationUser', array('UserId' => $application_user_id));
+				log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
+				
+				if($this->db->affected_rows() == 1) $username_deleted = true;
+				
+				if($application_user['TokenId']!=null){
+					$username_deleted = false;
+					$this->db->delete('keys', array('id' => $application_user['TokenId']));
+					if($this->db->affected_rows() == 1) $username_deleted = true;
+				} 
+				
 				log_message('debug', 'deleteEmployeeBy. - Query = ' . $this->db->last_query());
 			}
 			
-			if ($employees_deleted == '1') {
+			if ($employees_deleted == '1' && $username_deleted) {
+				$this->db->trans_commit();
 				log_message('debug', 'deleteEmployeeBy. - EMPLOYEE DELETED ');
 				return TRUE;
 			} else {
 				log_message('debug', 'deleteEmployeeBy. - FAILED TO DELETE EMPLOYEE ');
+				$this->db->trans_rollback();
 				return FALSE;
 			}
 		}
@@ -133,18 +160,20 @@ class Employee_model extends CI_Model {
 			}
 				
 			$userActive = 0;
-			if (isset($data['userActive']) 
+			$application_user = array();
+			
+			if(isset($data['userActive']) 
 				|| array_key_exists('userActive', $data)) {
 				$userActive = 1;
 			
 				$role_string = $data['role'][0];
 				if(sizeof($data['role']) == 2){	//In case multiple roles have been selected - Sales + Operations
 					$role_string = $data['role'][0].','.$data['role'][1];
-				}
-				
-			} 
-
-			$application_user = array();
+				}		
+			} else {
+				$application_user['TokenId'] = NULL;
+			}
+			
 			if(!empty($data['username']) 
 				AND !empty($data['password'])){
 				 
@@ -163,6 +192,13 @@ class Employee_model extends CI_Model {
 				$this->db->insert('ApplicationUser', $application_user);
 				$application_user_id = $this->db->insert_id();
 			}
+			
+			$this->db->query('DELETE FROM `keys`
+				USING `keys` 
+				LEFT JOIN ApplicationUser ON(ApplicationUser.TokenId = keys.id)
+				WHERE ApplicationUser.TokenId IS NULL');
+			
+			log_message('debug', 'edit_customer. - Query = ' . $this->db->last_query());
 			
 			log_message('debug', 'edit_employee. - Query = ' . $this->db->last_query());
 			

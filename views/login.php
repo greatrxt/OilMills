@@ -1,4 +1,5 @@
-	<div class="page-content-inner" style="background: url(<?php echo base_url();?>assets/common/img/temp/login/4.jpg) no-repeat center center fixed; width: 100%; height: 100%;background-size:cover">
+	
+	<div class="page-content-inner" style="background: url(<?php echo base_url();?>assets/common/img/temp/login/4.jpg) no-repeat center center fixed; width: 100%; min-height: 100%;background-size:cover">
 
     <!-- Login Omega Page -->
     <div class="single-page-block-header">
@@ -8,13 +9,6 @@
                     <a href="http://www.parmaroilmills.com" target="_blank">
                         <img src="<?php echo base_url();?>assets/common/img/logo.png" alt="Parmar Oil Mills" />
                     </a>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="single-page-block-header-menu">
-                    <ul class="list-unstyled list-inline">
-                        <li><a href="http://www.1qubit.com">Support</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -60,11 +54,15 @@
             </div>
         </div>
     </div>
-    <div class="single-page-block-footer text-center">
+	 <div class="single-page-block-footer text-center" style = "padding-top:50px;">
+	 		<a href = "http://parmaroilmills.com/android/parmar_oil_mills.apk">
+				<img src = "http://parmaroilmills.com/assets/common/img/Android.png" height = "70px;" style = "padding-bottom:20px"></img>
+			</a>
         <ul class="list-unstyled list-inline">
             <li>Designed and Developed By <a href="http://www.1qubit.com">1Qubit Technologies</a></li>
         </ul>
     </div>
+
     <!-- End Login Omega Page -->
 
 </div>

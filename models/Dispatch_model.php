@@ -89,7 +89,7 @@ class Dispatch_model extends CI_Model {
 	}
 	
 	public function get_dispatch($id){
-		$query_string = 'SELECT Product.Name as ProductName, Broker.Name as BrokerName, PaymentTerms, SellingPriceAtOrderTime, GROUP_CONCAT(DISTINCT(SalesOrder.OrderId) SEPARATOR ", OD") as OrderId,
+		$query_string = 'SELECT Product.Code, Product.Name as ProductName, Broker.Name as BrokerName, PaymentTerms, SellingPriceAtOrderTime, GROUP_CONCAT(DISTINCT(SalesOrder.OrderId) SEPARATOR ", OD") as OrderId,
 									SUM(OrderEntries_Dispatch.DispatchQuantity) as DispatchQuantity, Customer.Name as CustomerName, Route.RouteName, Route.RouteId
 									FROM OrderEntries 
 									LEFT JOIN Product ON OrderEntries.OrderedProductId = Product.ProductId
@@ -99,7 +99,7 @@ class Dispatch_model extends CI_Model {
 									LEFT JOIN OrderEntries_Dispatch ON OrderEntries_Dispatch.OrderEntryId = OrderEntries.OrderEntryId
 									LEFT JOIN Route ON OrderEntries_Dispatch.RouteId = Route.RouteId
 									WHERE OrderEntries_Dispatch.DispatchID = '.$id.'
-									GROUP BY CustomerName, ProductName
+									GROUP BY CustomerName, ProductName, SellingPriceAtOrderTime
 									ORDER BY Route.RouteId';
 		$result = $this->db->query($query_string);
 		return $result->result_array();			

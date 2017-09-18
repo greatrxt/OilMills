@@ -41,10 +41,15 @@ class Order extends REST_Controller
 		}
 		
 		$order_placed_by_application_user = $this->user_model->get_user_from_token($headers['X-Api-Key']);
-		$data = $this->post();
-		//$this->response($order_placed_by_application_user['Username'], 200);
-		$result = $this->order_model->place_order($data, $order_placed_by_application_user);
-		$this->response($result, 200);
+		if($order_placed_by_application_user['Active'] == 1){
+			$data = $this->post();
+			//$this->response($order_placed_by_application_user['Username'], 200);
+			$result = $this->order_model->place_order($data, $order_placed_by_application_user);
+			$this->response($result, 200);
+		} else {
+			$result = 'Cannot place order. User has been deactivated';
+			$this->response($result, 200);
+		}
   }
 
 }

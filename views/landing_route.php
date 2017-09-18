@@ -8,7 +8,7 @@
                 <div class="dropdown pull-right">
 				<a href="route/create">
 					<button type="button" class="btn btn-primary">
-                        Add Route
+                        Create New Route
                     </button>
 				</a>
                 </div>
@@ -152,6 +152,10 @@
 </script>
 <script>
     $(function () {
-		$('#displayRoutesTable').DataTable();
+		$('#displayRoutesTable').DataTable({
+			"pageLength": 25,
+			"order": [
+                      /*[2, 'desc'],*/[4, 'asc']      
+		]});
     });
 </script>

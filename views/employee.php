@@ -175,6 +175,7 @@ function validateForm(){
 		|| document.getElementById('department').value.length < 2
 		|| document.getElementById('designation').value.length < 2
 		|| document.getElementById('city').value.length < 1
+		|| document.getElementById('area').value.length < 1
 		|| document.getElementById('address').value.length < 3){
 		 $('.nav-tabs-horizontal li:eq(0) a').tab('show');
 		 
